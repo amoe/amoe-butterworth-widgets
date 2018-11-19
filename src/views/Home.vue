@@ -37,6 +37,9 @@ export default Vue.extend({
                 value: "Farming/Land Service"
             }]
         };
+    },
+    computed: {
+
     }
 });
 </script>
@@ -47,6 +50,8 @@ export default Vue.extend({
 @lightgreen: hsl(105, 100%, 40%);
 @lightgreenmod: hsl(105, 100%, 30%);
 @red: hsl(0, 100%, 41%);
+
+@space-small: 0.2em;
 
 .widget-container {
     display: flex;
@@ -80,6 +85,8 @@ export default Vue.extend({
 .widget-taxonomy-type-group {
     display: flex;
     flex-direction: row;
+    border-left: medium solid @offblack;
     border-right: medium solid @offblack;
+    padding: @space-small;
 }
 </style>
