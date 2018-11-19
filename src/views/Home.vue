@@ -12,7 +12,7 @@
           <!-- Div container needed so that we can use flex-end to push it
                to the right.  It seems that inline-svg by itself cannot
                be a flex container. -->
-          <div class="add"><plus-circle-icon/></div>
+          <div class="add"><plus-circle-icon v-on:click="add(taxonomyType)"/></div>
 
           <taxon-select :value="widget.value">
           </taxon-select>
@@ -22,11 +22,7 @@
               <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
             </span>
           </div>
-
-
         </div>
-
-
       </div>
     </div>
   </div>
@@ -39,10 +35,23 @@ import CircleIcon from '@/components/CircleIcon.vue';
 import TaxonSelect from '@/components/TaxonSelect.vue';
 import { PlusCircleIcon } from 'vue-feather-icons';
 
+interface WidgetInstance {
+    level: number;
+    value: string;
+};
+
+interface TaxonomyTypes {
+    [key: string]: WidgetInstance[];
+};
+
+interface ComponentData {
+    widgets: TaxonomyTypes;
+};
+
 export default Vue.extend({
     name: 'home',
     components: { CircleIcon, PlusCircleIcon, TaxonSelect },
-    data() {
+    data(): ComponentData {
         return {
             widgets: {
                'Occupation': [
@@ -74,6 +83,16 @@ export default Vue.extend({
 
             }
         };
+    },
+    methods: {
+        add(taxonomyType: string): void {
+            const blankWidget: WidgetInstance = {
+                level: 4,
+                value: "Blank"
+            };
+
+            this.widgets[taxonomyType].push(blankWidget);
+        }
     },
     computed: {
         sortedTaxonomyTypeKeys(): string[] {
