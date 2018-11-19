@@ -4,13 +4,14 @@
     <p>Some text</p>
 
     <div class="widget-container">
-      <div class="widget" v-for="widget in widgets">
-        <input class="taxon-name" type="text" size="32" v-model="widget.value"></input>
-        <div class="level-container">
-
-          <span v-for="n in widget.level">
-            <circle-icon :width="16" :height="16"></circle-icon>
-          </span>
+      <div class="widget-taxonomy-type-group"> 
+        <div class="widget" v-for="widget in widgets">
+          <input class="taxon-name" type="text" size="32" v-model="widget.value"></input>
+          <div class="level-container">
+            <span v-for="n in widget.level">
+              <circle-icon :width="16" :height="16"></circle-icon>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -76,4 +77,9 @@ export default Vue.extend({
     background-color: @offwhite;
 }
 
+.widget-taxonomy-type-group {
+    display: flex;
+    flex-direction: row;
+    border-right: medium solid @offblack;
+}
 </style>
