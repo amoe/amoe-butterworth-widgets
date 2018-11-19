@@ -39,12 +39,15 @@ export default Vue.extend({
 </script>
 
 <style lang="less">
+@offblack: hsl(6, 24%, 8%);
+@lightgreen: hsl(105, 100%, 40%);
+
 .widget-container {
     display: flex;
 }
 
 .widget {
-    background-color: hsl(105, 100%, 40%);
+    background-color: @lightgreen;
     padding-top: 1em;
     padding-bottom: 1em;
     margin-left: 0.2em;
