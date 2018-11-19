@@ -17,7 +17,7 @@
           <input class="taxon-name" type="text" size="32" v-model="widget.value"></input>
           <div class="level-container">
             <span v-for="n in widget.level">
-              <circle-icon :width="16" :height="16"></circle-icon>
+              <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
             </span>
           </div>
 
@@ -90,8 +90,13 @@ export default Vue.extend({
 @red: hsl(0, 100%, 41%);
 @grey: hsl(0, 0%, 63%);
 
-@space-small: 0.8em;
+// Spacing constants
+@space-xx-small: 0.1em;
+@space-x-small: 0.2em;
+@space-small: 0.4em;
+@space-medium: 0.8em;
 @space-large: 1.6em;
+
 @roundedness: 0.2em;
 
 .widget-container {
@@ -103,7 +108,7 @@ export default Vue.extend({
     display: flex;
     flex-direction: row;
     border-right: medium solid @offblack;
-    padding: @space-small;
+    padding: @space-medium;
     min-width: 0;
 }
 
@@ -113,11 +118,19 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
 
-    background-color: @lightgreen;
-    padding-top: @space-small;
-    padding-bottom: @space-small;
-    margin-left: @space-small;
-    margin-right: @space-small;
+//    background-color: @lightgreen;
+
+    background-image: linear-gradient(
+        to right,
+        rgba(26, 198, 204, 0.5),
+        rgba(26, 198, 204, 1.0) 50%,
+        rgba(26, 198, 204, 0.5)
+    );
+
+    padding-top: @space-medium;
+    padding-bottom: @space-medium;
+    margin-left: @space-medium;
+    margin-right: @space-medium;
 
 
     // Outset border gives it the raised quality.
@@ -147,7 +160,11 @@ export default Vue.extend({
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    margin: @space-small;
+    margin: @space-medium;
+}
+
+.circle-icon {
+    margin: @space-xx-small;
 }
 
 </style>
