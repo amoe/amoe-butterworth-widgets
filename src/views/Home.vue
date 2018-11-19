@@ -14,7 +14,9 @@
                be a flex container. -->
           <div class="add"><plus-circle-icon/></div>
 
-          <input class="taxon-name" type="text" size="32" v-model="widget.value"></input>
+          <taxon-select :value="widget.value">
+          </taxon-select>
+
           <div class="level-container">
             <span v-for="n in widget.level">
               <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
@@ -34,11 +36,12 @@
 import Vue from 'vue';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import CircleIcon from '@/components/CircleIcon.vue';
+import TaxonSelect from '@/components/TaxonSelect.vue';
 import { PlusCircleIcon } from 'vue-feather-icons';
 
 export default Vue.extend({
     name: 'home',
-    components: { CircleIcon, PlusCircleIcon },
+    components: { CircleIcon, PlusCircleIcon, TaxonSelect },
     data() {
         return {
             widgets: {
