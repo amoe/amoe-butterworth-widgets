@@ -9,6 +9,8 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
     "vue": "^2.5.17",
     "vue-feather-icons": "^4.7.1",
     "vue-router": "^3.0.1",
