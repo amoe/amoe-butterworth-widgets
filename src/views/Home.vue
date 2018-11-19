@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+
+    <p>Foo <airplay-icon/> Bar</p>
+
     <div class="widget-container">
       <div class="widget" v-for="widget in widgets">
         <input type="text" size="32" v-model="widget.value"></input>
@@ -11,10 +14,11 @@
 <script lang="ts">
 import Vue from 'vue';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { AirplayIcon } from 'vue-feather-icons'
 
 export default Vue.extend({
     name: 'home',
-    components: {},
+    components: { AirplayIcon },
     data() {
         return {
             widgets: [{
