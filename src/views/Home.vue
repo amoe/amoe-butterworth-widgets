@@ -4,8 +4,11 @@
     <p>Some text</p>
 
     <div class="widget-container">
-      <div class="widget-taxonomy-type-group"> 
-        <div class="widget" v-for="widget in widgets">
+      <div class="widget-taxonomy-type-group"
+           v-for="taxonomyType in sortedTaxonomyTypeKeys">
+        <p>Type: <code>{{taxonomyType}}</code></p>
+
+        <div class="widget" v-for="widget in widgets[taxonomyType]">
           <input class="taxon-name" type="text" size="32" v-model="widget.value"></input>
           <div class="level-container">
             <span v-for="n in widget.level">
@@ -13,6 +16,8 @@
             </span>
           </div>
         </div>
+
+
       </div>
     </div>
   </div>
@@ -28,18 +33,43 @@ export default Vue.extend({
     components: { CircleIcon },
     data() {
         return {
-            widgets: [{
-                level: 2,
-                value: "Agriculture/Fishing"
-            },
-            {
-                level: 3,
-                value: "Farming/Land Service"
-            }]
+            widgets: {
+               'Occupation': [
+                   {
+                       level: 1,
+                       value: "Manufacturing"
+                   },
+                   {
+                       level: 2,
+                       value: "Wood workers"
+                   },
+                   {
+                       level: 3,
+                       value: "Bandbox-maker"
+                   },
+
+               ],
+               'Place': [
+                   {
+                       level: 1,
+                       value: "Country"
+                   },
+                   {
+                       level: 2,
+                       value: "France"
+                   }
+
+               ]
+
+            }
         };
     },
     computed: {
-
+        sortedTaxonomyTypeKeys(): string[] {
+            const keys = Object.keys(this.widgets);
+            keys.sort();
+            return keys;
+        }
     }
 });
 </script>
@@ -50,22 +80,38 @@ export default Vue.extend({
 @lightgreen: hsl(105, 100%, 40%);
 @lightgreenmod: hsl(105, 100%, 30%);
 @red: hsl(0, 100%, 41%);
+@grey: hsl(0, 0%, 63%);
 
-@space-small: 0.2em;
+@space-small: 0.8em;
+@space-large: 1.6em;
+@roundedness: 0.2em;
 
 .widget-container {
     display: flex;
+    border: thin solid @grey;
 }
+
+.widget-taxonomy-type-group {
+    display: flex;
+    flex-direction: row;
+    border-right: medium solid @offblack;
+    padding: @space-small;
+}
+
+
 
 .widget {
     background-color: @lightgreen;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    margin-left: 0.2em;
-    margin-right: 0.2em;
+    padding-top: @space-large;
+    padding-bottom: @space-large;
+    margin-left: @space-small;
+    margin-right: @space-small;
     display: flex;
     flex-direction: column;
-    border: thin solid @offblack;
+    border-width: 0.2em;
+    border-style: outset;
+    border-color: hsl(0, 0%, 90%);
+    border-radius: @roundedness;
 }
 
 .level-container {
@@ -82,11 +128,4 @@ export default Vue.extend({
     background-color: @offwhite;
 }
 
-.widget-taxonomy-type-group {
-    display: flex;
-    flex-direction: row;
-    border-left: medium solid @offblack;
-    border-right: medium solid @offblack;
-    padding: @space-small;
-}
 </style>
