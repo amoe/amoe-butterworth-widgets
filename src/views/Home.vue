@@ -1,14 +1,16 @@
 <template>
   <div class="home">
 
-    <p>Foo <circle-icon/> Bar</p>
+    <p>Some text</p>
 
     <div class="widget-container">
       <div class="widget" v-for="widget in widgets">
         <input class="taxon-name" type="text" size="32" v-model="widget.value"></input>
         <div class="level-container">
-          <circle-icon v-for="n in widget.level"
-                       :key="n"></circle-icon>
+
+          <span v-for="n in widget.level">
+            <circle-icon :width="16" :height="16"></circle-icon>
+          </span>
         </div>
       </div>
     </div>
@@ -18,7 +20,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-import { CircleIcon } from 'vue-feather-icons'
+import CircleIcon from '@/components/CircleIcon.vue';
 
 export default Vue.extend({
     name: 'home',
@@ -39,8 +41,11 @@ export default Vue.extend({
 </script>
 
 <style lang="less">
+@offwhite: hsl(0, 0%, 99%);
 @offblack: hsl(6, 24%, 8%);
 @lightgreen: hsl(105, 100%, 40%);
+@lightgreenmod: hsl(105, 100%, 30%);
+@red: hsl(0, 100%, 41%);
 
 .widget-container {
     display: flex;
@@ -54,6 +59,7 @@ export default Vue.extend({
     margin-right: 0.2em;
     display: flex;
     flex-direction: column;
+    border: thin solid @offblack;
 }
 
 .level-container {
@@ -61,10 +67,13 @@ export default Vue.extend({
     flex-direction: row;
     justify-content: center;
     margin: 1em;
+    color: @red;
 }
 
 .taxon-name {
     margin-left: 1em;
     margin-right: 1em;
+    background-color: @offwhite;
 }
+
 </style>
