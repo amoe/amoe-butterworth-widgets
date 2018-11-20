@@ -3,7 +3,6 @@ import { TweenMax } from 'gsap';
 // Get the boundingbox of respective elements, calculate
 // the diff and animate to the same values
 function warp(elementToMove: Element, targetElement: Element): void {
-
     const box = targetElement.getBoundingClientRect();
     const targetLeft = box.left;
 

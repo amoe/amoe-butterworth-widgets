@@ -34,7 +34,7 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import CircleIcon from '@/components/CircleIcon.vue';
 import TaxonSelect from '@/components/TaxonSelect.vue';
 import { PlusCircleIcon } from 'vue-feather-icons';
-//import { Draggable } from 'gsap/Draggable';
+import { Draggable } from 'gsap/Draggable';
 
 interface WidgetInstance {
     level: number;
