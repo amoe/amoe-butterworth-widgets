@@ -85,6 +85,11 @@ export default Vue.extend({
             }
         };
     },
+    mounted() {
+//        const target: Element[] = 
+
+//        Draggable.create(
+    },
     methods: {
         add(taxonomyType: string): void {
             const blankWidget: WidgetInstance = {
