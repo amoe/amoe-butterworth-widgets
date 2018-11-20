@@ -8,7 +8,7 @@
            v-for="taxonomyType in sortedTaxonomyTypeKeys">
         <p>Type: <code>{{taxonomyType}}</code></p>
 
-        <div class="widget" v-for="widget in widgets[taxonomyType]">
+        <div class="widget" v-for="widget in widgets[taxonomyType]" ref="widgets">
           <!-- Div container needed so that we can use flex-end to push it
                to the right.  It seems that inline-svg by itself cannot
                be a flex container. -->
@@ -35,6 +35,7 @@ import CircleIcon from '@/components/CircleIcon.vue';
 import TaxonSelect from '@/components/TaxonSelect.vue';
 import { PlusCircleIcon } from 'vue-feather-icons';
 import { Draggable } from 'gsap/Draggable';
+import typeGuards from '@/type-guards';
 
 interface WidgetInstance {
     level: number;
@@ -86,9 +87,12 @@ export default Vue.extend({
         };
     },
     mounted() {
-//        const target: Element[] = 
+        if (typeGuards.isElementArray(this.$refs.widgets)) {
+            const target: Element[] = this.$refs.widgets;
+            const vars = {};
 
-//        Draggable.create(
+            Draggable.create(target, vars);
+        }
     },
     methods: {
         add(taxonomyType: string): void {
