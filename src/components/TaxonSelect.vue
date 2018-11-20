@@ -1,5 +1,7 @@
 <template>
-  <input class="taxon-name" type="text" size="32" v-model="value"></input>
+  <select class="taxon-select">
+    <option selected>{{value}}</option>
+</select>
 </template>
 
 <script lang="ts">
@@ -9,3 +11,11 @@ export default Vue.extend({
     props: ['value']
 });
 </script>
+
+<style lang="less">
+/*
+.taxon-select {
+    min-width: @somevar;
+}
+*/
+</style>
