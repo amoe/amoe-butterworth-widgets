@@ -16,6 +16,7 @@ export default Vue.extend({
 @import "../assets/variables.less";
 
 .taxon-select {
-//    min-width: @somevar;
+    min-width: 8em;
+    background-color: @offwhite;
 }
 </style>

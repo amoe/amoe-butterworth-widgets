@@ -34,6 +34,7 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import CircleIcon from '@/components/CircleIcon.vue';
 import TaxonSelect from '@/components/TaxonSelect.vue';
 import { PlusCircleIcon } from 'vue-feather-icons';
+//import { Draggable } from 'gsap/Draggable';
 
 interface WidgetInstance {
     level: number;
@@ -155,7 +156,7 @@ export default Vue.extend({
     flex-direction: row;
     justify-content: center;
     margin: 1em;
-    color: @red;
+    color: @orange;
 }
 
 .taxon-name {
