@@ -1,6 +1,6 @@
 <template>
   <div class="widget-bar">
-    <div class="widget" v-for="widget in widgets" ref="widgets">
+    <div class="widget0" v-for="widget in widgets" ref="widgets">
     </div>
     </div>
 </template>
@@ -59,7 +59,7 @@ export default Vue.extend({
 </script>
 
 <style>
-.widget {
+.widget0 {
     width: 8em;
     height: 16ex;
     background-color: green;
