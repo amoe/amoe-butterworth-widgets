@@ -105,21 +105,7 @@ export default Vue.extend({
 </script>
 
 <style lang="less">
-@offwhite: hsl(0, 0%, 99%);
-@offblack: hsl(6, 24%, 8%);
-@lightgreen: hsl(105, 100%, 40%);
-@lightgreenmod: hsl(105, 100%, 30%);
-@red: hsl(0, 100%, 41%);
-@grey: hsl(0, 0%, 63%);
-
-// Spacing constants
-@space-xx-small: 0.1em;
-@space-x-small: 0.2em;
-@space-small: 0.4em;
-@space-medium: 0.8em;
-@space-large: 1.6em;
-
-@roundedness: 0.2em;
+@import "../assets/variables.less";
 
 .widget-container {
     display: flex;

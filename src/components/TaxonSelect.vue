@@ -13,9 +13,9 @@ export default Vue.extend({
 </script>
 
 <style lang="less">
-/*
+@import "../assets/variables.less";
+
 .taxon-select {
-    min-width: @somevar;
+//    min-width: @somevar;
 }
-*/
 </style>
