@@ -1,5 +1,6 @@
 {
   "name": "widgets2",
+  "main": "dist/amoe-butterworth-widgets.umd.js",
   "version": "0.1.0",
   "private": true,
   "scripts": {
