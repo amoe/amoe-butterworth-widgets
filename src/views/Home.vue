@@ -220,12 +220,15 @@ export default Vue.extend({
 }
 
 .floating-widget-container {
-    border: 1px solid black;
+    border: 1px solid green;
+    padding: @space-medium;
     width: 512px;
     height: 512px;
 }
 
 .floating-widget {
+    border: 2px dashed black;
+    margin: @space-medium;
 }
 
 </style>
