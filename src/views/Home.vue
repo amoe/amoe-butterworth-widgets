@@ -3,8 +3,6 @@
 
     <p>Some text</p>
 
-    <x-circle-icon></x-circle-icon>
-
     <div class="widget-container">
       <div class="widget-taxonomy-type-group"
            v-for="taxonomyType in sortedTaxonomyTypeKeys">
@@ -28,6 +26,15 @@
         </div>
       </div>
     </div>
+
+
+    <div class="floating-widget-container">
+      <div class="floating-widget" v-for="floatingWidget in floatingWidgets">
+        <p>Foo</p>
+      </div>
+    </div>
+
+    <button v-on:click="addFloatingWidget">Add new floating widget</button>
   </div>
 </template>
 
@@ -58,6 +65,7 @@ interface TaxonomyTypes {
 
 interface ComponentData {
     widgets: TaxonomyTypes;
+    floatingWidgets: object[];
 };
 
 interface ColorScaleCache {
@@ -94,10 +102,11 @@ export default Vue.extend({
                        level: 2,
                        value: "France"
                    }
-
                ]
-
-            }
+            },
+            floatingWidgets: [
+                {}
+            ]
         };
     },
     mounted() {
@@ -116,6 +125,10 @@ export default Vue.extend({
             };
 
             this.widgets[taxonomyType].push(blankWidget);
+        },
+        addFloatingWidget(): void {
+            console.log("adding floating widget");
+            this.floatingWidgets.push({});
         }
     },
     computed: {
@@ -129,7 +142,7 @@ export default Vue.extend({
             // these calls
             const scale = d3Scale.scaleOrdinal();
             scale.domain(this.sortedTaxonomyTypeKeys);
-            scale.range(d3ScaleChromatic.schemeAccent);
+            scale.range(d3ScaleChromatic.schemePastel1);
 
             const result: ColorScaleCache = {};
             this.sortedTaxonomyTypeKeys.forEach(taxonomyType => {
@@ -205,4 +218,14 @@ export default Vue.extend({
     margin-right: 1em;
     background-color: @offwhite;
 }
+
+.floating-widget-container {
+    border: 1px solid black;
+    width: 512px;
+    height: 512px;
+}
+
+.floating-widget {
+}
+
 </style>
