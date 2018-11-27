@@ -5,8 +5,10 @@
 
     <div class="widget-container">
       <div class="widget-taxonomy-type-group"
-           v-for="taxonomyType in sortedTaxonomyTypeKeys">
+           v-for="taxonomyType in sortedTaxonomyTypeKeys"
+           ref="widgetGroups">
         <p>Type: <code>{{taxonomyType}}</code></p>
+
 
         <div class="widget" v-for="widget in widgets[taxonomyType]" ref="widgets"
              v-bind:style="widgetStyle[taxonomyType]">
@@ -112,10 +114,21 @@ export default Vue.extend({
     mounted() {
         if (typeGuards.isElementArray(this.$refs.widgets)) {
             const target: Element[] = this.$refs.widgets;
-            const vars = {};
+            // Lock to the x-axis
+            const vars = {
+                type: 'x'
+            };
 
             Draggable.create(target, vars);
         }
+
+        // if (typeGuards.isElementArray(this.$refs.widgetGroups)) {
+        //     const target: Element[] = this.$refs.widgetGroups;
+        //     console
+        //     const vars = {};
+
+        //     Draggable.create(target, vars);
+        // }
     },
     methods: {
         add(taxonomyType: string): void {
@@ -171,6 +184,7 @@ export default Vue.extend({
     border-right: medium solid @offblack;
     padding: @space-medium;
     min-width: 0;
+    background-color: red;
 }
 
 
@@ -192,17 +206,24 @@ export default Vue.extend({
 
     padding-top: @space-medium;
     padding-bottom: @space-medium;
-    margin-left: @space-medium;
-    margin-right: @space-medium;
 
 
     // Outset border gives it the raised quality.
-    border-width: 0.2em;
-    border-style: outset;
-    border-color: hsl(0, 0%, 90%);
+    // To make these 'absorb' into each other, we could try first-child and 
+    // last-child CSS properties.
+
+    border-top: @widget-border-style;
+    border-bottom: @widget-border-style;
     border-radius: @roundedness;
 
     min-width: 0;
+}
+
+.widget:first-child {
+    border-left: @widget-border-style;
+}
+.widget:last-child {
+    border-right: @widget-border-style;
 }
 
 .level-container {
