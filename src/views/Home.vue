@@ -10,7 +10,8 @@
            v-for="taxonomyType in sortedTaxonomyTypeKeys">
         <p>Type: <code>{{taxonomyType}}</code></p>
 
-        <div class="widget" v-for="widget in widgets[taxonomyType]" ref="widgets">
+        <div class="widget" v-for="widget in widgets[taxonomyType]" ref="widgets"
+             v-bind:style="widgetStyle[taxonomyType]">
           <x-circle-icon class="widget-close"></x-circle-icon>
 
           <taxon-select :value="widget.value">
@@ -42,6 +43,10 @@ import { XCircleIcon } from 'vue-feather-icons';
 import { Draggable } from 'gsap/Draggable';
 import typeGuards from '@/type-guards';
 
+
+import * as d3Scale from 'd3-scale';
+import * as d3ScaleChromatic from 'd3-scale-chromatic';
+
 interface WidgetInstance {
     level: number;
     value: string;
@@ -54,6 +59,10 @@ interface TaxonomyTypes {
 interface ComponentData {
     widgets: TaxonomyTypes;
 };
+
+interface ColorScaleCache {
+    [key: string]: object;
+}
 
 export default Vue.extend({
     name: 'home',
@@ -114,6 +123,22 @@ export default Vue.extend({
             const keys = Object.keys(this.widgets);
             keys.sort();
             return keys;
+        },
+        widgetStyle(): object {
+            // Render widget styles upfront, this might enable vue to cache
+            // these calls
+            const scale = d3Scale.scaleOrdinal();
+            scale.domain(this.sortedTaxonomyTypeKeys);
+            scale.range(d3ScaleChromatic.schemeAccent);
+
+            const result: ColorScaleCache = {};
+            this.sortedTaxonomyTypeKeys.forEach(taxonomyType => {
+                result[taxonomyType] = {
+                    'background-color': scale(taxonomyType)
+                };
+            });
+
+            return result;
         }
     }
 });
@@ -141,14 +166,16 @@ export default Vue.extend({
     display: flex;
     flex-direction: column;
 
-//    background-color: @lightgreen;
+/*    background-color: @lightgreen;*/
 
+    /*
     background-image: linear-gradient(
         to right,
         rgba(26, 198, 204, 0.5),
         rgba(26, 198, 204, 1.0) 50%,
         rgba(26, 198, 204, 0.5)
     );
+    */
 
     padding-top: @space-medium;
     padding-bottom: @space-medium;
