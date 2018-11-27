@@ -20,6 +20,9 @@
             <span v-for="n in widget.level">
               <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
             </span>
+            <span>
+              <plus-circle-icon :width="16" :height="16"></plus-circle-icon>
+            </span>
           </div>
         </div>
       </div>
@@ -30,9 +33,11 @@
 <script lang="ts">
 import Vue from 'vue';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+
 import CircleIcon from '@/components/CircleIcon.vue';
+import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
+
 import TaxonSelect from '@/components/TaxonSelect.vue';
-import { PlusCircleIcon } from 'vue-feather-icons';
 import { XCircleIcon } from 'vue-feather-icons';
 import { Draggable } from 'gsap/Draggable';
 import typeGuards from '@/type-guards';
@@ -172,9 +177,5 @@ export default Vue.extend({
     margin-left: 1em;
     margin-right: 1em;
     background-color: @offwhite;
-}
-
-.circle-icon {
-    margin: @space-xx-small;
 }
 </style>
