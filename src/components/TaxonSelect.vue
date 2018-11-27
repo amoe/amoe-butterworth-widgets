@@ -18,5 +18,6 @@ export default Vue.extend({
 .taxon-select {
     min-width: 8em;
     background-color: @offwhite;
+    margin: @space-small;
 }
 </style>

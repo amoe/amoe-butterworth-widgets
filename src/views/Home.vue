@@ -3,16 +3,15 @@
 
     <p>Some text</p>
 
+    <x-circle-icon></x-circle-icon>
+
     <div class="widget-container">
       <div class="widget-taxonomy-type-group"
            v-for="taxonomyType in sortedTaxonomyTypeKeys">
         <p>Type: <code>{{taxonomyType}}</code></p>
 
         <div class="widget" v-for="widget in widgets[taxonomyType]" ref="widgets">
-          <!-- Div container needed so that we can use flex-end to push it
-               to the right.  It seems that inline-svg by itself cannot
-               be a flex container. -->
-          <div class="add"><plus-circle-icon v-on:click="add(taxonomyType)"/></div>
+          <x-circle-icon class="widget-close"></x-circle-icon>
 
           <taxon-select :value="widget.value">
           </taxon-select>
@@ -34,6 +33,7 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import CircleIcon from '@/components/CircleIcon.vue';
 import TaxonSelect from '@/components/TaxonSelect.vue';
 import { PlusCircleIcon } from 'vue-feather-icons';
+import { XCircleIcon } from 'vue-feather-icons';
 import { Draggable } from 'gsap/Draggable';
 import typeGuards from '@/type-guards';
 
@@ -52,7 +52,7 @@ interface ComponentData {
 
 export default Vue.extend({
     name: 'home',
-    components: { CircleIcon, PlusCircleIcon, TaxonSelect },
+    components: { CircleIcon, PlusCircleIcon, TaxonSelect, XCircleIcon },
     data(): ComponentData {
         return {
             widgets: {
@@ -174,15 +174,7 @@ export default Vue.extend({
     background-color: @offwhite;
 }
 
-.add {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    margin: @space-medium;
-}
-
 .circle-icon {
     margin: @space-xx-small;
 }
-
 </style>
