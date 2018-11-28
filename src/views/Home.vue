@@ -1,13 +1,10 @@
 <template>
   <div class="home">
-    
-    <serif-operator></serif-operator>
-
     <p>Some text</p>
 
     <div class="widget-container">
       <div class="widget-taxonomy-type-group"
-           v-for="taxonomyType in sortedTaxonomyTypeKeys"
+           v-for="(taxonomyType, index) in sortedTaxonomyTypeKeys"
            ref="widgetGroups">
         <move-icon class="move-handle"></move-icon>
 
@@ -29,6 +26,9 @@
             </span>
           </div>
         </div>
+        <!-- add serif if we are not the last -->
+        <serif-operator v-if="index < (sortedTaxonomyTypeKeys.length - 1)"></serif-operator>
+
       </div>
     </div>
 
@@ -195,13 +195,10 @@ export default Vue.extend({
 .widget-taxonomy-type-group {
     display: flex;
     flex-direction: row;
-    border-right: medium solid @offblack;
     padding: @space-medium;
     min-width: 0;
     background-color: red;
 }
-
-
 
 .widget {
     display: flex;
