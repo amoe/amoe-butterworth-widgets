@@ -27,18 +27,18 @@ const TAXONOMY_DATA = {
 
 const config = {};
 const t = new TreeModel(config)
-const root = t.parse(TAXONOMY_DATA);
 
 export default Vue.extend({
     name: '',
     data() {
         return {
             someArray: [1, 2, 3],
-            anotherArray: [4, 5, 6]
+            anotherArray: [4, 5, 6],
+            taxonomyRoot: t.parse(TAXONOMY_DATA)
         }
     },
     mounted() {
-        console.log("root is %o", root);
+        console.log("root is %o", this.taxonomyRoot);
     }
 });
 </script>
