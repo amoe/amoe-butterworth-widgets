@@ -29,6 +29,7 @@
             </div>
           </div>
         </div>
+
         <!-- add serif if we are not the last -->
         <serif-operator v-if="index < (sortedTaxonomyTypeKeys.length - 1)"></serif-operator>
       </div>

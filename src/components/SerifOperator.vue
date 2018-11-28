@@ -1,26 +1,24 @@
 <template>
-  <div class="serif-demo">   <!-- fixme -->
-    <div class="serif">
-      <div class="serif-left">
-      </div>
-      <transition name="fade"
-                  v-on:enter="serifEnter"
-                  v-on:leave="serifLeave">
-        <div class="serif-content" v-if="serifExpanded">
-          <label for="distanceType">Distance type</label>
-          <select name="distanceType">
-            <option value="sentences">Sentences</option>
-          </select>
-
-          <label for="distanceValue">Distance value</label>
-          <input type="number">
-            
-        </div>
-      </transition>
-      <div class="serif-right">
-      </div>
+  <div class="serif">
+    <div class="serif-left">
     </div>
-</div>
+    <transition name="fade"
+                v-on:enter="serifEnter"
+                v-on:leave="serifLeave">
+      <div class="serif-content" v-if="serifExpanded">
+        <label for="distanceType">Distance type</label>
+        <select name="distanceType">
+          <option value="sentences">Sentences</option>
+        </select>
+
+        <label for="distanceValue">Distance value</label>
+        <input type="number">
+
+      </div>
+    </transition>
+    <div class="serif-right">
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -74,6 +72,9 @@ export default Vue.extend({
 </script>
 
 <style lang="less">
+@import "../assets/variables.less";
+
+
 .serif {
     display: flex;
     flex-direction: row;
@@ -81,7 +82,8 @@ export default Vue.extend({
     /* Just to set off from main */
     height: 8em;
     margin: 1em;
-    
+
+    background-color: hsl(0, 0, 98%);
 }
 
 .serif-left {
