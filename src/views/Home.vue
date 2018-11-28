@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+    
+    <serif-operator></serif-operator>
 
     <p>Some text</p>
 
@@ -47,6 +49,7 @@ import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
+import SerifOperator from '@/components/SerifOperator.vue';
 
 import TaxonSelect from '@/components/TaxonSelect.vue';
 import { XCircleIcon, MoveIcon } from 'vue-feather-icons';
@@ -77,7 +80,7 @@ interface ColorScaleCache {
 
 export default Vue.extend({
     name: 'home',
-    components: { CircleIcon, PlusCircleIcon, TaxonSelect, XCircleIcon, MoveIcon },
+    components: { CircleIcon, PlusCircleIcon, TaxonSelect, XCircleIcon, MoveIcon, SerifOperator },
     data(): ComponentData {
         return {
             widgets: {
