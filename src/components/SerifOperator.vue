@@ -27,6 +27,8 @@ import {TweenMax} from 'gsap';
 
 type TransitionCallback = () => void;
 
+const ANIMATION_TIME_SECONDS = 1.0;
+
 export default Vue.extend({
     data() {
         return {
@@ -52,14 +54,14 @@ export default Vue.extend({
             // This is a little trick found on the GSAP forums, since we can't
             // tween to 'auto' easily.
             TweenMax.set(el, {width: 'auto'});
-            TweenMax.from(el, 0.2, {
+            TweenMax.from(el, ANIMATION_TIME_SECONDS, {
                 width: '0',
                 onComplete: done
             });
         },
         serifLeave(el: Element, done: TransitionCallback) {
             console.log("serifleave");
-            TweenMax.to(el, 0.2, {
+            TweenMax.to(el, ANIMATION_TIME_SECONDS, {
                 width: '0%',
                 onComplete: done
             });
@@ -74,6 +76,7 @@ export default Vue.extend({
 <style lang="less">
 @import "../assets/variables.less";
 
+@serif-width: 2px;
 
 .serif {
     display: flex;
@@ -87,18 +90,18 @@ export default Vue.extend({
 }
 
 .serif-left {
-    border-right: 1px solid black;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-right: @serif-width solid black;
+    border-top: @serif-width solid black;
+    border-bottom: @serif-width solid black;
     width: 25%;
     height: 100%;
     margin-right: 1px;
 }
 
 .serif-right {
-    border-left: 1px solid black;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-left: @serif-width solid black;
+    border-top: @serif-width solid black;
+    border-bottom: @serif-width solid black;
 
     margin-left: 1px;
     width: 25%;
@@ -108,5 +111,18 @@ export default Vue.extend({
 .serif-content {
     overflow-x: hidden;
     width: auto;
+    
+    display: flex;
+    flex-direction: column;
+    
+    font-size: smaller;
 }
+
+.serif-content * {
+    margin-left: @space-medium;
+    margin-right: @space-medium;
+    margin-bottom: @space-xx-small;
+    margin-top: @space-xx-small;
+}
+
 </style>
