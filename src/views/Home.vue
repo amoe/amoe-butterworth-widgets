@@ -3,6 +3,8 @@
     <p>Some text</p>
 
     <div class="widget-container">
+      <!-- We need a separate column class, because we don't want to drag the
+           attached operator as well as the group itself. -->
       <div class="widget-group-column"
            v-for="(taxonomyType, index) in sortedTaxonomyTypeKeys">
         <div class="widget-taxonomy-type-group" ref="widgetGroups">
