@@ -7,8 +7,9 @@
       <div class="widget-taxonomy-type-group"
            v-for="taxonomyType in sortedTaxonomyTypeKeys"
            ref="widgetGroups">
-        <p>Type: <code>{{taxonomyType}}</code></p>
+        <move-icon class="move-handle"></move-icon>
 
+        <p>Type: <code>{{taxonomyType}}</code></p>
 
         <div class="widget" v-for="widget in widgets[taxonomyType]" ref="widgets"
              v-bind:style="widgetStyle[taxonomyType]">
@@ -48,7 +49,7 @@ import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 
 import TaxonSelect from '@/components/TaxonSelect.vue';
-import { XCircleIcon } from 'vue-feather-icons';
+import { XCircleIcon, MoveIcon } from 'vue-feather-icons';
 import { Draggable } from 'gsap/Draggable';
 import typeGuards from '@/type-guards';
 
@@ -76,7 +77,7 @@ interface ColorScaleCache {
 
 export default Vue.extend({
     name: 'home',
-    components: { CircleIcon, PlusCircleIcon, TaxonSelect, XCircleIcon },
+    components: { CircleIcon, PlusCircleIcon, TaxonSelect, XCircleIcon, MoveIcon },
     data(): ComponentData {
         return {
             widgets: {
@@ -122,15 +123,25 @@ export default Vue.extend({
             Draggable.create(target, vars);
         }
 
-        // if (typeGuards.isElementArray(this.$refs.widgetGroups)) {
-        //     const target: Element[] = this.$refs.widgetGroups;
-        //     console
-        //     const vars = {};
-
-        //     Draggable.create(target, vars);
-        // }
+        if (typeGuards.isElementArray(this.$refs.widgetGroups)) {
+            // We can't use the same approach here, because trigger element
+            // is taken to be relative to the document rather than the
+            // draggable element.
+            this.$refs.widgetGroups.forEach(this.setupWidgetGroupDraggable);
+        }
     },
     methods: {
+
+        setupWidgetGroupDraggable(group: Element): void {
+            const handle = group.querySelector('.move-handle');
+            // fixme check null
+            
+            const vars = {
+                trigger: handle
+            };
+
+            Draggable.create(group, vars);
+        },
         add(taxonomyType: string): void {
             const blankWidget: WidgetInstance = {
                 level: 4,
