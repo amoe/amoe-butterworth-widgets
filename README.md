@@ -1,4 +1,4 @@
-# widgets2
+# widgets3
 
 ## Project setup
 ```

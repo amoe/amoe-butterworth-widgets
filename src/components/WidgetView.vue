@@ -140,6 +140,8 @@ export default Vue.extend({
             // draggable element.
             this.$refs.widgetGroups.forEach(this.setupWidgetGroupDraggable);
         }
+
+        this.$nextTick(this.bindFloatingDraggables);
     },
     methods: {
         setupWidgetGroupDraggable(group: Element): void {
