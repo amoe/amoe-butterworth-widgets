@@ -15,6 +15,19 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import TreeModel from 'tree-model';
+
+const TAXONOMY_DATA = {
+    'children': [{'content': 'Rock', 'id': 1, 'label': 'Taxon'},
+                 {'content': 'Classical', 'id': 2, 'label': 'Taxon'}],
+    'content': 'Music',
+    'id': 0,
+    'label': 'Taxon'
+}
+
+const config = {};
+const t = new TreeModel(config)
+const root = t.parse(TAXONOMY_DATA);
 
 export default Vue.extend({
     name: '',
@@ -25,7 +38,7 @@ export default Vue.extend({
         }
     },
     mounted() {
-        console.log("foo: %o", this.$refs.foo);
+        console.log("root is %o", root);
     }
 });
 </script>
