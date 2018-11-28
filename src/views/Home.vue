@@ -267,4 +267,9 @@ export default Vue.extend({
     margin: @space-medium;
 }
 
+// Contains both a widget-group and a possible serif operator
+.widget-group-column {
+    display: flex;
+    flex-direction: row;
+}
 </style>
