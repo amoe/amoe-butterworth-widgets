@@ -54,14 +54,14 @@ export default Vue.extend({
             // This is a little trick found on the GSAP forums, since we can't
             // tween to 'auto' easily.
             TweenMax.set(el, {width: 'auto'});
-            TweenMax.from(el, 1, {
+            TweenMax.from(el, 0.2, {
                 width: '0',
                 onComplete: done
             });
         },
         serifLeave(el: Element, done: TransitionCallback) {
             console.log("serifleave");
-            TweenMax.to(el, 1, {
+            TweenMax.to(el, 0.2, {
                 width: '0%',
                 onComplete: done
             });
@@ -78,12 +78,8 @@ export default Vue.extend({
     display: flex;
     flex-direction: row;
 
-    // FIXME -- can't hardcode sizes
-    width: 512px;
-    height: 512px;
-    
-
     /* Just to set off from main */
+    height: 8em;
     margin: 1em;
     
 }

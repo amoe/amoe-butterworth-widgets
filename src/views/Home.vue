@@ -3,32 +3,32 @@
     <p>Some text</p>
 
     <div class="widget-container">
-      <div class="widget-taxonomy-type-group"
-           v-for="(taxonomyType, index) in sortedTaxonomyTypeKeys"
-           ref="widgetGroups">
-        <move-icon class="move-handle"></move-icon>
+      <div class="widget-group-column"
+           v-for="(taxonomyType, index) in sortedTaxonomyTypeKeys">
+        <div class="widget-taxonomy-type-group" ref="widgetGroups">
+          <move-icon class="move-handle"></move-icon>
 
-        <p>Type: <code>{{taxonomyType}}</code></p>
+          <p>Type: <code>{{taxonomyType}}</code></p>
 
-        <div class="widget" v-for="widget in widgets[taxonomyType]" ref="widgets"
-             v-bind:style="widgetStyle[taxonomyType]">
-          <x-circle-icon class="widget-close"></x-circle-icon>
+          <div class="widget" v-for="widget in widgets[taxonomyType]" ref="widgets"
+               v-bind:style="widgetStyle[taxonomyType]">
+            <x-circle-icon class="widget-close"></x-circle-icon>
 
-          <taxon-select :value="widget.value">
-          </taxon-select>
+            <taxon-select :value="widget.value">
+            </taxon-select>
 
-          <div class="level-container">
-            <span v-for="n in widget.level">
-              <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
-            </span>
-            <span>
-              <plus-circle-icon :width="16" :height="16"></plus-circle-icon>
-            </span>
+            <div class="level-container">
+              <span v-for="n in widget.level">
+                <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
+              </span>
+              <span>
+                <plus-circle-icon :width="16" :height="16"></plus-circle-icon>
+              </span>
+            </div>
           </div>
         </div>
         <!-- add serif if we are not the last -->
         <serif-operator v-if="index < (sortedTaxonomyTypeKeys.length - 1)"></serif-operator>
-
       </div>
     </div>
 
@@ -197,12 +197,14 @@ export default Vue.extend({
     flex-direction: row;
     padding: @space-medium;
     min-width: 0;
-    background-color: red;
+    //background-color: red;
 }
 
 .widget {
     display: flex;
     flex-direction: column;
+
+    // A widget has a fixed height of 8em.
 
 /*    background-color: @lightgreen;*/
 
