@@ -204,8 +204,8 @@ export default Vue.extend({
 
             console.log("floating widgets are %o", this.$refs.floatingWidgets);
 
-            // Next tick is essential here otherwise 
-
+            // Next tick is essential here otherwise we miss the one that's
+            // just about to be rendered
             this.$nextTick(this.bindFloatingDraggables);
         }
     }
