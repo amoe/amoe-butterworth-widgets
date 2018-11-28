@@ -1,6 +1,6 @@
 <template>
   <div>
-  <widget-view></widget-view>
+  <widget-view :taxonomies="taxonomies"></widget-view>
   </div>
 </template>
 
@@ -28,11 +28,11 @@ export default Vue.extend({
         return {
             someArray: [1, 2, 3],
             anotherArray: [4, 5, 6],
-            taxonomyRoot: t.parse(TAXONOMY_DATA)
+            taxonomies: {'Music': t.parse(TAXONOMY_DATA)}
         }
     },
     mounted() {
-        console.log("root is %o", this.taxonomyRoot);
+        console.log("root is %o", this.taxonomies);
     }
 });
 </script>

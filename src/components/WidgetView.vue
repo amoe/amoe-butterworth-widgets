@@ -85,6 +85,7 @@ interface ColorScaleCache {
 export default Vue.extend({
     name: 'home',
     components: { CircleIcon, PlusCircleIcon, TaxonSelect, XCircleIcon, MoveIcon, SerifOperator },
+    props: ['taxonomies'],
     data(): ComponentData {
         return {
             widgets: {
@@ -118,6 +119,9 @@ export default Vue.extend({
                 {}
             ]
         };
+    },
+    created() {
+        console.log("using taxonomies: %o", this.taxonomies);
     },
     mounted() {
         if (typeGuards.isElementArray(this.$refs.widgets)) {
