@@ -37,8 +37,9 @@
 
 
     <div class="floating-widget-container">
-      <div class="floating-widget" v-for="floatingWidget in floatingWidgets">
-        <p>Foo</p>
+      <div class="floating-widget" v-for="floatingWidget in floatingWidgets"
+           ref="floatingWidgets">
+        <p>Some floating widget</p>
       </div>
     </div>
 
@@ -137,7 +138,6 @@ export default Vue.extend({
         }
     },
     methods: {
-
         setupWidgetGroupDraggable(group: Element): void {
             const handle = group.querySelector('.move-handle');
             // fixme check null
@@ -159,6 +159,18 @@ export default Vue.extend({
         addFloatingWidget(): void {
             console.log("adding floating widget");
             this.floatingWidgets.push({});
+        },
+        bindFloatingDraggables(): void {
+            if (typeGuards.isElementArray(this.$refs.floatingWidgets)) {
+                const widgets: Element[] = this.$refs.floatingWidgets;
+
+
+                const newWidgets = widgets.filter(
+                    w => Draggable.get(w) === undefined
+                );
+
+                Draggable.create(newWidgets, {});
+            }
         }
     },
     computed: {
@@ -182,6 +194,19 @@ export default Vue.extend({
             });
 
             return result;
+        }
+    },
+    updated() {
+    },
+    watch: {
+        floatingWidgets: function (newValue, oldValue) {
+            console.log("watch called on floating widgets");
+
+            console.log("floating widgets are %o", this.$refs.floatingWidgets);
+
+            // Next tick is essential here otherwise 
+
+            this.$nextTick(this.bindFloatingDraggables);
         }
     }
 });

@@ -55,14 +55,14 @@ export default Vue.extend({
             // tween to 'auto' easily.
             TweenMax.set(el, {width: 'auto'});
             TweenMax.from(el, ANIMATION_TIME_SECONDS, {
-                width: '0',
+                width: 0,
                 onComplete: done
             });
         },
         serifLeave(el: Element, done: TransitionCallback) {
             console.log("serifleave");
             TweenMax.to(el, ANIMATION_TIME_SECONDS, {
-                width: '0%',
+                width: 0,   
                 onComplete: done
             });
         },
