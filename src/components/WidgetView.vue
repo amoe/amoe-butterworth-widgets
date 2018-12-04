@@ -7,7 +7,8 @@
            attached operator as well as the group itself. -->
       <div class="widget-group-column"
            v-for="(compoundWidgetDefinition, index) in compoundWidgets">
-        <compound-widget v-bind="compoundWidgetDefinition"/>
+        <compound-widget v-bind="compoundWidgetDefinition"
+                         :widget-style="widgetStyle"/>
 
         <!-- add serif if we are not the last -->
         <serif-operator v-if="index < (compoundWidgets.length - 1)"></serif-operator>
@@ -27,15 +28,22 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue';
+import Vue from 'vue';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import CompoundWidget from '@/components/CompoundWidget.vue';
 import { Draggable } from 'gsap/Draggable';
 import typeGuards from '@/type-guards';
 import SerifOperator from '@/components/SerifOperator.vue';
+import * as d3Scale from 'd3-scale';
+import * as d3ScaleChromatic from 'd3-scale-chromatic';
+
 
 interface TaxonomyTypeIndex {
     [key: string]: TaxonomyTypeInfo;
+};
+
+interface ColorScaleCache {
+    [key: string]: object;
 };
 
 interface TaxonomyTypeInfo {
@@ -170,14 +178,11 @@ export default Vue.extend({
         }
     },
     computed: {
-        /*
         sortedTaxonomyTypeKeys(): string[] {
-            const keys = Object.keys(this.widgets);
+            const keys = Object.keys(this.taxonomyTypes);
             keys.sort();
             return keys;
         },
-*/
-        /*
         widgetStyle(): object {
             // Render widget styles upfront, this might enable vue to cache
             // these calls
@@ -194,7 +199,6 @@ export default Vue.extend({
 
             return result;
         }
-*/
     },
     updated() {
     },

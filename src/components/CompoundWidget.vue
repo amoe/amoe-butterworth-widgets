@@ -4,9 +4,8 @@
 
     <p>Type: <code>{{taxonomyRef}}</code></p>
 
-         <!-- v-bind:style="widgetStyle[taxonomyType]" -->
-
     <div class="widget" v-for="taxon in taxons" 
+         v-bind:style="widgetStyle[taxonomyType]"
          ref="widgets">
       <x-circle-icon class="widget-close"></x-circle-icon>
 
@@ -44,24 +43,6 @@ export default Vue.extend({
     props: ['taxonomyRef', 'taxons'],
     components: {MoveIcon, XCircleIcon, TaxonSelect, CircleIcon, PlusCircleIcon},
     computed: {
-/*
-        widgetStyle(): object {
-            // Render widget styles upfront, this might enable vue to cache
-            // these calls
-            const scale = d3Scale.scaleOrdinal();
-            scale.domain(this.sortedTaxonomyTypeKeys);
-            scale.range(d3ScaleChromatic.schemePastel1);
-
-            const result: ColorScaleCache = {};
-            this.sortedTaxonomyTypeKeys.forEach(taxonomyType => {
-                result[taxonomyType] = {
-                    'background-color': scale(taxonomyType)
-                };
-            });
-
-            return result;
-        }
-*/
     }
 });
 </script>
