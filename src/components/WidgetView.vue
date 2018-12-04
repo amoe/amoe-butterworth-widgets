@@ -7,7 +7,6 @@
            attached operator as well as the group itself. -->
       <div class="widget-group-column"
            v-for="(taxonomyType, index) in compoundWidgets">
-
         <!--
         <compound-widget :widgets="widgets" :taxonomy-type="taxonomyType"/>
         -->
@@ -37,23 +36,6 @@ import { Draggable } from 'gsap/Draggable';
 import typeGuards from '@/type-guards';
 import SerifOperator from '@/components/SerifOperator.vue';
 
-/*
-interface WidgetInstance {
-    level: number;
-    value: string;
-};
-
-interface TaxonomyTypes {
-    [key: string]: WidgetInstance[];
-};
-
-interface ComponentData {
-    widgets: TaxonomyTypes;
-    floatingWidgets: object[];
-};
-*/
-
-
 interface TaxonomyTypeIndex {
     [key: string]: TaxonomyTypeInfo;
 };
@@ -80,9 +62,7 @@ interface ComponentData {
 
 export default Vue.extend({
     name: 'home',
-    components: { 
-        SerifOperator, CompoundWidget
-    },
+    components: {SerifOperator, CompoundWidget},
     props: ['taxonomies'],
     data(): ComponentData {
         return {
@@ -131,7 +111,7 @@ export default Vue.extend({
         console.log("using taxonomies: %o", this.taxonomies);
     },
     mounted() {
-        /*
+/*
         if (typeGuards.isElementArray(this.$refs.widgets)) {
             const target: Element[] = this.$refs.widgets;
             // Lock to the x-axis
@@ -141,7 +121,8 @@ export default Vue.extend({
 
             Draggable.create(target, vars);
         }
-
+*/
+/*
         if (typeGuards.isElementArray(this.$refs.widgetGroups)) {
             // We can't use the same approach here, because trigger element
             // is taken to be relative to the document rather than the
@@ -222,7 +203,6 @@ export default Vue.extend({
     watch: {
         floatingWidgets: function (newValue, oldValue) {
             console.log("watch called on floating widgets");
-
             console.log("floating widgets are %o", this.$refs.floatingWidgets);
 
             // Next tick is essential here otherwise we miss the one that's
