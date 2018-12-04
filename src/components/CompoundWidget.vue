@@ -30,6 +30,7 @@ import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import TaxonSelect from '@/components/TaxonSelect.vue';
 import { XCircleIcon, MoveIcon } from 'vue-feather-icons';
 import typeGuards from '@/type-guards';
+import assert from '@/assert';
 
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
@@ -52,7 +53,7 @@ export default Vue.extend({
             const compoundWidget: Element = this.$refs.compoundWidgetElement;
 
             const handle = compoundWidget.querySelector('.move-handle');
-            // fixme check null
+            assert(handle !== null, "move handle must be found");
 
             console.log("I  will try to bind the draggable to element %o", handle);
             
