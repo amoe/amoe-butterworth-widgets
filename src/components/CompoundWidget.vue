@@ -2,17 +2,19 @@
   <div class="widget-taxonomy-type-group" ref="widgetGroups">
     <move-icon class="move-handle"></move-icon>
 
-    <p>Type: <code>{{taxonomyType}}</code></p>
+    <p>Type: <code>{{taxonomyRef}}</code></p>
 
-    <div class="widget" v-for="widget in widgets[taxonomyType]" ref="widgets"
-         v-bind:style="widgetStyle[taxonomyType]">
+         <!-- v-bind:style="widgetStyle[taxonomyType]" -->
+
+    <div class="widget" v-for="taxon in taxons" 
+         ref="widgets">
       <x-circle-icon class="widget-close"></x-circle-icon>
 
-      <taxon-select :value="widget.value">
+      <taxon-select :value="taxon.value">
       </taxon-select>
 
       <div class="level-container">
-        <span v-for="n in widget.level">
+        <span v-for="n in taxon.level">
           <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
         </span>
         <span>
@@ -39,7 +41,7 @@ interface ColorScaleCache {
 }
 
 export default Vue.extend({
-    props: ['widgets', 'taxonomyType'],
+    props: ['taxonomyRef', 'taxons'],
     components: {MoveIcon, XCircleIcon, TaxonSelect, CircleIcon, PlusCircleIcon},
     computed: {
 /*

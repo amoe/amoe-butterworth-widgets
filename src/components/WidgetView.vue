@@ -6,10 +6,8 @@
       <!-- We need a separate column class, because we don't want to drag the
            attached operator as well as the group itself. -->
       <div class="widget-group-column"
-           v-for="(taxonomyType, index) in compoundWidgets">
-        <!--
-        <compound-widget :widgets="widgets" :taxonomy-type="taxonomyType"/>
-        -->
+           v-for="(compoundWidgetDefinition, index) in compoundWidgets">
+        <compound-widget v-bind="compoundWidgetDefinition"/>
 
         <!-- add serif if we are not the last -->
         <serif-operator v-if="index < (compoundWidgets.length - 1)"></serif-operator>
