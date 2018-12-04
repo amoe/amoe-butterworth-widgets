@@ -1,8 +1,8 @@
 <template>
-  <div class="widget-taxonomy-type-group" ref="widgetGroups">
+  <div class="widget-taxonomy-type-group" ref="compoundWidgetElement">
     <move-icon class="move-handle"></move-icon>
 
-    <p>Type: <code>{{taxonomyRef}}</code></p>
+     <p>Type: <code>{{taxonomyRef}}</code></p>
 
     <div class="widget" v-for="taxon in taxons" :style="widgetStyle" ref="widgets">
       <x-circle-icon class="widget-close"></x-circle-icon>
@@ -24,11 +24,12 @@
 
 <script lang="ts">
 import Vue from 'vue';
-
+import { Draggable } from 'gsap/Draggable';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import TaxonSelect from '@/components/TaxonSelect.vue';
 import { XCircleIcon, MoveIcon } from 'vue-feather-icons';
+import typeGuards from '@/type-guards';
 
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
@@ -40,7 +41,28 @@ interface ColorScaleCache {
 export default Vue.extend({
     props: ['taxonomyRef', 'taxons', 'widgetStyle'],
     components: {MoveIcon, XCircleIcon, TaxonSelect, CircleIcon, PlusCircleIcon},
+    mounted() { 
+        console.log("inside mounted callback");
+        if (typeGuards.isElement(this.$refs.compoundWidgetElement)) {
+            const compoundWidget: Element = this.$refs.compoundWidgetElement;
+
+            const handle = compoundWidget.querySelector('.move-handle');
+            // fixme check null
+
+            console.log("I  will try to bind the draggable to element %o", handle);
+            
+            const vars = {
+                trigger: handle
+            };
+
+            Draggable.create(compoundWidget, vars);
+        }
+    },
     computed: {
+    },
+    methods: {
+        setupCompoundWidgetDraggable(group: Element): void {
+        },
     }
 });
 </script>

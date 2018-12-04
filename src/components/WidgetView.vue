@@ -146,28 +146,10 @@ export default Vue.extend({
             Draggable.create(target, vars);
         }
 */
-/*
-        if (typeGuards.isElementArray(this.$refs.widgetGroups)) {
-            // We can't use the same approach here, because trigger element
-            // is taken to be relative to the document rather than the
-            // draggable element.
-            this.$refs.widgetGroups.forEach(this.setupWidgetGroupDraggable);
-        }
 
         this.$nextTick(this.bindFloatingDraggables);
-        */
     },
     methods: {
-        setupWidgetGroupDraggable(group: Element): void {
-            const handle = group.querySelector('.move-handle');
-            // fixme check null
-            
-            const vars = {
-                trigger: handle
-            };
-
-            Draggable.create(group, vars);
-        },
         /*
         add(taxonomyType: string): void {
             const blankWidget: WidgetInstance = {
