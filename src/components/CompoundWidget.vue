@@ -1,10 +1,10 @@
 <template>
-  <div class="widget-taxonomy-type-group" ref="compoundWidgetElement">
+  <div class="compound-widget-container" :style="dynamicStyles" ref="compoundWidgetElement">
     <move-icon class="move-handle"></move-icon>
 
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
-    <div class="widget" v-for="taxon in taxons" :style="widgetStyle" ref="widgets">
+    <div class="widget" v-for="taxon in taxons" :style="styleOverrides" ref="widgets">
       <x-circle-icon class="widget-close"></x-circle-icon>
 
       <taxon-select :value="taxon.value">
@@ -39,7 +39,12 @@ interface ColorScaleCache {
 }
 
 export default Vue.extend({
-    props: ['taxonomyRef', 'taxons', 'widgetStyle'],
+    props: ['taxonomyRef', 'taxons', 'styleOverrides'],
+    data() {
+        return {
+            currentlyBeingDragged: false
+        };
+    },
     components: {MoveIcon, XCircleIcon, TaxonSelect, CircleIcon, PlusCircleIcon},
     mounted() { 
         console.log("inside mounted callback");
@@ -52,17 +57,38 @@ export default Vue.extend({
             console.log("I  will try to bind the draggable to element %o", handle);
             
             const vars = {
-                trigger: handle
+                trigger: handle,
+                onPress: () => this.currentlyBeingDragged = true,
+                onRelease: () => this.currentlyBeingDragged = false
             };
 
             Draggable.create(compoundWidget, vars);
         }
     },
     computed: {
+        // styles for the compound widget itself -- styleOverrides only used
+        // for styling the taxons
+        dynamicStyles(): object {
+            if (this.currentlyBeingDragged) {
+                return { 
+                    'border-width': 'medium',
+                    'border-style': 'dashed',
+                    'border-color': 'black'
+                };
+            } else {
+                return {};
+            }
+        }
     },
     methods: {
         setupCompoundWidgetDraggable(group: Element): void {
         },
+        onPress(): void {
+            console.log("foo");
+        },
+        onRelease(): void {
+            console.log("bar");
+        }
     }
 });
 </script>
@@ -70,12 +96,17 @@ export default Vue.extend({
 <style lang="less">
 @import "../assets/variables.less";
 
-.widget-taxonomy-type-group {
+.compound-widget-container {
     display: flex;
     flex-direction: row;
     padding: @space-medium;
     min-width: 0;
-    //background-color: red;
+
+    // Initial border is invisible.  This prevents the adjacent compound widgets
+    // from shuffling rightwards when a border is shown later
+    border-width: medium;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0);
 }
 
 .widget {
@@ -119,7 +150,7 @@ export default Vue.extend({
 
 .level-container {
     display: flex;
-    flex-direction: row;
+p    flex-direction: row;
     justify-content: center;
     margin: 1em;
     color: @orange;
