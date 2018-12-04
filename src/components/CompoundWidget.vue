@@ -4,9 +4,7 @@
 
     <p>Type: <code>{{taxonomyRef}}</code></p>
 
-    <div class="widget" v-for="taxon in taxons" 
-         v-bind:style="widgetStyle[taxonomyType]"
-         ref="widgets">
+    <div class="widget" v-for="taxon in taxons" :style="widgetStyle" ref="widgets">
       <x-circle-icon class="widget-close"></x-circle-icon>
 
       <taxon-select :value="taxon.value">
@@ -40,7 +38,7 @@ interface ColorScaleCache {
 }
 
 export default Vue.extend({
-    props: ['taxonomyRef', 'taxons'],
+    props: ['taxonomyRef', 'taxons', 'widgetStyle'],
     components: {MoveIcon, XCircleIcon, TaxonSelect, CircleIcon, PlusCircleIcon},
     computed: {
     }
