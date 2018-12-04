@@ -131,6 +131,7 @@ export default Vue.extend({
         console.log("using taxonomies: %o", this.taxonomies);
     },
     mounted() {
+        /*
         if (typeGuards.isElementArray(this.$refs.widgets)) {
             const target: Element[] = this.$refs.widgets;
             // Lock to the x-axis
@@ -149,6 +150,7 @@ export default Vue.extend({
         }
 
         this.$nextTick(this.bindFloatingDraggables);
+        */
     },
     methods: {
         setupWidgetGroupDraggable(group: Element): void {
