@@ -110,11 +110,10 @@ export default Vue.extend({
 
 .serif-content {
     overflow-x: hidden;
+    overflow-y: hidden;
     width: auto;
-    
     display: flex;
     flex-direction: column;
-    
     font-size: smaller;
 }
 
