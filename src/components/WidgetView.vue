@@ -8,10 +8,12 @@
       <div class="widget-group-column"
            v-for="(taxonomyType, index) in compoundWidgets">
 
+        <!--
         <compound-widget :widgets="widgets" :taxonomy-type="taxonomyType"/>
+        -->
 
         <!-- add serif if we are not the last -->
-        <serif-operator v-if="index < (sortedTaxonomyTypeKeys.length - 1)"></serif-operator>
+        <serif-operator v-if="index < (compoundWidgets.length - 1)"></serif-operator>
       </div>
     </div>
 
