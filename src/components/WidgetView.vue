@@ -106,7 +106,25 @@ export default Vue.extend({
                             value: "France"
                         }
                     ]
-                }
+                },
+                {
+                    taxonomyRef: 'Occupation',
+                    taxons: [
+                        {
+                            level: 1,
+                            value: "Manufacturing"
+                        },
+                        {
+                            level: 2,
+                            value: "Wood workers"
+                        },
+                        {
+                            level: 3,
+                            value: "Bandbox-maker"
+                        },
+                    ]
+                },
+
             ],
             floatingWidgets: [
                 {}
