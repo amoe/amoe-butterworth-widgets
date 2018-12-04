@@ -70,7 +70,7 @@ interface TaxonInfo {
 };
 
 interface ComponentData {
-    taxonomies: TaxonomyTypeIndex;
+    taxonomyTypes: TaxonomyTypeIndex;
     compoundWidgets: CompoundWidget[];
     floatingWidgets: any;
 };
@@ -84,7 +84,7 @@ export default Vue.extend({
     props: ['taxonomies'],
     data(): ComponentData {
         return {
-            taxonomies: {
+            taxonomyTypes: {
                 'Occupation': {},
                 'Place': {},
             },
