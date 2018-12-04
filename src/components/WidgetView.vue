@@ -8,7 +8,7 @@
       <div class="widget-group-column"
            v-for="(compoundWidgetDefinition, index) in compoundWidgets">
         <compound-widget v-bind="compoundWidgetDefinition"
-                         :widget-style="widgetStyle"/>
+                         :widget-style="widgetStyle[compoundWidgetDefinition.taxonomyRef]"/>
 
         <!-- add serif if we are not the last -->
         <serif-operator v-if="index < (compoundWidgets.length - 1)"></serif-operator>
