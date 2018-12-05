@@ -7,5 +7,9 @@ function isElement(value: any): value is Element {
     return value.tagName !== undefined;
 }
 
+function isSvgGraphicsElement(value: any): value is SVGGraphicsElement {
+    return value.transform !== undefined;
+}
 
-export default { isElementArray, isElement };
+
+export default { isElementArray, isElement, isSvgGraphicsElement };

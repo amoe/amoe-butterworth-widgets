@@ -9,17 +9,21 @@
       </ol>
     </li>
   </ol>
+  
 
+  <distance-indicator :distance="4" stroke="hsl(45, 100%, 50%)">
+  </distance-indicator>
 
 </section>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import DistanceIndicator from '@/components/DistanceIndicator.vue';
 
 export default Vue.extend({
     name: '',
-    components: {},
+    components: {DistanceIndicator},
     data() {
         return {
             someArray: [1, 2, 3],

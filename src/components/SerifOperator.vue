@@ -5,6 +5,8 @@
     <transition name="fade"
                 v-on:enter="serifEnter"
                 v-on:leave="serifLeave">
+
+
       <div class="serif-content" v-if="serifExpanded">
         <label for="distanceType">Distance type</label>
         <select name="distanceType">
@@ -13,8 +15,13 @@
 
         <label for="distanceValue">Distance value</label>
         <input type="number">
-
       </div>
+
+      <div v-else>
+          <distance-indicator :distance="4" stroke="hsl(45, 100%, 50%)">
+          </distance-indicator>
+      </div>
+
     </transition>
     <div class="serif-right">
     </div>
@@ -24,12 +31,14 @@
 <script lang="ts">
 import Vue from 'vue';
 import {TweenMax} from 'gsap';
+import DistanceIndicator from '@/components/DistanceIndicator.vue';
 
 type TransitionCallback = () => void;
 
 const ANIMATION_TIME_SECONDS = 1.0;
 
 export default Vue.extend({
+    components: {DistanceIndicator},
     data() {
         return {
             widgets: [1, 2, 3, 4],
