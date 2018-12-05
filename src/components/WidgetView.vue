@@ -2,7 +2,7 @@
   <div class="home">
     <p>Some text</p>
 
-    <div class="main-view-container">
+    <div class="main-view-container" ref="mainViewContainer">
       <!-- We need a separate column class, because we don't want to drag the
            attached operator as well as the group itself. -->
       <div class="widget-group-column"
@@ -36,6 +36,8 @@ import typeGuards from '@/type-guards';
 import SerifOperator from '@/components/SerifOperator.vue';
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
+import PerfectScrollbar from 'perfect-scrollbar';
+import 'perfect-scrollbar/css/perfect-scrollbar.css';
 
 
 interface TaxonomyTypeIndex {
@@ -124,7 +126,19 @@ export default Vue.extend({
                         },
                     ]
                 },
-
+                {
+                    taxonomyRef: 'Place',
+                    taxons: [
+                        {
+                            level: 1,
+                            value: "Country"
+                        },
+                        {
+                            level: 2,
+                            value: "France"
+                        }
+                    ]
+                },
             ],
             floatingWidgets: [
                 {}
@@ -135,6 +149,7 @@ export default Vue.extend({
         console.log("using taxonomies: %o", this.taxonomies);
     },
     mounted() {
+        this.setupScrollbar();
 /*
         if (typeGuards.isElementArray(this.$refs.widgets)) {
             const target: Element[] = this.$refs.widgets;
@@ -150,6 +165,14 @@ export default Vue.extend({
         this.$nextTick(this.bindFloatingDraggables);
     },
     methods: {
+        setupScrollbar(): void {
+            if (typeGuards.isHTMLElement(this.$refs.mainViewContainer)) {
+                const mainViewContainer: HTMLElement = this.$refs.mainViewContainer;
+                const ps = new PerfectScrollbar(mainViewContainer);
+                ps.update();
+                console.log("set up scrollbar with %o", ps);
+            }
+        },
         /*
         add(taxonomyType: string): void {
             const blankWidget: WidgetInstance = {
@@ -221,6 +244,9 @@ export default Vue.extend({
 .main-view-container {
     display: flex;
     border: thin solid @grey;
+    width: 99vw;
+    overflow: hidden;
+    position: relative;
 }
 
 .floating-widget-container {

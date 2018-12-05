@@ -5,7 +5,6 @@
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
     <div class="widget" v-for="taxon in taxons" :style="styleOverrides" ref="widgets">
-
       <taxon-select :value="taxon.value">
       </taxon-select>
 
@@ -15,7 +14,6 @@
         <span v-for="n in taxon.level">
           <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
         </span>
-
 
         <plus-circle-icon class="widget-add-icon"
                           :width="16" :height="16"></plus-circle-icon>

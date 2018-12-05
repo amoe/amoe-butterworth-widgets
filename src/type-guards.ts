@@ -7,9 +7,15 @@ function isElement(value: any): value is Element {
     return value.tagName !== undefined;
 }
 
+function isHTMLElement(value: any): value is HTMLElement {
+    return value.accessKey !== undefined;
+}
+
 function isSvgGraphicsElement(value: any): value is SVGGraphicsElement {
     return value.transform !== undefined;
 }
 
 
-export default { isElementArray, isElement, isSvgGraphicsElement };
+export default {
+    isElementArray, isElement, isHTMLElement, isSvgGraphicsElement
+};
