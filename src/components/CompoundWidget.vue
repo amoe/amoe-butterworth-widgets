@@ -167,5 +167,6 @@ export default Vue.extend({
 
 .widget-add-icon {
     margin-left: @space-small;
+    stroke: @grey;
 }
 </style>
