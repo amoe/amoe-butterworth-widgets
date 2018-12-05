@@ -2,12 +2,11 @@
   <div class="serif">
     <div class="serif-left">
     </div>
+
     <transition name="fade"
-                v-on:enter="serifEnter"
-                v-on:leave="serifLeave">
-
-
-      <div class="serif-content" v-if="serifExpanded">
+                v-on:enter="serifOpen"
+                v-on:leave="serifClose">
+      <div class="serif-content" v-if="serifExpanded" key="serif-expanded">
         <label for="distanceType">Distance type</label>
         <select name="distanceType">
           <option value="sentences">Sentences</option>
@@ -17,11 +16,10 @@
         <input type="number">
       </div>
 
-      <div v-else>
-          <distance-indicator :distance="4" stroke="hsl(45, 100%, 50%)">
-          </distance-indicator>
+      <div v-else key="serif-collapsed" ref="distanceIndicator">
+        <distance-indicator :distance="4" stroke="hsl(45, 100%, 50%)">
+        </distance-indicator>
       </div>
-
     </transition>
     <div class="serif-right">
     </div>
@@ -35,7 +33,7 @@ import DistanceIndicator from '@/components/DistanceIndicator.vue';
 
 type TransitionCallback = () => void;
 
-const ANIMATION_TIME_SECONDS = 1.0;
+const ANIMATION_TIME_SECONDS = 2.0;
 
 export default Vue.extend({
     components: {DistanceIndicator},
@@ -57,19 +55,23 @@ export default Vue.extend({
         });
     },
     methods: {
-        serifEnter(el: Element, done: TransitionCallback) {
-            console.log("serifenter");
-            
+        serifOpen(el: Element, done: TransitionCallback) {
+            console.log("serifopen");
             // This is a little trick found on the GSAP forums, since we can't
             // tween to 'auto' easily.
+
+            console.log("distance indicator is %o", this.$refs.distanceIndicator);
+
             TweenMax.set(el, {width: 'auto'});
             TweenMax.from(el, ANIMATION_TIME_SECONDS, {
                 width: 0,
                 onComplete: done
             });
+
         },
-        serifLeave(el: Element, done: TransitionCallback) {
-            console.log("serifleave");
+        serifClose(el: Element, done: TransitionCallback) {
+            console.log("serifclose");
+
             TweenMax.to(el, ANIMATION_TIME_SECONDS, {
                 width: 0,   
                 onComplete: done
