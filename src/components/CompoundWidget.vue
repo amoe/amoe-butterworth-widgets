@@ -5,18 +5,20 @@
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
     <div class="widget" v-for="taxon in taxons" :style="styleOverrides" ref="widgets">
-      <x-circle-icon class="widget-close"></x-circle-icon>
 
       <taxon-select :value="taxon.value">
       </taxon-select>
 
       <div class="level-container">
+        <x-circle-icon class="widget-close-icon"></x-circle-icon>
+
         <span v-for="n in taxon.level">
           <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
         </span>
-        <span>
-          <plus-circle-icon :width="16" :height="16"></plus-circle-icon>
-        </span>
+
+
+        <plus-circle-icon class="widget-add-icon"
+                          :width="16" :height="16"></plus-circle-icon>
       </div>
     </div>
   </div>
@@ -151,9 +153,19 @@ export default Vue.extend({
 
 .level-container {
     display: flex;
-p    flex-direction: row;
+    flex-direction: row;
     justify-content: center;
     margin: 1em;
     color: @orange;
+}
+
+.widget-close-icon {
+    width: 1em;
+    height: 1em;
+    margin-right: @space-small;
+}
+
+.widget-add-icon {
+    margin-left: @space-small;
 }
 </style>
