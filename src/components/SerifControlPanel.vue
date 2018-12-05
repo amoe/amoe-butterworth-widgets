@@ -4,7 +4,7 @@
       <option value="distanceConditionType">Within</option>
     </select>
 
-    <input type="number" placeholder="4">
+    <input class="distance-value" type="number" placeholder="4">
 
     <select name="distanceUnit">
       <option value="sentences">Sentences</option>
@@ -28,7 +28,10 @@ export default Vue.extend({
     width: auto;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: smaller;
+    min-width: 8em;
 }
 
 
@@ -37,5 +40,10 @@ export default Vue.extend({
     margin-right: @space-medium;
     margin-bottom: @space-xx-small;
     margin-top: @space-xx-small;
+}
+
+
+input.distance-value {
+    width: 3em;
 }
 </style>
