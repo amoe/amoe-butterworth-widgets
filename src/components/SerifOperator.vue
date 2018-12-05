@@ -3,10 +3,14 @@
     <div class="serif-left">
     </div>
 
+    <!-- NB: This transition is not currently working, it's something to do
+             with the key values, but it's also debatable if it even
+             makes sense because of the adaptive width of the distance
+             indicator :/ -->
     <transition name="fade"
                 v-on:enter="serifOpen"
                 v-on:leave="serifClose">
-      <div class="serif-content" v-if="serifExpanded" key="serif-expanded">
+      <div class="serif-content" v-if="serifExpanded" >
         <label for="distanceType">Distance type</label>
         <select name="distanceType">
           <option value="sentences">Sentences</option>
@@ -16,7 +20,7 @@
         <input type="number">
       </div>
 
-      <div v-else key="serif-collapsed" ref="distanceIndicator">
+      <div v-else ref="distanceIndicator">
         <distance-indicator :distance="4" stroke="hsl(45, 100%, 50%)">
         </distance-indicator>
       </div>
