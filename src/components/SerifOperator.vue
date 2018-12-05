@@ -10,20 +10,12 @@
     <transition name="fade"
                 v-on:enter="serifOpen"
                 v-on:leave="serifClose">
-      <div class="serif-content" v-if="serifExpanded" >
-        <label for="distanceType">Distance type</label>
-        <select name="distanceType">
-          <option value="sentences">Sentences</option>
-        </select>
+      <serif-control-panel v-if="serifExpanded" key="serif-expanded"/>
 
-        <label for="distanceValue">Distance value</label>
-        <input type="number">
-      </div>
-
-      <div v-else ref="distanceIndicator">
-        <distance-indicator :distance="4" stroke="hsl(45, 100%, 50%)">
-        </distance-indicator>
-      </div>
+      <distance-indicator v-else 
+                          :distance="4" stroke="hsl(45, 100%, 50%)"
+                          key="serif-collapsed">
+      </distance-indicator>
     </transition>
     <div class="serif-right">
     </div>
@@ -34,13 +26,14 @@
 import Vue from 'vue';
 import {TweenMax} from 'gsap';
 import DistanceIndicator from '@/components/DistanceIndicator.vue';
+import SerifControlPanel from '@/components/SerifControlPanel.vue';
 
 type TransitionCallback = () => void;
 
 const ANIMATION_TIME_SECONDS = 2.0;
 
 export default Vue.extend({
-    components: {DistanceIndicator},
+    components: {SerifControlPanel, DistanceIndicator},
     data() {
         return {
             widgets: [1, 2, 3, 4],
@@ -66,20 +59,26 @@ export default Vue.extend({
 
             console.log("distance indicator is %o", this.$refs.distanceIndicator);
 
+            done();
+            /*
             TweenMax.set(el, {width: 'auto'});
             TweenMax.from(el, ANIMATION_TIME_SECONDS, {
                 width: 0,
                 onComplete: done
             });
+            */
 
         },
         serifClose(el: Element, done: TransitionCallback) {
             console.log("serifclose");
 
+            done();
+            /*
             TweenMax.to(el, ANIMATION_TIME_SECONDS, {
                 width: 0,   
                 onComplete: done
             });
+            */
         },
         toggleSerif() {
             this.serifExpanded = !this.serifExpanded;
@@ -123,20 +122,6 @@ export default Vue.extend({
     height: 100%;
 }
 
-.serif-content {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    width: auto;
-    display: flex;
-    flex-direction: column;
-    font-size: smaller;
-}
 
-.serif-content * {
-    margin-left: @space-medium;
-    margin-right: @space-medium;
-    margin-bottom: @space-xx-small;
-    margin-top: @space-xx-small;
-}
 
 </style>
