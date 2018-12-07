@@ -27,8 +27,9 @@ import Vue from 'vue';
 import { Draggable } from 'gsap/Draggable';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
+import MoveIcon from '@/components/MoveIcon.vue';
 import TaxonSelect from '@/components/TaxonSelect.vue';
-import { XCircleIcon, MoveIcon } from 'vue-feather-icons';
+import { XCircleIcon } from 'vue-feather-icons';
 import typeGuards from '@/type-guards';
 import assert from '@/assert';
 
