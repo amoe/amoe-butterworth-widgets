@@ -14,6 +14,8 @@
     </select>
 
     <p>Levels below this?  {{hasLevelsBelowThis}}</p>
+    
+    <p>Path length: {{selectedPath.length + 1}}</p>
 
     <div v-if="hasLevelsBelowThis">
       <button v-on:click="addNext"
