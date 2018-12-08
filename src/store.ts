@@ -22,25 +22,29 @@ const TAXONOMY_DATA = {
     'label': 'Taxon'
 };
 
+interface WidgetData {
+    isVisible: boolean
+};
+
 export default new Vuex.Store({
     state: {
-        widgetCount: 1,
+        widgetState: [] as WidgetData[],
         taxonomyData: TAXONOMY_DATA,
-        selectedPath: []
+        selectedPath: [],
     },
     mutations: {
     },
     actions: {
     },
     getters: {
-        widgetCount(state, getters) {
-            return state.widgetCount;
-        },
         taxonomyTree(state, getters) {
             return treeModel.parse<TaxonomyNodeModel>(state.taxonomyData);
         },
         selectedPath(state, getters) {
             return state.selectedPath;
+        },
+        addNewWidget(state, getters) {
+            state.widgetState.push({ isVisible: true });
         }
     }
 });

@@ -10,17 +10,22 @@
     <select v-on:change="onSelect">
       <option value="" selected disabled></option>
       <option v-for="item in filteredChildren"
-              :value="item.model.id">{{item.model.content}}</option>
+              :value="item.model.id"
+              key="item.model.id">{{item.model.content}}</option>
     </select>
 
     <p>Levels below this?  {{hasLevelsBelowThis}}</p>
     
-    <p>Path length: {{selectedPath.length + 1}}</p>
+    <p>Path length: {{visibleWidgetCount}}</p>
 
     <div v-if="hasLevelsBelowThis">
       <button v-on:click="addNext"
               :disabled="selectedTaxonId === null">Add</button>
     </div>
+
+    <ul>
+      <li v-for="n in visibleWidgetCount">Widget {{n}} -- is visible?</li>
+    </ul>
   </div>
 </template>
 
@@ -81,6 +86,9 @@ export default Vue.extend({
         },
         hasLevelsBelowThis(this: any) {
             return this.filteredChildren.length > 0;
+        },
+        visibleWidgetCount(this: any) {
+            return this.selectedPath.length + 1;
         }
     }
 });
@@ -91,7 +99,7 @@ export default Vue.extend({
 .taxon-selector {
     background-color: green;
     width: 100px;
-    height: 300px;
+    height: 400px;
     margin: 1em;
     border: 1px solid black;
 }
