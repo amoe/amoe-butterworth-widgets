@@ -9,6 +9,7 @@
 
 
     <select v-on:change="onSelect">
+      <option value="" selected disabled></option>
       <option v-for="item in filteredChildren"
               :value="item.model.id">{{item.model.content}}</option>
     </select>
