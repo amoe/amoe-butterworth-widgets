@@ -67,7 +67,7 @@ export default Vue.extend({
             return this.$store.getters.selectedPath;
         },
         isLastLevel(this: any) {
-            return  true;
+            return this.filteredChildren.length === 0;
         }
     }
 });
