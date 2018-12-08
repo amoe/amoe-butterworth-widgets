@@ -13,7 +13,12 @@
               :value="item.model.id">{{item.model.content}}</option>
     </select>
 
-    <p>Last level?  {{isLastLevel}}</p>
+    <p>Levels below this?  {{hasLevelsBelowThis}}</p>
+
+    <div v-if="hasLevelsBelowThis">
+      <button v-on:click="addNext"
+              :disabled="selectedTaxonId === null">Add</button>
+    </div>
   </div>
 </template>
 
@@ -26,7 +31,10 @@ export default Vue.extend({
     props: ['level'],
     name: 'home',
     data() {
-        return {};
+        return {
+            // contains currently selected taxonomy ID
+            selectedTaxonId: null as number | null
+        };
     },
     components: {},
     methods: {
@@ -39,7 +47,10 @@ export default Vue.extend({
             const casted = target as HTMLInputElement;
             console.log("target value is %o", casted.value);
 
-            this.selectedPath.splice(this.level - 1, 1, parseInt(casted.value));
+            this.selectedTaxonId =  parseInt(casted.value);
+        },
+        addNext() {
+            this.selectedPath.splice(this.level - 1, 1, this.selectedTaxonId);
         }
     },
     computed: {
@@ -66,8 +77,8 @@ export default Vue.extend({
         selectedPath(this: any) {
             return this.$store.getters.selectedPath;
         },
-        isLastLevel(this: any) {
-            return this.filteredChildren.length === 0;
+        hasLevelsBelowThis(this: any) {
+            return this.filteredChildren.length > 0;
         }
     }
 });
