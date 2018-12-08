@@ -7,13 +7,11 @@
       <li v-for="item in filteredChildren">{{item.model.content}}</li>
     </ul>
 
-    <div>
-      <div v-for="item in filteredChildren">
-        <input type="radio" name="taxon" :value="item.model.id" 
-               v-on:change="onSelect"/>
-        <label :for="item.model.id">{{item.model.content}}</label>
-      </div>
-    </div>
+
+    <select v-on:change="onSelect">
+      <option v-for="item in filteredChildren"
+              :value="item.model.id">{{item.model.content}}</option>
+    </select>
 
   </div>
 </template>
