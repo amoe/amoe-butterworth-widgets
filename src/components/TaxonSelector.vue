@@ -1,6 +1,8 @@
 <template>
   <div class="taxon-selector">
     <p>Level: {{level}}</p>
+    <p>Index: {{thisWidgetIndex}}</p>
+
     <p>Taxonomy elements:</p>
 
     <ul>
@@ -13,6 +15,8 @@
               :value="item.model.id"
               key="item.model.id">{{item.model.content}}</option>
     </select>
+
+    <button>Hide</button>
 
     <p>Levels below this?  {{hasLevelsBelowThis}}</p>
     
@@ -58,7 +62,7 @@ export default Vue.extend({
             this.selectedTaxonId =  parseInt(casted.value);
         },
         addNext() {
-            this.selectedPath.splice(this.level - 1, 1, this.selectedTaxonId);
+            this.selectedPath.splice(this.thisWidgetIndex, 1, this.selectedTaxonId);
             this.$store.commit(mc.ADD_NEW_WIDGET);
         }
     },
@@ -91,6 +95,9 @@ export default Vue.extend({
         },
         visibleWidgetCount(this: any) {
             return this.selectedPath.length + 1;
+        },
+        thisWidgetIndex(this: any) {
+            return this.level - 1;
         }
     }
 });
