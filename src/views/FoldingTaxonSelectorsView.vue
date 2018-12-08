@@ -23,7 +23,7 @@
 import Vue from 'vue';
 import TreeModel from 'tree-model';
 import {MyNodeModel, MyNode} from '@/types';
-import util from '@/util';
+import util2 from '@/util2';
 
 // For this demo, there's just one compound widget, and that can be modified
 
@@ -93,7 +93,7 @@ export default Vue.extend({
         filterTaxons(depth: number) {
             console.log("filtertaxons called for depth: %o", depth);
             console.log("Path is: %o", JSON.stringify(this.getPath()));
-            return util.findValidChildren(root, this.getPath());
+            return util2.findValidChildren(root, this.getPath());
         }
     },
     computed: {
