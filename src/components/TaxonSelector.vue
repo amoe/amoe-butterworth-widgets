@@ -33,6 +33,7 @@
 import Vue from 'vue';
 import {mapGetters} from 'vuex';
 import util from '@/util';
+import mc from '@/mutation-constants';
 
 export default Vue.extend({
     props: ['level'],
@@ -58,6 +59,7 @@ export default Vue.extend({
         },
         addNext() {
             this.selectedPath.splice(this.level - 1, 1, this.selectedTaxonId);
+            this.$store.commit(mc.ADD_NEW_WIDGET);
         }
     },
     computed: {

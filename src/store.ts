@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import mc from '@/mutation-constants';
 import { TaxonomyNodeModel } from '@/types'
 import TreeModel from 'tree-model';
 
@@ -33,6 +34,9 @@ export default new Vuex.Store({
         selectedPath: [],
     },
     mutations: {
+        [mc.ADD_NEW_WIDGET]: (state) => {
+            state.widgetState.push({ isVisible: true });
+        },
     },
     actions: {
     },
@@ -43,8 +47,8 @@ export default new Vuex.Store({
         selectedPath(state, getters) {
             return state.selectedPath;
         },
-        addNewWidget(state, getters) {
-            state.widgetState.push({ isVisible: true });
+        definedWidgetCount(state, getters) {
+            return state.widgetState.length;
         }
     }
 });
