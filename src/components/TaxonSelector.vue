@@ -7,13 +7,13 @@
       <li v-for="item in filteredChildren">{{item.model.content}}</li>
     </ul>
 
-
     <select v-on:change="onSelect">
       <option value="" selected disabled></option>
       <option v-for="item in filteredChildren"
               :value="item.model.id">{{item.model.content}}</option>
     </select>
 
+    <p>Last level?  {{isLastLevel}}</p>
   </div>
 </template>
 
@@ -25,6 +25,9 @@ import util from '@/util';
 export default Vue.extend({
     props: ['level'],
     name: 'home',
+    data() {
+        return {};
+    },
     components: {},
     methods: {
         onSelect(e: Event) {
@@ -62,6 +65,9 @@ export default Vue.extend({
         },
         selectedPath(this: any) {
             return this.$store.getters.selectedPath;
+        },
+        isLastLevel(this: any) {
+            return  true;
         }
     }
 });
@@ -72,7 +78,7 @@ export default Vue.extend({
 .taxon-selector {
     background-color: green;
     width: 100px;
-    height: 200px;
+    height: 300px;
     margin: 1em;
     border: 1px solid black;
 }
