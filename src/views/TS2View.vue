@@ -7,7 +7,7 @@
                       :key="n" :level="n"></taxon-selector>
     </div>
 
-    Widget count: {{widgetCount}}
+    Defined widget count: {{definedWidgetCount}}
     Path selected: <code>{{selectedPath}}</code>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="taxon-selector">
+  <div class="taxon-selector" v-if="widgetVisibility[thisWidgetIndex]">
     <p>Level: {{level}}</p>
     <p>Index: {{thisWidgetIndex}}</p>
 
@@ -13,10 +13,10 @@
       <option value="" selected disabled></option>
       <option v-for="item in filteredChildren"
               :value="item.model.id"
-              key="item.model.id">{{item.model.content}}</option>
+              :key="item.model.id">{{item.model.content}}</option>
     </select>
 
-    <button>Hide</button>
+    <button v-on:click="hide">Hide</button>
 
     <p>Levels below this?  {{hasLevelsBelowThis}}</p>
     
@@ -28,7 +28,7 @@
     </div>
 
     <ul>
-      <li v-for="n in visibleWidgetCount">Widget {{n}} -- is visible?</li>
+      <li v-for="n in visibleWidgetCount">Widget {{n}} -- is visible? {{widgetVisibility[n - 1]}}</li>
     </ul>
   </div>
 </template>
@@ -64,6 +64,9 @@ export default Vue.extend({
         addNext() {
             this.selectedPath.splice(this.thisWidgetIndex, 1, this.selectedTaxonId);
             this.$store.commit(mc.ADD_NEW_WIDGET);
+        },
+        hide() {
+            this.$store.commit(mc.HIDE_WIDGET, this.thisWidgetIndex);
         }
     },
     computed: {
@@ -90,6 +93,9 @@ export default Vue.extend({
         selectedPath(this: any) {
             return this.$store.getters.selectedPath;
         },
+        widgetVisibility(this: any) {
+            return this.$store.getters.widgetVisibility;
+        },
         hasLevelsBelowThis(this: any) {
             return this.filteredChildren.length > 0;
         },
@@ -98,7 +104,7 @@ export default Vue.extend({
         },
         thisWidgetIndex(this: any) {
             return this.level - 1;
-        }
+        },
     }
 });
 
@@ -108,7 +114,7 @@ export default Vue.extend({
 .taxon-selector {
     background-color: green;
     width: 100px;
-    height: 400px;
+    height: 80vh;
     margin: 1em;
     border: 1px solid black;
 }

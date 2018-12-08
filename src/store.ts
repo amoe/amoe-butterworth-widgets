@@ -29,7 +29,9 @@ interface WidgetData {
 
 export default new Vuex.Store({
     state: {
-        widgetState: [] as WidgetData[],
+        widgetState: [
+            { isVisible: true }
+        ] as WidgetData[],
         taxonomyData: TAXONOMY_DATA,
         selectedPath: [],
     },
@@ -37,6 +39,9 @@ export default new Vuex.Store({
         [mc.ADD_NEW_WIDGET]: (state) => {
             state.widgetState.push({ isVisible: true });
         },
+        [mc.HIDE_WIDGET]: (state, index) => {
+            state.widgetState[index].isVisible = false;
+        }
     },
     actions: {
     },
@@ -49,6 +54,9 @@ export default new Vuex.Store({
         },
         definedWidgetCount(state, getters) {
             return state.widgetState.length;
+        },
+        widgetVisibility(state) {
+            return state.widgetState.map(w => w.isVisible);
         }
     }
 });
