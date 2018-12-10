@@ -3,10 +3,11 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Orthodox from './views/Orthodox.vue';
 import RearrangementView from './views/RearrangementView.vue';
+import FoldingDemo2 from './views/FoldingDemo2.vue';
 
 Vue.use(Router);
 
-const IndexView = RearrangementView;
+const IndexView = FoldingDemo2;
 
 export default new Router({
     routes: [
@@ -44,7 +45,11 @@ export default new Router({
             path: '/rearrangement',
             name: 'rearrangement-demo',
             component: () => import('./views/RearrangementView.vue')
+        },
+        {
+            path: '/folding-demo-2',
+            name: 'folding-demo-2',
+            component: () => import('./views/FoldingDemo2.vue')
         }
-
     ],
 });
