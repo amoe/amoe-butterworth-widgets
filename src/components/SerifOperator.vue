@@ -27,8 +27,7 @@ import Vue from 'vue';
 import {TweenMax} from 'gsap';
 import DistanceIndicator from '@/components/DistanceIndicator.vue';
 import SerifControlPanel from '@/components/SerifControlPanel.vue';
-
-type TransitionCallback = () => void;
+import {TransitionCallback} from '@/types';
 
 const ANIMATION_TIME_SECONDS = 2.0;
 

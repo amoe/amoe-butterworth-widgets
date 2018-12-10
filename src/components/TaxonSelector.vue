@@ -1,36 +1,38 @@
 <template>
-  <div class="taxon-selector" v-if="widgetVisibility[thisWidgetIndex]">
-    <p>Level: {{level}}</p>
-    <p>Index: {{thisWidgetIndex}}</p>
+  <transition v-on:enter="onEnter" v-on:leave="onLeave">
+    <div class="taxon-selector" v-if="widgetVisibility[thisWidgetIndex]">
+      <p>Level: {{level}}</p>
+      <p>Index: {{thisWidgetIndex}}</p>
 
-    <p>Taxonomy elements:</p>
+      <p>Taxonomy elements:</p>
 
-    <ul>
-      <li v-for="item in filteredChildren">{{item.model.content}}</li>
-    </ul>
+      <ul>
+        <li v-for="item in filteredChildren">{{item.model.content}}</li>
+      </ul>
 
-    <select v-on:change="onSelect">
-      <option value="" selected disabled></option>
-      <option v-for="item in filteredChildren"
-              :value="item.model.id"
-              :key="item.model.id">{{item.model.content}}</option>
-    </select>
+      <select v-on:change="onSelect">
+        <option value="" selected disabled></option>
+        <option v-for="item in filteredChildren"
+                :value="item.model.id"
+                :key="item.model.id">{{item.model.content}}</option>
+      </select>
 
-    <button v-on:click="hide">Hide</button>
+      <button v-on:click="hide">Hide</button>
 
-    <p>Levels below this?  {{hasLevelsBelowThis}}</p>
-    
-    <p>Path length: {{visibleWidgetCount}}</p>
+      <p>Levels below this?  {{hasLevelsBelowThis}}</p>
 
-    <div v-if="hasLevelsBelowThis">
-      <button v-on:click="addNext"
-              :disabled="selectedTaxonId === null">Add</button>
+      <p>Path length: {{visibleWidgetCount}}</p>
+
+      <div v-if="hasLevelsBelowThis">
+        <button v-on:click="addNext"
+                :disabled="selectedTaxonId === null">Add</button>
+      </div>
+
+      <ul>
+        <li v-for="n in visibleWidgetCount">Widget {{n}} -- is visible? {{widgetVisibility[n - 1]}}</li>
+      </ul>
     </div>
-
-    <ul>
-      <li v-for="n in visibleWidgetCount">Widget {{n}} -- is visible? {{widgetVisibility[n - 1]}}</li>
-    </ul>
-  </div>
+  </transition>
 </template>
 
 <script lang="ts">
@@ -38,6 +40,7 @@ import Vue from 'vue';
 import {mapGetters} from 'vuex';
 import util from '@/util';
 import mc from '@/mutation-constants';
+import {TransitionCallback} from '@/types';
 
 export default Vue.extend({
     props: ['level'],
@@ -50,6 +53,14 @@ export default Vue.extend({
     },
     components: {},
     methods: {
+        onEnter(el: Element, done: TransitionCallback) {
+            console.log("enter transition");
+            done();
+        },
+        onLeave(el: Element, done: TransitionCallback) {
+            console.log("leave transition");
+            done();
+        },
         onSelect(e: Event) {
             // const element: Element = e.target;
             // console.log("Selection was called, args are %o", e.target);
