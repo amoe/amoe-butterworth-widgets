@@ -6,7 +6,8 @@
       <router-link to="/about">About</router-link> | 
       <router-link to="/demo1">Demo 1</router-link> | 
       <router-link to="/folding-taxon-selectors">FTS1 view</router-link> |
-      <router-link to="/ts2">TS2</router-link>
+      <router-link to="/ts2">TS2</router-link> |
+      <router-link to="/rearrangement">Rearrangement</router-link>
     </div>
     <router-view/>
   </div>

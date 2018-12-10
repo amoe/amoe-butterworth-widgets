@@ -2,10 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Orthodox from './views/Orthodox.vue';
+import RearrangementView from './views/RearrangementView.vue';
 
 Vue.use(Router);
 
-const IndexView = Orthodox;
+const IndexView = RearrangementView;
 
 export default new Router({
     routes: [
@@ -38,6 +39,11 @@ export default new Router({
             path: '/folding-taxon-selectors',
             name: 'folding-taxon-selectors',
             component: () => import('./views/FoldingTaxonSelectorsView.vue')
+        },
+        {
+            path: '/rearrangement',
+            name: 'rearrangement-demo',
+            component: () => import('./views/RearrangementView.vue')
         }
 
     ],
