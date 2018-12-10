@@ -29,8 +29,14 @@ export default (Vue as AugmentedVue).extend({
     },
     methods: {
         setupDraggables() {
-            console.log("found element as %o", this.$refs.boxes);
-            const foo: Element[] = this.$refs.boxes
+            const elements: Element[] = this.$refs.boxes;
+            const vars = {
+                onDragEnd: this.onDragEnd
+            };
+            Draggable.create(elements, vars);
+        },
+        onDragEnd() {
+            console.log("dragend");
         }
     }
 });
