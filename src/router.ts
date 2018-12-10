@@ -13,6 +13,11 @@ export default new Router({
             component: () => import('./views/TS2View.vue'),
         },
         {
+            path: '/orthodox',
+            name: 'Orthodox',
+            component: () => import('./views/Home.vue'),
+        },
+        {
             path: '/about',
             name: 'about',
             // route level code-splitting

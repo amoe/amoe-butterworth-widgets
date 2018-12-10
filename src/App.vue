@@ -2,6 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
+      <router-link to="/orthodox">Orthodox</router-link> | 
       <router-link to="/about">About</router-link> | 
       <router-link to="/demo1">Demo 1</router-link> | 
       <router-link to="/folding-taxon-selectors">FTS1 view</router-link> |

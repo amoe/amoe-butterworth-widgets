@@ -54,16 +54,14 @@ export default Vue.extend({
     components: {},
     methods: {
         onEnter(el: Element, done: TransitionCallback) {
-            console.log("enter transition");
+            console.log("enter transition, element is %o", el);
             done();
         },
         onLeave(el: Element, done: TransitionCallback) {
-            console.log("leave transition");
+            console.log("leave transition, element is %o", el);
             done();
         },
         onSelect(e: Event) {
-            // const element: Element = e.target;
-            // console.log("Selection was called, args are %o", e.target);
             if (e.currentTarget === null) throw new Error("bad");
             const target: EventTarget = e.currentTarget;
 
