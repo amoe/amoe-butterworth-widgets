@@ -18,6 +18,10 @@ interface RearrangementViewRefs {
 
 type AugmentedVue = VueConstructor<Vue & RearrangementViewRefs>;
 
+// no type for Draggable in @types/gsap :(
+type Draggable = any;
+
+
 export default (Vue as AugmentedVue).extend({
     data() {
         return {
@@ -29,14 +33,20 @@ export default (Vue as AugmentedVue).extend({
     },
     methods: {
         setupDraggables() {
+            const component = this;
             const elements: Element[] = this.$refs.boxes;
+
             const vars = {
-                onDragEnd: this.onDragEnd
+                onDragEnd: function(e: PointerEvent) {
+                    component.onDragEnd(this, e);
+                }
             };
             Draggable.create(elements, vars);
         },
-        onDragEnd() {
+        onDragEnd(draggable: Draggable, e: PointerEvent) {
             console.log("dragend");
+            console.log("this is %o", this);
+            console.log("draggable is %o", draggable);
         }
     }
 });
