@@ -52,10 +52,6 @@ export default Vue.extend({
             console.log("inside onleave");
             done();
         },
-        shuffle() {
-            // do nothing
-            this.items = _.shuffle(this.items)
-        },
         shuffleBoxes() {
             // do nothing
             this.boxes = _.shuffle(this.boxes)
