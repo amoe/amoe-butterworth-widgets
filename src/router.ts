@@ -1,26 +1,27 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import Demo1 from './views/Demo1.vue';
+import Orthodox from './views/Orthodox.vue';
 
 Vue.use(Router);
+
+const IndexView = Orthodox;
 
 export default new Router({
     routes: [
         {
             path: '/',
             name: 'home',
-            component: () => import('./views/TS2View.vue'),
+            component: IndexView,
         },
         {
             path: '/orthodox',
             name: 'Orthodox',
-            component: () => import('./views/Home.vue'),
+            component: () => import('./views/Orthodox.vue'),
         },
         {
             path: '/about',
             name: 'about',
-            // route level code-splitting
             component: () => import('./views/About.vue'),
         },
         {
