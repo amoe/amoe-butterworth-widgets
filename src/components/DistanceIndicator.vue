@@ -1,10 +1,7 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg"
-       :width="dynamicWidth" class="distance-indicator" ref="distanceIndicator">
-    <line v-for="n in distance"
-          :x1="getXPos(n - 1)" y1="0" :x2="getXPos(n - 1)" y2="100" :stroke="stroke"
-          :stroke-width="strokeWidth"/>
-  </svg>
+  <div class="distance-indicator">
+    <div v-for="n in distance" class="single-distance-line"/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -16,26 +13,11 @@ export default Vue.extend({
     components: {},
     data() {
         return {
-            offset: 12,
-            dynamicWidth: 150,
-            strokeWidth: 4
         };
     },
     mounted() {
-        // Once mounted, we need to dynamically resize to the 'real' size
-        if (typeGuards.isSvgGraphicsElement(this.$refs.distanceIndicator)) {
-            const svg: SVGGraphicsElement = this.$refs.distanceIndicator;
-            const bbox = svg.getBBox();
-            this.dynamicWidth = bbox.width + this.strokeWidth + 1;
-        }
     },
     methods: {
-        getXPos(n: number) {
-            // svg offsets are 1-based, hence the 1; stroke width causes the
-            // line to expand equally in each direction so we need to take
-            // it into account otherwise the view frame will cut it off.
-            return (n * this.offset) + (this.strokeWidth / 2) + 1;
-        }
     }
 });
 </script>
@@ -46,5 +28,18 @@ export default Vue.extend({
 .distance-indicator {
     margin-left: 1em;
     margin-right: 1em;
+    display: flex;
+    flex-direction: row;
+}
+
+.single-distance-line {
+    border-left: 1px solid black;
+    height: 100%;
+    margin-right: 0.2em;
+}
+
+
+.single-distance-line:last-child {
+    margin-right: 0;
 }
 </style>

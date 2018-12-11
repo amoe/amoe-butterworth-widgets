@@ -16,3 +16,4 @@ export interface MyNodeModel {
 
 export type MyNode = Node<MyNodeModel>
 
+export type TransitionCallback = () => void;

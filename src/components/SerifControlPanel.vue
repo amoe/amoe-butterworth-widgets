@@ -4,7 +4,11 @@
       <option value="distanceConditionType">Within</option>
     </select>
 
-    <input class="distance-value" type="number" placeholder="4">
+    <input class="distance-value"
+           type="number" 
+           placeholder="4" 
+           v-on:change="onChangeDistance"
+           :value="distance">
 
     <select name="distanceUnit">
       <option value="sentences">Sentences</option>
@@ -16,6 +20,7 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+    props: ['onChangeDistance', 'distance']
 });
 </script>
 

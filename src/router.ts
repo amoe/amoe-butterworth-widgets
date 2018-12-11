@@ -1,21 +1,29 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
-import Demo1 from './views/Demo1.vue';
+import Orthodox from './views/Orthodox.vue';
+import RearrangementView from './views/RearrangementView.vue';
+import FoldingDemo2 from './views/FoldingDemo2.vue';
 
 Vue.use(Router);
+
+const IndexView = FoldingDemo2;
 
 export default new Router({
     routes: [
         {
             path: '/',
             name: 'home',
-            component: () => import('./views/TS2View.vue'),
+            component: IndexView,
+        },
+        {
+            path: '/orthodox',
+            name: 'Orthodox',
+            component: () => import('./views/Orthodox.vue'),
         },
         {
             path: '/about',
             name: 'about',
-            // route level code-splitting
             component: () => import('./views/About.vue'),
         },
         {
@@ -32,7 +40,16 @@ export default new Router({
             path: '/folding-taxon-selectors',
             name: 'folding-taxon-selectors',
             component: () => import('./views/FoldingTaxonSelectorsView.vue')
+        },
+        {
+            path: '/rearrangement',
+            name: 'rearrangement-demo',
+            component: () => import('./views/RearrangementView.vue')
+        },
+        {
+            path: '/folding-demo-2',
+            name: 'folding-demo-2',
+            component: () => import('./views/FoldingDemo2.vue')
         }
-
     ],
 });

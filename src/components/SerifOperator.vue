@@ -10,10 +10,12 @@
     <transition name="fade"
                 v-on:enter="serifOpen"
                 v-on:leave="serifClose">
-      <serif-control-panel v-if="serifExpanded" key="serif-expanded"/>
+      <serif-control-panel v-if="serifExpanded" key="serif-expanded"
+                           :distance="distance"
+                           :on-change-distance="onChangeDistance"/>
 
       <distance-indicator v-else 
-                          :distance="4" stroke="hsl(45, 100%, 50%)"
+                          :distance="distance" stroke="hsl(45, 100%, 50%)"
                           key="serif-collapsed">
       </distance-indicator>
     </transition>
@@ -27,8 +29,7 @@ import Vue from 'vue';
 import {TweenMax} from 'gsap';
 import DistanceIndicator from '@/components/DistanceIndicator.vue';
 import SerifControlPanel from '@/components/SerifControlPanel.vue';
-
-type TransitionCallback = () => void;
+import {TransitionCallback} from '@/types';
 
 const ANIMATION_TIME_SECONDS = 2.0;
 
@@ -37,7 +38,8 @@ export default Vue.extend({
     data() {
         return {
             widgets: [1, 2, 3, 4],
-            serifExpanded: true
+            serifExpanded: true,
+            distance: 4
         }
     },
     mounted() {
@@ -52,6 +54,13 @@ export default Vue.extend({
         });
     },
     methods: {
+        onChangeDistance(e: Event) {
+             if (e.currentTarget === null) throw new Error('bad');
+             const target: EventTarget = e.currentTarget;
+
+             const casted = target as HTMLInputElement;
+             this.distance = parseInt(casted.value);
+        },
         serifOpen(el: Element, done: TransitionCallback) {
             console.log("serifopen");
             // This is a little trick found on the GSAP forums, since we can't

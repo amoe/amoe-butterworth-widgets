@@ -61,7 +61,8 @@ export default Vue.extend({
             const vars = {
                 trigger: handle,
                 onPress: () => this.currentlyBeingDragged = true,
-                onRelease: () => this.currentlyBeingDragged = false
+                onRelease: () => this.currentlyBeingDragged = false,
+                onDragEnd: this.onDragEnd
             };
 
             Draggable.create(compoundWidget, vars);
@@ -90,6 +91,9 @@ export default Vue.extend({
         },
         onRelease(): void {
             console.log("bar");
+        },
+        onDragEnd(): void {
+            console.log("dragend");
         }
     }
 });
