@@ -40,9 +40,7 @@ interface ColorScaleCache {
     [key: string]: object;
 }
 
-type Draggable = any;
-
-export default Vue.extend({
+export default (Vue as AugmentedVue).extend({
     props: ['taxonomyRef', 'taxons', 'styleOverrides'],
     data() {
         return {
@@ -100,10 +98,6 @@ export default Vue.extend({
         onRelease(): void {
             console.log("bar");
         },
-        onDragEnd(draggable: Draggable, e: PointerEvent): void {
-            console.log("dragend");
-            console.log("draggable is %o, event is %o", draggable, e);
-        }
     }
 });
 </script>
