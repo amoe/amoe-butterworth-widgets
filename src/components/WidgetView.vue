@@ -29,6 +29,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import {mapGetters} from 'vuex';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import CompoundWidget from '@/components/CompoundWidget.vue';
 import { Draggable } from 'gsap/Draggable';
@@ -63,7 +64,6 @@ interface TaxonInfo {
 
 interface ComponentData {
     taxonomyTypes: TaxonomyTypeIndex;
-    compoundWidgets: CompoundWidget[];
     floatingWidgets: any;
 };
 
@@ -78,68 +78,6 @@ export default Vue.extend({
                 'Occupation': {},
                 'Place': {},
             },
-            compoundWidgets: [
-                {
-                    taxonomyRef: 'Occupation',
-                    taxons: [
-                        {
-                            level: 1,
-                            value: "Manufacturing"
-                        },
-                        {
-                            level: 2,
-                            value: "Wood workers"
-                        },
-                        {
-                            level: 3,
-                            value: "Bandbox-maker"
-                        },
-                    ]
-                },
-                {
-                    taxonomyRef: 'Place',
-                    taxons: [
-                        {
-                            level: 1,
-                            value: "Country"
-                        },
-                        {
-                            level: 2,
-                            value: "France"
-                        }
-                    ]
-                },
-                {
-                    taxonomyRef: 'Occupation',
-                    taxons: [
-                        {
-                            level: 1,
-                            value: "Manufacturing"
-                        },
-                        {
-                            level: 2,
-                            value: "Wood workers"
-                        },
-                        {
-                            level: 3,
-                            value: "Bandbox-maker"
-                        },
-                    ]
-                },
-                {
-                    taxonomyRef: 'Place',
-                    taxons: [
-                        {
-                            level: 1,
-                            value: "Country"
-                        },
-                        {
-                            level: 2,
-                            value: "France"
-                        }
-                    ]
-                },
-            ],
             floatingWidgets: [
                 {}
             ],
@@ -150,18 +88,6 @@ export default Vue.extend({
     },
     mounted() {
         this.setupScrollbar();
-/*
-        if (typeGuards.isElementArray(this.$refs.widgets)) {
-            const target: Element[] = this.$refs.widgets;
-            // Lock to the x-axis
-            const vars = {
-                type: 'x'
-            };
-
-            Draggable.create(target, vars);
-        }
-*/
-
         this.$nextTick(this.bindFloatingDraggables);
     },
     methods: {
@@ -173,16 +99,6 @@ export default Vue.extend({
                 console.log("set up scrollbar with %o", ps);
             }
         },
-        /*
-        add(taxonomyType: string): void {
-            const blankWidget: WidgetInstance = {
-                level: 4,
-                value: "Blank"
-            };
-
-            this.compoundWidgets[taxonomyType].push(blankWidget);
-        },
-        */
         addFloatingWidget(): void {
             console.log("adding floating widget");
             this.floatingWidgets.push({});
@@ -221,7 +137,8 @@ export default Vue.extend({
             });
 
             return result;
-        }
+        },
+        ... mapGetters(['compoundWidgets'])
     },
     updated() {
     },

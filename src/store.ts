@@ -29,11 +29,76 @@ interface WidgetData {
 
 export default new Vuex.Store({
     state: {
+        // This is used for the TS2View
         widgetState: [
             { isVisible: true }
         ] as WidgetData[],
         taxonomyData: TAXONOMY_DATA,
         selectedPath: [],
+
+        // This is used for the orthodox view
+        compoundWidgets: [
+            {
+                taxonomyRef: 'Occupation',
+                taxons: [
+                    {
+                        level: 1,
+                        value: "Manufacturing"
+                    },
+                    {
+                        level: 2,
+                        value: "Wood workers"
+                    },
+                    {
+                        level: 3,
+                        value: "Bandbox-maker"
+                    },
+                ]
+            },
+            {
+                taxonomyRef: 'Place',
+                taxons: [
+                    {
+                        level: 1,
+                        value: "Country"
+                    },
+                    {
+                        level: 2,
+                        value: "France"
+                    }
+                ]
+            },
+            {
+                taxonomyRef: 'Occupation',
+                taxons: [
+                    {
+                        level: 1,
+                        value: "Manufacturing"
+                    },
+                    {
+                        level: 2,
+                        value: "Wood workers"
+                    },
+                    {
+                        level: 3,
+                        value: "Bandbox-maker"
+                    },
+                ]
+            },
+            {
+                taxonomyRef: 'Place',
+                taxons: [
+                    {
+                        level: 1,
+                        value: "Country"
+                    },
+                    {
+                        level: 2,
+                        value: "France"
+                    }
+                ]
+            },
+        ],
     },
     mutations: {
         [mc.ADD_NEW_WIDGET]: (state) => {
@@ -57,6 +122,9 @@ export default new Vuex.Store({
         },
         widgetVisibility(state) {
             return state.widgetState.map(w => w.isVisible);
+        },
+        compoundWidgets(state) {
+            return state.compoundWidgets;
         }
     }
 });
