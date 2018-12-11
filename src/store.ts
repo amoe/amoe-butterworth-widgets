@@ -39,7 +39,7 @@ interface TaxonInfo {
 interface CompoundWidget {
     taxonomyRef: string;
     taxons: TaxonInfo[];
-    isCurrentlyBeingDragged: false;
+    isCurrentlyBeingDragged: boolean;
 };
 
 
@@ -122,7 +122,14 @@ export default new Vuex.Store({
         },
         [mc.HIDE_WIDGET]: (state, index) => {
             state.widgetState[index].isVisible = false;
+        },
+        [mc.COMPOUND_WIDGET_DRAG_FLAG_ON]: (state, index: number) => {
+            state.compoundWidgets[index].isCurrentlyBeingDragged = true;
+        },
+        [mc.COMPOUND_WIDGET_DRAG_FLAG_OFF]: (state, index: number) => {
+            state.compoundWidgets[index].isCurrentlyBeingDragged = false;
         }
+
     },
     actions: {
     },
@@ -139,6 +146,7 @@ export default new Vuex.Store({
         widgetVisibility(state) {
             return state.widgetState.map(w => w.isVisible);
         },
+        // method-style access that's used in the child compound widget
         isSpecificCompoundWidgetBeingDragged(state) {
             return (index: number) => state.compoundWidgets[index].isCurrentlyBeingDragged;
         },

@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+    import Vue from 'vue';
 import {VueConstructor} from 'vue';
 import {mapGetters} from 'vuex';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
@@ -65,7 +65,7 @@ type Draggable = any;
 
 interface WidgetViewRefs {
     $refs: {
-        compoundWidgets: Element[]
+        compoundWidgets: Vue[]
     };
 };
 
@@ -95,36 +95,33 @@ export default (Vue as AugmentedVue).extend({
     },
     methods: {
         bindCompoundWidgets(): void {
-            const component = this;
-
             console.log("inside mounted callback");
+            const widgetsToBind: Element[] = this.$refs.compoundWidgets.map(v => v.$el);
+            console.log("widgets to bind = %o", widgetsToBind);
 
-            const widgetsToBind: Element[] = this.$refs.compoundWidgets;
+            // forEach will pass the index to the callback implicitly
+            widgetsToBind.forEach(this.bindCompoundWidget);
+        },
+        bindCompoundWidget(compoundWidget: Element, index: number): void {
+            const component = this;
+            console.log("value of compoundWidget is %o", compoundWidget);
+            const handle = compoundWidget.querySelector('.move-handle');
+            assert(handle !== null, "move handle must be found");
+
+            console.log("I  will try to bind the draggable to element %o", handle);
+
+            const vars = {
+                trigger: handle,
+                type: 'x',
+                onPress: () => this.$store.commit(mc.COMPOUND_WIDGET_DRAG_FLAG_ON, index),
+                onRelease: () => this.$store.commit(mc.COMPOUND_WIDGET_DRAG_FLAG_OFF, index),
+                // Need to pass the appropriate index which we know here.
+                onDragEnd: function (e: PointerEvent) {
+                    component.onDragEnd(this, e);
+                }
+            };
             
-            // Needs revision because now we are handling an element array
-            /*
-            if (typeGuards.isElement(this.$refs.compoundWidgetElement)) {
-                const compoundWidget: Element = this.$refs.compoundWidgetElement;
-
-                const handle = compoundWidget.querySelector('.move-handle');
-                assert(handle !== null, "move handle must be found");
-
-                console.log("I  will try to bind the draggable to element %o", handle);
-
-                const vars = {
-                    trigger: handle,
-                    type: 'x',
-                    onPress: () => this.$store.commit(mc.COMPOUND_WIDGET_DRAG_FLAG_ON),
-                    onRelease: () => this.$store.commit(mc.COMPOUND_WIDGET_DRAG_FLAG_OFF),
-                    // Need to pass the appropriate index which we know here.
-                    onDragEnd: function (e: PointerEvent) {
-                        component.onDragEnd(this, e);
-                    }
-                };
-
-                Draggable.create(compoundWidget, vars);
-            }
-            */
+            Draggable.create(compoundWidget, vars);
         },
         onDragEnd(draggable: Draggable, e: PointerEvent) {
             console.log("drag ended");
