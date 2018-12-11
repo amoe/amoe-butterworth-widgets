@@ -31,7 +31,7 @@ function findValidChildren(
 
 
 function getCollidingElements(d: DraggableConstructor, validElements: Element[]) {
-    return [];
+    return validElements.filter(e => d.hitTest(e, '50%'));
 }
 
 

@@ -133,9 +133,9 @@ export default (Vue as AugmentedVue).extend({
         onDragEnd(draggable: DraggableConstructor, e: PointerEvent, index: number) {
             console.log("drag ended");
 
-            const collisions = util.getCollidingElements(
-                draggable, this.getCompoundWidgetElements()
-            );
+            const validElements = this.getCompoundWidgetElements();
+
+            const collisions = util.getCollidingElements(draggable, validElements);
 
             if (collisions.length === 0) {
                 // Spring back to where you were before dragging
@@ -143,14 +143,11 @@ export default (Vue as AugmentedVue).extend({
             } else if (collisions.length > 1) {
                 throw new Error("Ambiguous drag");
             } else {
-                this.swapCompoundWidgets(index, this.getIndexByElement(collisions[0]));
+                this.swapCompoundWidgets(index, validElements.indexOf(collisions[0]));
             }
         },
-        getIndexByElement(compoundWidget: Element): number {
-            return 0;
-        },
         swapCompoundWidgets(sourceIndex: number, targetIndex: number) {
-            
+            console.log("Would swap widgets %o and %o", sourceIndex, targetIndex);
         },
         getCompoundWidgetElements(): Element[] {
             return this.$refs.compoundWidgets.map(v => v.$el);
