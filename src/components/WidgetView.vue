@@ -8,7 +8,8 @@
       <div class="widget-group-column"
            v-for="(compoundWidgetDefinition, index) in compoundWidgets">
         <compound-widget v-bind="compoundWidgetDefinition"
-                         :style-overrides="widgetStyle[compoundWidgetDefinition.taxonomyRef]"/>
+                         :style-overrides="widgetStyle[compoundWidgetDefinition.taxonomyRef]"
+                         ref="compoundWidgets"/>
 
         <!-- add serif if we are not the last -->
         <serif-operator v-if="index < (compoundWidgets.length - 1)"></serif-operator>
@@ -29,6 +30,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import {VueConstructor} from 'vue';
 import {mapGetters} from 'vuex';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import CompoundWidget from '@/components/CompoundWidget.vue';
@@ -39,7 +41,8 @@ import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
-
+import mc from '@/mutation-constants';
+import assert from '@/assert';
 
 interface TaxonomyTypeIndex {
     [key: string]: TaxonomyTypeInfo;
@@ -52,23 +55,23 @@ interface ColorScaleCache {
 interface TaxonomyTypeInfo {
 };
 
-interface CompoundWidget {
-    taxonomyRef: string;
-    taxons: TaxonInfo[];
-};
-
-interface TaxonInfo {
-    level: number;
-    value: string;
-};
-
 interface ComponentData {
     taxonomyTypes: TaxonomyTypeIndex;
     floatingWidgets: any;
 };
 
+type Draggable = any;
 
-export default Vue.extend({
+
+interface WidgetViewRefs {
+    $refs: {
+        compoundWidgets: Element[]
+    };
+};
+
+type AugmentedVue = VueConstructor<Vue & WidgetViewRefs>;
+
+export default (Vue as AugmentedVue).extend({
     name: 'home',
     components: {SerifOperator, CompoundWidget},
     props: ['taxonomies'],
@@ -88,9 +91,44 @@ export default Vue.extend({
     },
     mounted() {
         this.setupScrollbar();
-        this.$nextTick(this.bindFloatingDraggables);
+        this.bindCompoundWidgets();
     },
     methods: {
+        bindCompoundWidgets(): void {
+            const component = this;
+
+            console.log("inside mounted callback");
+
+            const widgetsToBind: Element[] = this.$refs.compoundWidgets;
+            
+            // Needs revision because now we are handling an element array
+            /*
+            if (typeGuards.isElement(this.$refs.compoundWidgetElement)) {
+                const compoundWidget: Element = this.$refs.compoundWidgetElement;
+
+                const handle = compoundWidget.querySelector('.move-handle');
+                assert(handle !== null, "move handle must be found");
+
+                console.log("I  will try to bind the draggable to element %o", handle);
+
+                const vars = {
+                    trigger: handle,
+                    type: 'x',
+                    onPress: () => this.$store.commit(mc.COMPOUND_WIDGET_DRAG_FLAG_ON),
+                    onRelease: () => this.$store.commit(mc.COMPOUND_WIDGET_DRAG_FLAG_OFF),
+                    // Need to pass the appropriate index which we know here.
+                    onDragEnd: function (e: PointerEvent) {
+                        component.onDragEnd(this, e);
+                    }
+                };
+
+                Draggable.create(compoundWidget, vars);
+            }
+            */
+        },
+        onDragEnd(draggable: Draggable, e: PointerEvent) {
+            console.log("drag ended");
+        },
         setupScrollbar(): void {
             if (typeGuards.isHTMLElement(this.$refs.mainViewContainer)) {
                 const mainViewContainer: HTMLElement = this.$refs.mainViewContainer;
@@ -103,18 +141,6 @@ export default Vue.extend({
             console.log("adding floating widget");
             this.floatingWidgets.push({});
         },
-        bindFloatingDraggables(): void {
-            if (typeGuards.isElementArray(this.$refs.floatingWidgets)) {
-                const widgets: Element[] = this.$refs.floatingWidgets;
-
-
-                const newWidgets = widgets.filter(
-                    w => Draggable.get(w) === undefined
-                );
-
-                Draggable.create(newWidgets, {});
-            }
-        }
     },
     computed: {
         sortedTaxonomyTypeKeys(): string[] {
@@ -142,16 +168,6 @@ export default Vue.extend({
     },
     updated() {
     },
-    watch: {
-        floatingWidgets: function (newValue, oldValue) {
-            console.log("watch called on floating widgets");
-            console.log("floating widgets are %o", this.$refs.floatingWidgets);
-
-            // Next tick is essential here otherwise we miss the one that's
-            // just about to be rendered
-            this.$nextTick(this.bindFloatingDraggables);
-        }
-    }
 });
 </script>
 

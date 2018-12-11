@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import Vue, {VueConstructor} from 'vue';
+import {mapGetters} from 'vuex';
 import { Draggable } from 'gsap/Draggable';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
@@ -53,7 +54,6 @@ export default (Vue as AugmentedVue).extend({
     props: ['taxonomyRef', 'taxons', 'styleOverrides'],
     data() {
         return {
-            currentlyBeingDragged: false
         };
     },
     components: {MoveIcon, XCircleIcon, TaxonSelect, CircleIcon, PlusCircleIcon},
@@ -75,7 +75,12 @@ export default (Vue as AugmentedVue).extend({
             } else {
                 return {};
             }
-        }
+        },
+        currentlyBeingDragged(this: any): boolean {
+            const index = 0; // fail
+            return this.isSpecificCompoundWidgetBeingDragged(index);
+        },
+        ... mapGetters(['isSpecificCompoundWidgetBeingDragged'])
     },
     methods: {
         setupCompoundWidgetDraggable(group: Element): void {

@@ -23,9 +23,25 @@ const TAXONOMY_DATA = {
     'label': 'Taxon'
 };
 
+
+
+
 interface WidgetData {
     isVisible: boolean
 };
+
+
+interface TaxonInfo {
+    level: number;
+    value: string;
+};
+
+interface CompoundWidget {
+    taxonomyRef: string;
+    taxons: TaxonInfo[];
+    isCurrentlyBeingDragged: false;
+};
+
 
 export default new Vuex.Store({
     state: {
@@ -53,7 +69,7 @@ export default new Vuex.Store({
                         level: 3,
                         value: "Bandbox-maker"
                     },
-                ]
+                ],
             },
             {
                 taxonomyRef: 'Place',
@@ -98,7 +114,7 @@ export default new Vuex.Store({
                     }
                 ]
             },
-        ],
+        ] as CompoundWidget[],
     },
     mutations: {
         [mc.ADD_NEW_WIDGET]: (state) => {
@@ -122,6 +138,9 @@ export default new Vuex.Store({
         },
         widgetVisibility(state) {
             return state.widgetState.map(w => w.isVisible);
+        },
+        isSpecificCompoundWidgetBeingDragged(state) {
+            return (index: number) => state.compoundWidgets[index].isCurrentlyBeingDragged;
         },
         compoundWidgets(state) {
             return state.compoundWidgets;
