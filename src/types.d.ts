@@ -17,3 +17,8 @@ export interface MyNodeModel {
 export type MyNode = Node<MyNodeModel>
 
 export type TransitionCallback = () => void;
+
+export interface SwapParameters {
+    sourceIndex: number;
+    targetIndex: number;
+}

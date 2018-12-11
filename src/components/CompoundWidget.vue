@@ -19,8 +19,6 @@
                           :width="16" :height="16"></plus-circle-icon>
       </div>
     </div>
-    
-    <p>Dragged: {{currentlyBeingDragged}}, index: {{compoundWidgetIndex}}</p>
   </div>
 </template>
 

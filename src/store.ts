@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import mc from '@/mutation-constants';
-import { TaxonomyNodeModel } from '@/types'
+import { TaxonomyNodeModel, SwapParameters } from '@/types'
 import TreeModel from 'tree-model';
 
 Vue.use(Vuex);
@@ -132,8 +132,12 @@ export default new Vuex.Store({
         },
         [mc.COMPOUND_WIDGET_DRAG_FLAG_OFF]: (state, index: number) => {
             state.compoundWidgets[index].isCurrentlyBeingDragged = false;
-        }
-
+        },
+        [mc.SWAP_COMPOUND_WIDGETS]: (state, params: SwapParameters) => {
+            const cutItems = state.compoundWidgets.splice(params.sourceIndex, 1);
+            const theItem = cutItems[0];
+            state.compoundWidgets.splice(params.targetIndex, 0, theItem);
+        },
     },
     actions: {
     },
