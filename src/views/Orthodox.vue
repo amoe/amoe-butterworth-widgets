@@ -8,7 +8,7 @@
 import Vue from 'vue';
 import TreeModel from 'tree-model';
 import WidgetView from '@/components/WidgetView.vue'; // @ is an alias to /src
-
+import * as log from 'loglevel';
 
 const TAXONOMY_DATA = {
     'children': [{'content': 'Rock', 'id': 1, 'label': 'Taxon'},
@@ -32,7 +32,7 @@ export default Vue.extend({
         }
     },
     mounted() {
-        console.log("root is %o", this.taxonomies);
+        log.debug("root is %o", this.taxonomies);
     }
 });
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" :key="renderCount">
     <p>Some text</p>
 
     <div class="main-view-container" ref="mainViewContainer">
@@ -8,7 +8,9 @@
       <div class="widget-group-column"
            v-for="(compoundWidgetDefinition, index) in compoundWidgets">
         <compound-widget v-bind="compoundWidgetDefinition"
-                         :style-overrides="widgetStyle[compoundWidgetDefinition.taxonomyRef]"/>
+                         :compound-widget-index="index"
+                         :style-overrides="widgetStyle[compoundWidgetDefinition.taxonomyRef]"
+                         ref="compoundWidgets"/>
 
         <!-- add serif if we are not the last -->
         <serif-operator v-if="index < (compoundWidgets.length - 1)"></serif-operator>
@@ -29,16 +31,21 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import {VueConstructor} from 'vue';
+import {mapGetters} from 'vuex';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import CompoundWidget from '@/components/CompoundWidget.vue';
-import { Draggable } from 'gsap/Draggable';
+import { Draggable, DraggableConstructor } from 'gsap/Draggable';
 import typeGuards from '@/type-guards';
 import SerifOperator from '@/components/SerifOperator.vue';
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
-
+import mc from '@/mutation-constants';
+import assert from '@/assert';
+import util from '@/util';
+import * as log from 'loglevel';
 
 interface TaxonomyTypeIndex {
     [key: string]: TaxonomyTypeInfo;
@@ -51,24 +58,21 @@ interface ColorScaleCache {
 interface TaxonomyTypeInfo {
 };
 
-interface CompoundWidget {
-    taxonomyRef: string;
-    taxons: TaxonInfo[];
-};
-
-interface TaxonInfo {
-    level: number;
-    value: string;
-};
-
 interface ComponentData {
     taxonomyTypes: TaxonomyTypeIndex;
-    compoundWidgets: CompoundWidget[];
     floatingWidgets: any;
+    renderCount: 0;
 };
 
+interface WidgetViewRefs {
+    $refs: {
+        compoundWidgets: Vue[]
+    };
+};
 
-export default Vue.extend({
+type AugmentedVue = VueConstructor<Vue & WidgetViewRefs>;
+
+export default (Vue as AugmentedVue).extend({
     name: 'home',
     components: {SerifOperator, CompoundWidget},
     props: ['taxonomies'],
@@ -78,127 +82,88 @@ export default Vue.extend({
                 'Occupation': {},
                 'Place': {},
             },
-            compoundWidgets: [
-                {
-                    taxonomyRef: 'Occupation',
-                    taxons: [
-                        {
-                            level: 1,
-                            value: "Manufacturing"
-                        },
-                        {
-                            level: 2,
-                            value: "Wood workers"
-                        },
-                        {
-                            level: 3,
-                            value: "Bandbox-maker"
-                        },
-                    ]
-                },
-                {
-                    taxonomyRef: 'Place',
-                    taxons: [
-                        {
-                            level: 1,
-                            value: "Country"
-                        },
-                        {
-                            level: 2,
-                            value: "France"
-                        }
-                    ]
-                },
-                {
-                    taxonomyRef: 'Occupation',
-                    taxons: [
-                        {
-                            level: 1,
-                            value: "Manufacturing"
-                        },
-                        {
-                            level: 2,
-                            value: "Wood workers"
-                        },
-                        {
-                            level: 3,
-                            value: "Bandbox-maker"
-                        },
-                    ]
-                },
-                {
-                    taxonomyRef: 'Place',
-                    taxons: [
-                        {
-                            level: 1,
-                            value: "Country"
-                        },
-                        {
-                            level: 2,
-                            value: "France"
-                        }
-                    ]
-                },
-            ],
             floatingWidgets: [
                 {}
             ],
+            renderCount: 0
         };
     },
     created() {
-        console.log("using taxonomies: %o", this.taxonomies);
+        log.debug("using taxonomies: %o", this.taxonomies);
     },
     mounted() {
-        this.setupScrollbar();
-/*
-        if (typeGuards.isElementArray(this.$refs.widgets)) {
-            const target: Element[] = this.$refs.widgets;
-            // Lock to the x-axis
-            const vars = {
-                type: 'x'
-            };
-
-            Draggable.create(target, vars);
-        }
-*/
-
-        this.$nextTick(this.bindFloatingDraggables);
+        this.reRender();
     },
     methods: {
+        reRender() {
+            this.renderCount++;
+            this.$nextTick(() => {
+                this.setupScrollbar();
+                this.bindCompoundWidgets();
+            });
+        },
+        bindCompoundWidgets(): void {
+            log.debug("inside mounted callback");
+            const widgetsToBind: Element[] = this.getCompoundWidgetElements();
+            log.debug("widgets to bind = %o", widgetsToBind);
+
+            // forEach will pass the index to the callback implicitly
+            widgetsToBind.forEach(this.bindCompoundWidget);
+        },
+        bindCompoundWidget(compoundWidget: Element, index: number): void {
+            const component = this;
+            log.debug("value of compoundWidget is %o", compoundWidget);
+            const handle = compoundWidget.querySelector('.move-handle');
+            assert(handle !== null, "move handle must be found");
+
+            log.debug("I  will try to bind the draggable to element %o", handle);
+
+            const vars = {
+                trigger: handle,
+                type: 'x',
+                onPress: () => this.$store.commit(mc.COMPOUND_WIDGET_DRAG_FLAG_ON, index),
+                onRelease: () => this.$store.commit(mc.COMPOUND_WIDGET_DRAG_FLAG_OFF, index),
+                // Need to pass the appropriate index which we know here.
+                onDragEnd: function (e: PointerEvent) {
+                    component.onDragEnd(this, e, index);
+                }
+            };
+            
+            Draggable.create(compoundWidget, vars);
+        },
+        onDragEnd(draggable: DraggableConstructor, e: PointerEvent, sourceIndex: number) {
+            log.debug("drag ended");
+
+            const validElements = this.getCompoundWidgetElements();
+
+            const collisions = util.getCollidingElements(draggable, validElements);
+
+            if (collisions.length === 0) {
+                // Spring back to where you were before dragging
+                this.reRender();
+            } else if (collisions.length > 1) {
+                throw new Error("Ambiguous drag");
+            } else {
+                const targetIndex = validElements.indexOf(collisions[0]);
+                this.$store.commit(mc.SWAP_COMPOUND_WIDGETS, {sourceIndex, targetIndex});
+                this.reRender();
+            }
+        },
+        getCompoundWidgetElements(): Element[] {
+            return this.$refs.compoundWidgets.map(v => v.$el);
+        },
         setupScrollbar(): void {
             if (typeGuards.isHTMLElement(this.$refs.mainViewContainer)) {
                 const mainViewContainer: HTMLElement = this.$refs.mainViewContainer;
                 const ps = new PerfectScrollbar(mainViewContainer);
                 ps.update();
-                console.log("set up scrollbar with %o", ps);
+                log.debug("set up scrollbar with %o", ps);
             }
         },
-        /*
-        add(taxonomyType: string): void {
-            const blankWidget: WidgetInstance = {
-                level: 4,
-                value: "Blank"
-            };
-
-            this.compoundWidgets[taxonomyType].push(blankWidget);
-        },
-        */
         addFloatingWidget(): void {
-            console.log("adding floating widget");
+            log.debug("adding floating widget");
             this.floatingWidgets.push({});
         },
-        bindFloatingDraggables(): void {
-            if (typeGuards.isElementArray(this.$refs.floatingWidgets)) {
-                const widgets: Element[] = this.$refs.floatingWidgets;
-
-
-                const newWidgets = widgets.filter(
-                    w => Draggable.get(w) === undefined
-                );
-
-                Draggable.create(newWidgets, {});
-            }
-        }
     },
     computed: {
         sortedTaxonomyTypeKeys(): string[] {
@@ -221,20 +186,11 @@ export default Vue.extend({
             });
 
             return result;
-        }
+        },
+        ... mapGetters(['compoundWidgets'])
     },
     updated() {
     },
-    watch: {
-        floatingWidgets: function (newValue, oldValue) {
-            console.log("watch called on floating widgets");
-            console.log("floating widgets are %o", this.$refs.floatingWidgets);
-
-            // Next tick is essential here otherwise we miss the one that's
-            // just about to be rendered
-            this.$nextTick(this.bindFloatingDraggables);
-        }
-    }
 });
 </script>
 

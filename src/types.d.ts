@@ -18,5 +18,7 @@ export type MyNode = Node<MyNodeModel>
 
 export type TransitionCallback = () => void;
 
-// no type for Draggable in @types/gsap :(
-export type Draggable = any;
+export interface SwapParameters {
+    sourceIndex: number;
+    targetIndex: number;
+}

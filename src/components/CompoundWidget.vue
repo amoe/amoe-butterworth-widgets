@@ -23,7 +23,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, {VueConstructor} from 'vue';
+import {mapGetters} from 'vuex';
 import { Draggable } from 'gsap/Draggable';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
@@ -35,43 +36,31 @@ import assert from '@/assert';
 
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
+import * as log from 'loglevel';
 
 interface ColorScaleCache {
     [key: string]: object;
-}
+};
+
+interface CompoundWidgetRefs {
+    $refs: {
+        compoundWidgetElement: Element,
+        widgets: Element[]
+    }
+};
+
+type AugmentedVue = VueConstructor<Vue & CompoundWidgetRefs>;
 
 export default (Vue as AugmentedVue).extend({
-    props: ['taxonomyRef', 'taxons', 'styleOverrides'],
+    props: ['compoundWidgetIndex', 'taxonomyRef', 'taxons', 'styleOverrides'],
     data() {
         return {
-            currentlyBeingDragged: false
         };
     },
     components: {MoveIcon, XCircleIcon, TaxonSelect, CircleIcon, PlusCircleIcon},
     mounted() { 
-        const component = this;
-
-        console.log("inside mounted callback");
-        if (typeGuards.isElement(this.$refs.compoundWidgetElement)) {
-            const compoundWidget: Element = this.$refs.compoundWidgetElement;
-
-            const handle = compoundWidget.querySelector('.move-handle');
-            assert(handle !== null, "move handle must be found");
-
-            console.log("I  will try to bind the draggable to element %o", handle);
-            
-            const vars = {
-                trigger: handle,
-                type: 'x',
-                onPress: () => this.currentlyBeingDragged = true,
-                onRelease: () => this.currentlyBeingDragged = false,
-                onDragEnd: function (e: PointerEvent) {
-                    component.onDragEnd(this, e);
-                }
-            };
-
-            Draggable.create(compoundWidget, vars);
-        }
+        // nothing happens here because all the draggable binding is handled in
+        // the parent widgetview
     },
     computed: {
         // styles for the compound widget itself -- styleOverrides only used
@@ -87,16 +76,20 @@ export default (Vue as AugmentedVue).extend({
             } else {
                 return {};
             }
-        }
+        },
+        currentlyBeingDragged(this: any): boolean {
+            return this.isSpecificCompoundWidgetBeingDragged(this.compoundWidgetIndex);
+        },
+        ... mapGetters(['isSpecificCompoundWidgetBeingDragged'])
     },
     methods: {
         setupCompoundWidgetDraggable(group: Element): void {
         },
         onPress(): void {
-            console.log("foo");
+            log.debug("foo");
         },
         onRelease(): void {
-            console.log("bar");
+            log.debug("bar");
         },
     }
 });
@@ -121,19 +114,6 @@ export default (Vue as AugmentedVue).extend({
 .widget {
     display: flex;
     flex-direction: column;
-
-    // A widget has a fixed height of 8em.
-
-/*    background-color: @lightgreen;*/
-
-    /*
-    background-image: linear-gradient(
-        to right,
-        rgba(26, 198, 204, 0.5),
-        rgba(26, 198, 204, 1.0) 50%,
-        rgba(26, 198, 204, 0.5)
-    );
-    */
 
     padding-top: @space-medium;
     padding-bottom: @space-medium;

@@ -1,4 +1,5 @@
 import { TaxonomyNode } from '@/types';
+import { DraggableConstructor } from 'gsap/Draggable';
 
 function getVirtualRoot(rootNode: TaxonomyNode, wantedPath: number[]): TaxonomyNode {
     console.log("inside getVirtualRoot");
@@ -29,4 +30,9 @@ function findValidChildren(
 };
 
 
-export default { findValidChildren };
+function getCollidingElements(d: DraggableConstructor, validElements: Element[]) {
+    return validElements.filter(e => d.hitTest(e, '50%'));
+}
+
+
+export default { findValidChildren, getCollidingElements };
