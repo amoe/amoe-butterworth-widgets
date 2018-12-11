@@ -45,6 +45,7 @@ import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import mc from '@/mutation-constants';
 import assert from '@/assert';
 import util from '@/util';
+import * as log from 'loglevel';
 
 interface TaxonomyTypeIndex {
     [key: string]: TaxonomyTypeInfo;
@@ -88,7 +89,7 @@ export default (Vue as AugmentedVue).extend({
         };
     },
     created() {
-        console.log("using taxonomies: %o", this.taxonomies);
+        log.debug("using taxonomies: %o", this.taxonomies);
     },
     mounted() {
         this.reRender();
@@ -102,20 +103,20 @@ export default (Vue as AugmentedVue).extend({
             });
         },
         bindCompoundWidgets(): void {
-            console.log("inside mounted callback");
+            log.debug("inside mounted callback");
             const widgetsToBind: Element[] = this.getCompoundWidgetElements();
-            console.log("widgets to bind = %o", widgetsToBind);
+            log.debug("widgets to bind = %o", widgetsToBind);
 
             // forEach will pass the index to the callback implicitly
             widgetsToBind.forEach(this.bindCompoundWidget);
         },
         bindCompoundWidget(compoundWidget: Element, index: number): void {
             const component = this;
-            console.log("value of compoundWidget is %o", compoundWidget);
+            log.debug("value of compoundWidget is %o", compoundWidget);
             const handle = compoundWidget.querySelector('.move-handle');
             assert(handle !== null, "move handle must be found");
 
-            console.log("I  will try to bind the draggable to element %o", handle);
+            log.debug("I  will try to bind the draggable to element %o", handle);
 
             const vars = {
                 trigger: handle,
@@ -131,7 +132,7 @@ export default (Vue as AugmentedVue).extend({
             Draggable.create(compoundWidget, vars);
         },
         onDragEnd(draggable: DraggableConstructor, e: PointerEvent, sourceIndex: number) {
-            console.log("drag ended");
+            log.debug("drag ended");
 
             const validElements = this.getCompoundWidgetElements();
 
@@ -156,11 +157,11 @@ export default (Vue as AugmentedVue).extend({
                 const mainViewContainer: HTMLElement = this.$refs.mainViewContainer;
                 const ps = new PerfectScrollbar(mainViewContainer);
                 ps.update();
-                console.log("set up scrollbar with %o", ps);
+                log.debug("set up scrollbar with %o", ps);
             }
         },
         addFloatingWidget(): void {
-            console.log("adding floating widget");
+            log.debug("adding floating widget");
             this.floatingWidgets.push({});
         },
     },

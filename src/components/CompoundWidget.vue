@@ -36,6 +36,7 @@ import assert from '@/assert';
 
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
+import * as log from 'loglevel';
 
 interface ColorScaleCache {
     [key: string]: object;
@@ -85,10 +86,10 @@ export default (Vue as AugmentedVue).extend({
         setupCompoundWidgetDraggable(group: Element): void {
         },
         onPress(): void {
-            console.log("foo");
+            log.debug("foo");
         },
         onRelease(): void {
-            console.log("bar");
+            log.debug("bar");
         },
     }
 });
