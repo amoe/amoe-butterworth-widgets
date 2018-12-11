@@ -30,12 +30,12 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue';
+import Vue from 'vue';
 import {VueConstructor} from 'vue';
 import {mapGetters} from 'vuex';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 import CompoundWidget from '@/components/CompoundWidget.vue';
-import { Draggable } from 'gsap/Draggable';
+import { Draggable, DraggableConstructor } from 'gsap/Draggable';
 import typeGuards from '@/type-guards';
 import SerifOperator from '@/components/SerifOperator.vue';
 import * as d3Scale from 'd3-scale';
@@ -44,6 +44,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import mc from '@/mutation-constants';
 import assert from '@/assert';
+import util from '@/util';
 
 interface TaxonomyTypeIndex {
     [key: string]: TaxonomyTypeInfo;
@@ -61,9 +62,6 @@ interface ComponentData {
     floatingWidgets: any;
     renderCount: 0;
 };
-
-type Draggable = any;
-
 
 interface WidgetViewRefs {
     $refs: {
@@ -105,7 +103,7 @@ export default (Vue as AugmentedVue).extend({
         },
         bindCompoundWidgets(): void {
             console.log("inside mounted callback");
-            const widgetsToBind: Element[] = this.$refs.compoundWidgets.map(v => v.$el);
+            const widgetsToBind: Element[] = this.getCompoundWidgetElements();
             console.log("widgets to bind = %o", widgetsToBind);
 
             // forEach will pass the index to the callback implicitly
@@ -126,15 +124,36 @@ export default (Vue as AugmentedVue).extend({
                 onRelease: () => this.$store.commit(mc.COMPOUND_WIDGET_DRAG_FLAG_OFF, index),
                 // Need to pass the appropriate index which we know here.
                 onDragEnd: function (e: PointerEvent) {
-                    component.onDragEnd(this, e);
+                    component.onDragEnd(this, e, index);
                 }
             };
             
             Draggable.create(compoundWidget, vars);
         },
-        onDragEnd(draggable: Draggable, e: PointerEvent) {
+        onDragEnd(draggable: DraggableConstructor, e: PointerEvent, index: number) {
             console.log("drag ended");
-            this.reRender();
+
+            const collisions = util.getCollidingElements(
+                draggable, this.getCompoundWidgetElements()
+            );
+
+            if (collisions.length === 0) {
+                // Spring back to where you were before dragging
+                this.reRender();
+            } else if (collisions.length > 1) {
+                throw new Error("Ambiguous drag");
+            } else {
+                this.swapCompoundWidgets(index, this.getIndexByElement(collisions[0]));
+            }
+        },
+        getIndexByElement(compoundWidget: Element): number {
+            return 0;
+        },
+        swapCompoundWidgets(sourceIndex: number, targetIndex: number) {
+            
+        },
+        getCompoundWidgetElements(): Element[] {
+            return this.$refs.compoundWidgets.map(v => v.$el);
         },
         setupScrollbar(): void {
             if (typeGuards.isHTMLElement(this.$refs.mainViewContainer)) {
