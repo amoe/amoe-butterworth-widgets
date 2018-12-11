@@ -60,6 +60,7 @@ export default Vue.extend({
             
             const vars = {
                 trigger: handle,
+                type: 'x',
                 onPress: () => this.currentlyBeingDragged = true,
                 onRelease: () => this.currentlyBeingDragged = false,
                 onDragEnd: this.onDragEnd
