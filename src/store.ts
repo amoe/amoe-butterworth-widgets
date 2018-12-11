@@ -70,6 +70,7 @@ export default new Vuex.Store({
                         value: "Bandbox-maker"
                     },
                 ],
+                isCurrentlyBeingDragged: false
             },
             {
                 taxonomyRef: 'Place',
@@ -82,7 +83,8 @@ export default new Vuex.Store({
                         level: 2,
                         value: "France"
                     }
-                ]
+                ],
+                isCurrentlyBeingDragged: false
             },
             {
                 taxonomyRef: 'Occupation',
@@ -99,7 +101,8 @@ export default new Vuex.Store({
                         level: 3,
                         value: "Bandbox-maker"
                     },
-                ]
+                ],
+                isCurrentlyBeingDragged: false
             },
             {
                 taxonomyRef: 'Place',
@@ -112,7 +115,8 @@ export default new Vuex.Store({
                         level: 2,
                         value: "France"
                     }
-                ]
+                ],
+                isCurrentlyBeingDragged: false
             },
         ] as CompoundWidget[],
     },

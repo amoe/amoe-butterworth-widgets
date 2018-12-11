@@ -8,6 +8,7 @@
       <div class="widget-group-column"
            v-for="(compoundWidgetDefinition, index) in compoundWidgets">
         <compound-widget v-bind="compoundWidgetDefinition"
+                         :compound-widget-index="index"
                          :style-overrides="widgetStyle[compoundWidgetDefinition.taxonomyRef]"
                          ref="compoundWidgets"/>
 

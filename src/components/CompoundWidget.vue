@@ -19,6 +19,8 @@
                           :width="16" :height="16"></plus-circle-icon>
       </div>
     </div>
+    
+    <p>Dragged: {{currentlyBeingDragged}}, index: {{compoundWidgetIndex}}</p>
   </div>
 </template>
 
@@ -51,7 +53,7 @@ interface CompoundWidgetRefs {
 type AugmentedVue = VueConstructor<Vue & CompoundWidgetRefs>;
 
 export default (Vue as AugmentedVue).extend({
-    props: ['taxonomyRef', 'taxons', 'styleOverrides'],
+    props: ['compoundWidgetIndex', 'taxonomyRef', 'taxons', 'styleOverrides'],
     data() {
         return {
         };
@@ -77,8 +79,7 @@ export default (Vue as AugmentedVue).extend({
             }
         },
         currentlyBeingDragged(this: any): boolean {
-            const index = 0; // fail
-            return this.isSpecificCompoundWidgetBeingDragged(index);
+            return this.isSpecificCompoundWidgetBeingDragged(this.compoundWidgetIndex);
         },
         ... mapGetters(['isSpecificCompoundWidgetBeingDragged'])
     },
