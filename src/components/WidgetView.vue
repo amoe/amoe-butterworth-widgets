@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" :key="renderCount">
     <p>Some text</p>
 
     <div class="main-view-container" ref="mainViewContainer">
@@ -59,6 +59,7 @@ interface TaxonomyTypeInfo {
 interface ComponentData {
     taxonomyTypes: TaxonomyTypeIndex;
     floatingWidgets: any;
+    renderCount: 0;
 };
 
 type Draggable = any;
@@ -85,16 +86,23 @@ export default (Vue as AugmentedVue).extend({
             floatingWidgets: [
                 {}
             ],
+            renderCount: 0
         };
     },
     created() {
         console.log("using taxonomies: %o", this.taxonomies);
     },
     mounted() {
-        this.setupScrollbar();
-        this.bindCompoundWidgets();
+        this.reRender();
     },
     methods: {
+        reRender() {
+            this.renderCount++;
+            this.$nextTick(() => {
+                this.setupScrollbar();
+                this.bindCompoundWidgets();
+            });
+        },
         bindCompoundWidgets(): void {
             console.log("inside mounted callback");
             const widgetsToBind: Element[] = this.$refs.compoundWidgets.map(v => v.$el);
@@ -126,6 +134,7 @@ export default (Vue as AugmentedVue).extend({
         },
         onDragEnd(draggable: Draggable, e: PointerEvent) {
             console.log("drag ended");
+            this.reRender();
         },
         setupScrollbar(): void {
             if (typeGuards.isHTMLElement(this.$refs.mainViewContainer)) {
