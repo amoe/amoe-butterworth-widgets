@@ -40,7 +40,7 @@ interface ColorScaleCache {
     [key: string]: object;
 }
 
-export default Vue.extend({
+export default (Vue as AugmentedVue).extend({
     props: ['taxonomyRef', 'taxons', 'styleOverrides'],
     data() {
         return {
@@ -49,6 +49,8 @@ export default Vue.extend({
     },
     components: {MoveIcon, XCircleIcon, TaxonSelect, CircleIcon, PlusCircleIcon},
     mounted() { 
+        const component = this;
+
         console.log("inside mounted callback");
         if (typeGuards.isElement(this.$refs.compoundWidgetElement)) {
             const compoundWidget: Element = this.$refs.compoundWidgetElement;
@@ -60,9 +62,12 @@ export default Vue.extend({
             
             const vars = {
                 trigger: handle,
+                type: 'x',
                 onPress: () => this.currentlyBeingDragged = true,
                 onRelease: () => this.currentlyBeingDragged = false,
-                onDragEnd: this.onDragEnd
+                onDragEnd: function (e: PointerEvent) {
+                    component.onDragEnd(this, e);
+                }
             };
 
             Draggable.create(compoundWidget, vars);
@@ -76,7 +81,8 @@ export default Vue.extend({
                 return { 
                     'border-width': 'medium',
                     'border-style': 'dashed',
-                    'border-color': 'black'
+                    'border-color': 'black',
+                    'background-color': 'hsla(0, 0%, 63%, 0.9)'   // transparenty grey
                 };
             } else {
                 return {};
@@ -92,9 +98,6 @@ export default Vue.extend({
         onRelease(): void {
             console.log("bar");
         },
-        onDragEnd(): void {
-            console.log("dragend");
-        }
     }
 });
 </script>

@@ -7,7 +7,7 @@ import FoldingDemo2 from './views/FoldingDemo2.vue';
 
 Vue.use(Router);
 
-const IndexView = FoldingDemo2;
+const IndexView = Orthodox;
 
 export default new Router({
     routes: [
