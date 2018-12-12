@@ -4,7 +4,7 @@
 
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
-    <transition-group name="flip2-list" tag="div">
+    <transition-group name="taxon-slide" tag="div">
       <div class="widget"
            v-for="(taxon, index) in taxons"
            :style="styleOverrides" 
@@ -136,12 +136,12 @@ export default (Vue as AugmentedVue).extend({
 }
 
 // Do a leave transition over 2 seconds, whatever it may be
-.flip2-list-leave-active {
+.taxon-slide-leave-active {
     transition: all 2s;
 }
 
 // The actual transform to execute
-.flip2-list-leave-to {
+.taxon-slide-leave-to {
     transform: translateX(10px);
     opacity: 0;
 }
