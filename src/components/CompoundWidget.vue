@@ -4,12 +4,14 @@
 
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
-    <div class="widget" v-for="taxon in taxons" :style="styleOverrides" ref="widgets">
+    <div class="widget" v-for="(taxon, index) in taxons" :style="styleOverrides" ref="widgets">
       <taxon-select :value="taxon.value">
       </taxon-select>
 
       <div class="level-container">
-        <x-circle-icon class="widget-close-icon"></x-circle-icon>
+        <x-circle-icon class="widget-close-icon"
+                       v-on:click="killTaxonSelector(index)">
+        </x-circle-icon>
 
         <span v-for="n in taxon.level">
           <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
@@ -33,6 +35,7 @@ import TaxonSelect from '@/components/TaxonSelect.vue';
 import { XCircleIcon } from 'vue-feather-icons';
 import typeGuards from '@/type-guards';
 import assert from '@/assert';
+import mc from '@/mutation-constants';
 
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
@@ -91,6 +94,16 @@ export default (Vue as AugmentedVue).extend({
         onRelease(): void {
             log.debug("bar");
         },
+        killTaxonSelector(taxonSelectorIndex: number): void {
+            log.info("Would kill taxon selector with index", taxonSelectorIndex);
+
+            const params = {
+                compoundWidgetIndex: this.compoundWidgetIndex,
+                taxonSelectorIndex: taxonSelectorIndex
+            };
+
+            this.$store.commit(mc.KILL_TAXON_SELECTOR, params);
+        }
     }
 });
 </script>
@@ -149,6 +162,7 @@ export default (Vue as AugmentedVue).extend({
     width: 1em;
     height: 1em;
     margin-right: @space-small;
+    cursor: pointer;
 }
 
 .widget-add-icon {

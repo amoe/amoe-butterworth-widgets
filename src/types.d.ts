@@ -22,3 +22,8 @@ export interface SwapParameters {
     sourceIndex: number;
     targetIndex: number;
 }
+
+export interface KillTaxonSelectorParameters {
+    compoundWidgetIndex: number;
+    taxonSelectorIndex: number;
+}
