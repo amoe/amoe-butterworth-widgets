@@ -4,5 +4,6 @@ export default {
     COMPOUND_WIDGET_DRAG_FLAG_ON: 'compoundWidgetDragFlagOn',
     COMPOUND_WIDGET_DRAG_FLAG_OFF: 'compoundWidgetDragFlagOff',
     SWAP_COMPOUND_WIDGETS: 'swapCompoundWidgets',
-    KILL_TAXON_SELECTOR: 'killTaxonSelector'
+    KILL_TAXON_SELECTOR: 'killTaxonSelector',
+    SHUFFLE_TAXON_SELECTORS: 'shuffleTaxonSelectors'
 };

@@ -36,24 +36,14 @@ export default Vue.extend({
                     name: 'Leela',
                     visible: true
                 }
-            ] as BoxInfo[],
-            items: [1,2,3,4,5,6,7,8,9]
+            ] as BoxInfo[]
         };
     },
     methods: {
         hide(index: number): void {
             this.boxes.splice(index, 1);
         },
-        onEnter(el: Element, done: TransitionCallback) {
-            console.log("inside onenter");
-            done();
-        },
-        onLeave(el: Element, done: TransitionCallback) {
-            console.log("inside onleave");
-            done();
-        },
         shuffleBoxes() {
-            // do nothing
             this.boxes = _.shuffle(this.boxes)
         }
     }

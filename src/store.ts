@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import mc from '@/mutation-constants';
 import { TaxonomyNodeModel, SwapParameters, KillTaxonSelectorParameters } from '@/types'
 import TreeModel from 'tree-model';
+import _ from 'lodash';
 
 Vue.use(Vuex);
 
@@ -141,6 +142,11 @@ export default new Vuex.Store({
         [mc.KILL_TAXON_SELECTOR]: (state, params: KillTaxonSelectorParameters) => {
             const taxons = state.compoundWidgets[params.compoundWidgetIndex].taxons;
             taxons.splice(params.taxonSelectorIndex, 1);
+        },
+        [mc.SHUFFLE_TAXON_SELECTORS]: (state) => {
+            state.compoundWidgets.forEach(c => {
+                c.taxons = _.shuffle(c.taxons);
+            });
         }
     },
     actions: {

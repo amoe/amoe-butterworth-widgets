@@ -1,6 +1,7 @@
 <template>
   <div class="home" :key="renderCount">
     <p>Some text</p>
+    <button v-on:click="shuffleTaxonSelectors">Shuffle taxon selectors</button>
 
     <div class="main-view-container" ref="mainViewContainer">
       <!-- We need a separate column class, because we don't want to drag the
@@ -168,6 +169,9 @@ export default (Vue as AugmentedVue).extend({
             log.debug("adding floating widget");
             this.floatingWidgets.push({});
         },
+        shuffleTaxonSelectors(): void {
+            this.$store.commit(mc.SHUFFLE_TAXON_SELECTORS);
+        }
     },
     computed: {
         sortedTaxonomyTypeKeys(): string[] {
