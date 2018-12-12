@@ -135,6 +135,18 @@ export default (Vue as AugmentedVue).extend({
     border-color: rgba(0, 0, 0, 0);
 }
 
+// Do a leave transition over 2 seconds, whatever it may be
+.flip2-list-leave-active {
+    transition: all 2s;
+}
+
+// The actual transform to execute
+.flip2-list-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+
 // Because vue transition creates a wrapper div around the transition'ed elements,
 // we need to style that div to layout the elements correctly.
 .compound-widget-container > div {
