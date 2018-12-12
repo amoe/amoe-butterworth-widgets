@@ -155,7 +155,11 @@ export default (Vue as AugmentedVue).extend({
         setupScrollbar(): void {
             if (typeGuards.isHTMLElement(this.$refs.mainViewContainer)) {
                 const mainViewContainer: HTMLElement = this.$refs.mainViewContainer;
-                const ps = new PerfectScrollbar(mainViewContainer);
+                const options = {
+                    suppressScrollY: true,
+                    useBothWheelAxes: true    // make it wheel-scrollable
+                };
+                const ps = new PerfectScrollbar(mainViewContainer, options);
                 ps.update();
                 log.debug("set up scrollbar with %o", ps);
             }
