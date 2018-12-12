@@ -1,6 +1,7 @@
 <template>
   <div class="serif">
-    <span>⇿</span>
+    <!-- LEFT RIGHT OPEN-HEADED ARROW -->
+    <span class="toggle-control" v-on:click="toggleSerif">&hoarr;</span>
 
     <div class="serif-left">
     </div>
@@ -46,10 +47,14 @@ export default Vue.extend({
     mounted() {
         this.$nextTick(() => {
             window.addEventListener('keydown', e => {
+
                 if (e.key === " ") {
-                    console.log("event was %o", e);
-                    this.toggleSerif();
-                    e.preventDefault();
+                     window.alert("no space bar action yet.  serif states need to move to vuex");
+                     e.stopPropagation();
+                     return false;
+                    // console.log("event was %o", e);
+                    // this.toggleSerif();
+                    // e.preventDefault();
                 }
             });
         });
@@ -132,6 +137,9 @@ export default Vue.extend({
     height: 100%;
 }
 
+.toggle-control {
+    cursor: pointer;
+}
 
 
 </style>
