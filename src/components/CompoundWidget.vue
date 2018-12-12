@@ -4,7 +4,11 @@
 
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
-    <div class="widget" v-for="(taxon, index) in taxons" :style="styleOverrides" ref="widgets">
+    <div class="widget"
+         v-for="(taxon, index) in taxons"
+         :style="styleOverrides" 
+         ref="widgets"
+         :key="taxon.level">
       <taxon-select :value="taxon.value">
       </taxon-select>
 
