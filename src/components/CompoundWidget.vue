@@ -18,7 +18,9 @@
         </span>
 
         <plus-circle-icon class="widget-add-icon"
-                          :width="16" :height="16"></plus-circle-icon>
+                          :width="16" :height="16"
+                          v-on:click="addTaxonSelector">
+        </plus-circle-icon>
       </div>
     </div>
   </div>
@@ -103,6 +105,9 @@ export default (Vue as AugmentedVue).extend({
             };
 
             this.$store.commit(mc.KILL_TAXON_SELECTOR, params);
+        },
+        addTaxonSelector(): void {
+            console.log("I would add a new taxon selector to this compound widget");
         }
     }
 });
@@ -168,5 +173,6 @@ export default (Vue as AugmentedVue).extend({
 .widget-add-icon {
     margin-left: @space-small;
     stroke: @grey;
+    cursor: pointer;
 }
 </style>
