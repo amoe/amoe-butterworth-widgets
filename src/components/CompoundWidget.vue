@@ -4,29 +4,31 @@
 
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
-    <div class="widget"
-         v-for="(taxon, index) in taxons"
-         :style="styleOverrides" 
-         ref="widgets"
-         :key="taxon.level">
-      <taxon-select :value="taxon.value">
-      </taxon-select>
+    <transition-group name="flip2-list" tag="div">
+      <div class="widget"
+           v-for="(taxon, index) in taxons"
+           :style="styleOverrides" 
+           ref="widgets"
+           :key="taxon.level">
+        <taxon-select :value="taxon.value">
+        </taxon-select>
 
-      <div class="level-container">
-        <x-circle-icon class="widget-close-icon"
-                       v-on:click="killTaxonSelector(index)">
-        </x-circle-icon>
+        <div class="level-container">
+          <x-circle-icon class="widget-close-icon"
+                         v-on:click="killTaxonSelector(index)">
+          </x-circle-icon>
 
-        <span v-for="n in taxon.level">
-          <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
-        </span>
+          <span v-for="n in taxon.level">
+            <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
+          </span>
 
-        <plus-circle-icon class="widget-add-icon"
-                          :width="16" :height="16"
-                          v-on:click="addTaxonSelector">
-        </plus-circle-icon>
+          <plus-circle-icon class="widget-add-icon"
+                            :width="16" :height="16"
+                            v-on:click="addTaxonSelector">
+          </plus-circle-icon>
+        </div>
       </div>
-    </div>
+      </transition-group>
   </div>
 </template>
 
@@ -131,6 +133,13 @@ export default (Vue as AugmentedVue).extend({
     border-width: medium;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0);
+}
+
+// Because vue transition creates a wrapper div around the transition'ed elements,
+// we need to style that div to layout the elements correctly.
+.compound-widget-container > div {
+    display: flex;
+    flex-direction: row;
 }
 
 .widget {
