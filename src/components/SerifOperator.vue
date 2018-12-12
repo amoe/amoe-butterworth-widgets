@@ -1,5 +1,7 @@
 <template>
   <div class="serif">
+    <span>⇿</span>
+
     <div class="serif-left">
     </div>
 
@@ -37,7 +39,6 @@ export default Vue.extend({
     components: {SerifControlPanel, DistanceIndicator},
     data() {
         return {
-            widgets: [1, 2, 3, 4],
             serifExpanded: true,
             distance: 4
         }
