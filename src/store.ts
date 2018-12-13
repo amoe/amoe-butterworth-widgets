@@ -131,7 +131,9 @@ export default new Vuex.Store({
         },
         getTaxonsByCompoundWidgetIndex(state, getters) {
             return (index: number) => {
-                const taxonomyType = state.compoundWidgets[index].taxonomyRef;
+                const thisCompoundWidget = state.compoundWidgets[index];
+                const taxonomyType = thisCompoundWidget.taxonomyRef;
+                const selectedPath = thisCompoundWidget.selectedPath;
 
                 if (taxonomyType === null) {
                     throw new Error("can't happen");
@@ -143,8 +145,20 @@ export default new Vuex.Store({
 
                 const targetTaxonomy = getters.taxonomies[taxonomyType];
                 console.log("locating in target taxonomy %o", targetTaxonomy);
+                console.log("selectedpath is %o", selectedPath);
 
-                return [];
+                // This might be disgustingly inefficient but we're just
+                // going to ignore that for now.
+
+                const nodes = selectedPath.map(id => util.getNodeById(targetTaxonomy, id));
+                const result = nodes.map((n, index) => {
+                    return {
+                        value: n.model.content,
+                        level: index + 1
+                    }
+                });
+
+                return result;
             };
         }
     }

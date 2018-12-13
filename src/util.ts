@@ -1,6 +1,18 @@
 import { TaxonomyNode, CompoundWidget } from '@/types';
 import { DraggableConstructor } from 'gsap/Draggable';
 
+
+function getNodeById(rootNode: TaxonomyNode, wantedId: number): TaxonomyNode {
+    const result = rootNode.all(function(node): boolean {
+        return node.model.id === wantedId;
+    });
+    if (result.length === 1) {
+        return result[0];
+    } else {
+        throw new Error("not found: " + wantedId);
+    }
+}
+
 function getVirtualRoot(rootNode: TaxonomyNode, wantedPath: number[]): TaxonomyNode {
     console.log("inside getVirtualRoot");
     if (wantedPath.length === 0) {
@@ -10,16 +22,7 @@ function getVirtualRoot(rootNode: TaxonomyNode, wantedPath: number[]): TaxonomyN
 
     // Find the leaf of the path...
     const leaf = wantedPath[wantedPath.length - 1]
-    const result = rootNode.all(function(node): boolean {
-        return node.model.id === leaf;
-    });
-    if (result.length === 1) {
-        return result[0];
-    } else {
-        // Should throw, but we just warn to avoid any weird event bugs
-        //        console.warn("Could not find virtual root with id %o", leaf);
-        throw new Error("not found: " + leaf);
-    }
+    return getNodeById(rootNode, leaf);
 }
 
 function findValidChildren(
@@ -44,4 +47,7 @@ function makeEmptyCompoundWidget(): CompoundWidget {
 }
 
 
-export default { findValidChildren, getCollidingElements, makeEmptyCompoundWidget };
+export default {
+    findValidChildren, getCollidingElements, makeEmptyCompoundWidget,
+    getNodeById
+};
