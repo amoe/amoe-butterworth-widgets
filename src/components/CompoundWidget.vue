@@ -74,14 +74,6 @@ export default (Vue as AugmentedVue).extend({
         ... mapGetters(['isSpecificCompoundWidgetBeingDragged'])
     },
     methods: {
-        setupCompoundWidgetDraggable(group: Element): void {
-        },
-        onPress(): void {
-            log.debug("foo");
-        },
-        onRelease(): void {
-            log.debug("bar");
-        },
         killTaxonSelector(taxonSelectorIndex: number) {
             log.info("Would kill taxon selector with index", taxonSelectorIndex);
 
