@@ -13,6 +13,7 @@
                       :taxon="taxons[n - 1]"
                       :key="getTaxonSelectorKey(n - 1)"
                       :index="n - 1"
+                      :selected-path="selectedPath"
                       :style-overrides="taxonStyleOverrides">
       </taxon-selector>
     </transition-group>
@@ -71,10 +72,16 @@ export default (Vue as AugmentedVue).extend({
                 return {};
             }
         },
+        // go through method-style getters to get specific compound widget properties
         currentlyBeingDragged(this: any): boolean {
             return this.isSpecificCompoundWidgetBeingDragged(this.compoundWidgetIndex);
         },
-        ... mapGetters(['isSpecificCompoundWidgetBeingDragged'])
+        selectedPath() {
+            return this.getSelectedPath(this.compoundWidgetIndex);
+        }
+        ... mapGetters([
+            'isSpecificCompoundWidgetBeingDragged', 'getSelectedPath'
+        ])
     },
     methods: {
         getTaxonSelectorKey(index: number) {

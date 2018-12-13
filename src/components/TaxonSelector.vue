@@ -27,13 +27,23 @@
 import Vue from 'vue';
 import mc from '@/mutation-constants';
 import * as log from 'loglevel';
+import {TaxonomyNode} from '@/types';
 import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 
+// The problem is that this individual taxon selector needs some way to know
+// about the selected path, which is a property of the parent compoundwidget. 
+//  No problem, we can just pass it in as a prop?
+
 export default Vue.extend({
-    props: ['index', 'styleOverrides', 'taxon'],
+    props: ['index', 'styleOverrides', 'taxon', 'selectedPath'],
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
+    data() {
+        return {
+            level: this.taxon === undefined ? this.index + 1 : this.taxon.level
+        }
+    },
     methods: {
         killTaxonSelector(): void {
             // Need to pass the buck to the parent because we don't know which
@@ -52,11 +62,27 @@ export default Vue.extend({
             if (this.taxon === undefined) {
                 return {
                     value: "",
-                    level: this.index + 1
+                    level: this.level
                 };
             } else {
                 return this.taxon;
             }
+        },
+        filteredChildren(): TaxonomyNode[] {
+            // We have the taxonomy tree.  We have a selected path.
+            // Selected path should be cut off to the value of this.level,
+            // Then passed to the finding method.
+
+            const level = this.level;
+
+            console.log("will return filtered elements for level %o", level);
+            console.log("path is currently %o", this.selectedPath);
+
+            // Slice to level-1, because index is 1-based and the slice should
+            // be empty on the first level
+            const pathSegment = this.selectedPath.slice(0, level - 1);
+
+            return util.findValidChildren(this.taxonomyTree, pathSegment);
         }
     }
 });
