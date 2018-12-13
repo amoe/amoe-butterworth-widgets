@@ -89,6 +89,9 @@ export default new Vuex.Store({
         },
         [mc.ADD_COMPOUND_WIDGET]: (state) => {
             state.compoundWidgets.push(util.makeEmptyCompoundWidget());
+        },
+        [mc.INITIALIZE_TAXONOMIES]: (state, taxonomiesData) => {
+            state.taxonomiesData = taxonomiesData;
         }
     },
     actions: {
@@ -121,13 +124,26 @@ export default new Vuex.Store({
             const result: TaxonomiesCache = {};
 
             allKeys.forEach(k => {
-                treeModel.parse<TaxonomyNodeModel>(state.taxonomiesData[k]);
+                result[k] = treeModel.parse<TaxonomyNodeModel>(state.taxonomiesData[k]);
             });
 
             return result;
         },
-        getTaxonsByCompoundWidgetIndex(state) {
+        getTaxonsByCompoundWidgetIndex(state, getters) {
             return (index: number) => {
+                const taxonomyType = state.compoundWidgets[index].taxonomyRef;
+
+                if (taxonomyType === null) {
+                    throw new Error("can't happen");
+                }
+
+                console.log("looking up taxonomy type %o", taxonomyType);
+
+                console.log("taxonomies list %o", getters.taxonomies);
+
+                const targetTaxonomy = getters.taxonomies[taxonomyType];
+                console.log("locating in target taxonomy %o", targetTaxonomy);
+
                 return [];
             };
         }
