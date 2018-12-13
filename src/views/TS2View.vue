@@ -8,7 +8,7 @@
     </div>
 
     Defined widget count: {{definedWidgetCount}}
-    Path selected: <code>{{selectedPath}}</code>
+    Path selected: <code>{{selectedPathTS2}}</code>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ import TS2TaxonSelector from '@/components/TS2TaxonSelector.vue';
 export default Vue.extend({
     name: 'home',
     components: {TS2TaxonSelector},
-    computed: mapGetters(['definedWidgetCount', 'taxonomyTree', 'selectedPath'])
+    computed: mapGetters(['definedWidgetCount', 'taxonomyTree', 'selectedPathTS2'])
 });
 </script>
 
