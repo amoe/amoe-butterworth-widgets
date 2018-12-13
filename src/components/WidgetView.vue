@@ -10,9 +10,9 @@
            attached operator as well as the group itself. -->
       <div class="widget-group-column"
            v-for="(compoundWidgetDefinition, index) in compoundWidgets">
-        <compound-widget v-bind="compoundWidgetDefinition"
-                         :compound-widget-index="index"
+        <compound-widget :compound-widget-index="index"
                          :taxon-style-overrides="widgetStyle[compoundWidgetDefinition.taxonomyRef]"
+                         :taxonomy-ref="compoundWidgetDefinition.taxonomyRef"
                          ref="compoundWidgets"/>
 
         <!-- add serif if we are not the last -->

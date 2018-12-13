@@ -27,6 +27,7 @@ import {mapGetters} from 'vuex';
 import { Draggable } from 'gsap/Draggable';
 import MoveIcon from '@/components/MoveIcon.vue';
 import typeGuards from '@/type-guards';
+import {TaxonInfo} from '@/types';
 import assert from '@/assert';
 import mc from '@/mutation-constants';
 import TaxonSelector from '@/components/TaxonSelector.vue';
@@ -48,7 +49,7 @@ interface CompoundWidgetRefs {
 type AugmentedVue = VueConstructor<Vue & CompoundWidgetRefs>;
 
 export default (Vue as AugmentedVue).extend({
-    props: ['compoundWidgetIndex', 'taxonomyRef', 'taxons', 'taxonStyleOverrides'],
+    props: ['compoundWidgetIndex', 'taxonomyRef', 'taxonStyleOverrides'],
     data() {
         return {
         };
@@ -57,6 +58,9 @@ export default (Vue as AugmentedVue).extend({
     mounted() { 
         // nothing happens here because all the draggable binding is handled in
         // the parent widgetview
+    },
+    created() {
+        console.log("Compound widget has taxons %o", this.taxons);
     },
     computed: {
         // styles for the compound widget itself -- styleOverrides only used
@@ -77,12 +81,19 @@ export default (Vue as AugmentedVue).extend({
         currentlyBeingDragged(this: any): boolean {
             return this.isSpecificCompoundWidgetBeingDragged(this.compoundWidgetIndex);
         },
+        taxons(this: any): TaxonInfo[] {
+            return this.getTaxonsByCompoundWidgetIndex(this.compoundWidgetIndex);
+        },
         selectedPath(this: any): number[] {
             return this.getSelectedPath(this.compoundWidgetIndex);
-        }, ...mapGetters(['isSpecificCompoundWidgetBeingDragged', 'getSelectedPath'])
+        }, ...mapGetters([
+            'isSpecificCompoundWidgetBeingDragged',
+            'getSelectedPath',
+            'getTaxonsByCompoundWidgetIndex'
+        ])
     },
     methods: {
-        getTaxonSelectorKey(index: number) {
+        getTaxonSelectorKey(index: number): number {
             // This is very tricky code here
             if (index === this.taxons.length) {
                 return index + 1;

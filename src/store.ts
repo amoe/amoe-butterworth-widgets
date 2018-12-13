@@ -125,6 +125,11 @@ export default new Vuex.Store({
             });
 
             return result;
+        },
+        getTaxonsByCompoundWidgetIndex(state) {
+            return (index: number) => {
+                return [];
+            };
         }
     }
 });
