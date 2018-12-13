@@ -38,7 +38,8 @@ function makeEmptyCompoundWidget(): CompoundWidget {
     return {
         taxonomyRef: null,
         taxons: [],
-        isCurrentlyBeingDragged: false
+        isCurrentlyBeingDragged: false,
+        selectedPath: []
     };
 }
 

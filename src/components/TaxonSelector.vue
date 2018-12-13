@@ -25,19 +25,21 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 import * as log from 'loglevel';
 import {TaxonomyNode} from '@/types';
 import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
+import util from '@/util';
 
 // The problem is that this individual taxon selector needs some way to know
 // about the selected path, which is a property of the parent compoundwidget. 
 //  No problem, we can just pass it in as a prop?
 
 export default Vue.extend({
-    props: ['index', 'styleOverrides', 'taxon', 'selectedPath'],
+    props: ['index', 'styleOverrides', 'taxon', 'selectedPath', 'taxonomyRef'],
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
     data() {
         return {
@@ -68,6 +70,9 @@ export default Vue.extend({
                 return this.taxon;
             }
         },
+        taxonomies(this: any) {
+            return this.$store.getters.taxonomies;
+        },
         filteredChildren(): TaxonomyNode[] {
             // We have the taxonomy tree.  We have a selected path.
             // Selected path should be cut off to the value of this.level,
@@ -82,7 +87,7 @@ export default Vue.extend({
             // be empty on the first level
             const pathSegment = this.selectedPath.slice(0, level - 1);
 
-            return util.findValidChildren(this.taxonomyTree, pathSegment);
+            return util.findValidChildren(this.taxonomies[this.taxonomyRef], pathSegment);
         }
     }
 });

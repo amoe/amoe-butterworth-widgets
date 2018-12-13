@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import mc from '@/mutation-constants';
-import { TaxonomyNodeModel, SwapParameters, KillTaxonSelectorParameters, CompoundWidget } from '@/types'
+import { TaxonomyNode, TaxonomyNodeModel, SwapParameters, KillTaxonSelectorParameters, CompoundWidget } from '@/types'
 import TreeModel from 'tree-model';
 import _ from 'lodash';
 import sampleData from '@/sample-data';
+import sampleData2 from '@/sample-data-2';
 import util from '@/util';
 
 Vue.use(Vuex);
@@ -33,6 +34,15 @@ interface WidgetData {
     isVisible: boolean
 };
 
+// Don't know how to write the type for a JSON tree.
+interface TaxonomiesData {
+    [key: string]: any
+};
+
+interface TaxonomiesCache {
+    [key: string]: TaxonomyNode
+};
+
 
 export default new Vuex.Store({
     state: {
@@ -45,6 +55,7 @@ export default new Vuex.Store({
 
         // This is used for the orthodox view
         compoundWidgets: [] as CompoundWidget[],
+        taxonomiesData: {} as TaxonomiesData
     },
     mutations: {
         [mc.ADD_NEW_WIDGET]: (state) => {
@@ -74,7 +85,7 @@ export default new Vuex.Store({
             });
         },
         [mc.LOAD_SAMPLE_DATA]: (state) => {
-            state.compoundWidgets = sampleData;
+            state.compoundWidgets = sampleData2;
         },
         [mc.ADD_COMPOUND_WIDGET]: (state) => {
             state.compoundWidgets.push(util.makeEmptyCompoundWidget());
@@ -101,6 +112,19 @@ export default new Vuex.Store({
         },
         compoundWidgets(state) {
             return state.compoundWidgets;
+        },
+        getSelectedPath(state) {
+            return (index: number) => state.compoundWidgets[index].selectedPath;
+        },
+        taxonomies(state): TaxonomiesCache {
+            const allKeys = Object.keys(state.taxonomiesData);
+            const result: TaxonomiesCache = {};
+
+            allKeys.forEach(k => {
+                treeModel.parse<TaxonomyNodeModel>(state.taxonomiesData[k]);
+            });
+
+            return result;
         }
     }
 });

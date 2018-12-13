@@ -14,6 +14,7 @@
                       :key="getTaxonSelectorKey(n - 1)"
                       :index="n - 1"
                       :selected-path="selectedPath"
+                      :taxonomy-ref="taxonomyRef"
                       :style-overrides="taxonStyleOverrides">
       </taxon-selector>
     </transition-group>
@@ -76,7 +77,7 @@ export default (Vue as AugmentedVue).extend({
         currentlyBeingDragged(this: any): boolean {
             return this.isSpecificCompoundWidgetBeingDragged(this.compoundWidgetIndex);
         },
-        selectedPath() {
+        selectedPath(this: any): number[] {
             return this.getSelectedPath(this.compoundWidgetIndex);
         }, ...mapGetters(['isSpecificCompoundWidgetBeingDragged', 'getSelectedPath'])
     },
