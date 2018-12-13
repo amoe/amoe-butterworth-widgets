@@ -24,7 +24,7 @@ function getVirtualRoot(rootNode: TaxonomyNode, wantedPath: number[]): TaxonomyN
 
 function findValidChildren(
     rootNode: TaxonomyNode, wantedPath: number[]
-): TaxonomyNode {
+): TaxonomyNode[] {
     const virtualRoot = getVirtualRoot(rootNode, wantedPath);
     return virtualRoot.children;
 };
