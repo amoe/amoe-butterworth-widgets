@@ -95,4 +95,58 @@ export default Vue.extend({
 
 <style lang="less">
 @import "../assets/variables.less";
+
+
+.widget {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: @space-medium;
+    padding-bottom: @space-medium;
+
+
+    // Outset border gives it the raised quality.
+    // To make these 'absorb' into each other, we could try first-child and 
+    // last-child CSS properties.
+
+    border-top: @widget-border-style;
+    border-bottom: @widget-border-style;
+    border-radius: @roundedness;
+
+    min-width: 0;
+}
+
+.widget:first-child {
+    border-left: @widget-border-style;
+}
+.widget:last-child {
+    border-right: @widget-border-style;
+}
+
+.level-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 1em;
+    color: @orange;
+}
+
+.widget-close-icon {
+    width: 1em;
+    height: 1em;
+    margin-right: @space-small;
+    cursor: pointer;
+}
+
+.widget-add-icon {
+    margin-left: @space-small;
+    stroke: @grey;
+    cursor: pointer;
+}
+
+.taxon-select {
+    min-width: 8em;
+    background-color: @offwhite;
+    margin: @space-small;
+}
 </style>
