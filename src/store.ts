@@ -4,6 +4,7 @@ import mc from '@/mutation-constants';
 import { TaxonomyNodeModel, SwapParameters, KillTaxonSelectorParameters } from '@/types'
 import TreeModel from 'tree-model';
 import _ from 'lodash';
+import sampleData from '@/sample-data';
 
 Vue.use(Vuex);
 
@@ -54,72 +55,7 @@ export default new Vuex.Store({
         selectedPath: [],
 
         // This is used for the orthodox view
-        compoundWidgets: [
-            {
-                taxonomyRef: 'Occupation',
-                taxons: [
-                    {
-                        level: 1,
-                        value: "Manufacturing"
-                    },
-                    {
-                        level: 2,
-                        value: "Wood workers"
-                    },
-                    {
-                        level: 3,
-                        value: "Bandbox-maker"
-                    },
-                ],
-                isCurrentlyBeingDragged: false
-            },
-            {
-                taxonomyRef: 'Place',
-                taxons: [
-                    {
-                        level: 1,
-                        value: "Country"
-                    },
-                    {
-                        level: 2,
-                        value: "France"
-                    }
-                ],
-                isCurrentlyBeingDragged: false
-            },
-            {
-                taxonomyRef: 'Occupation',
-                taxons: [
-                    {
-                        level: 1,
-                        value: "Manufacturing"
-                    },
-                    {
-                        level: 2,
-                        value: "Wood workers"
-                    },
-                    {
-                        level: 3,
-                        value: "Bandbox-maker"
-                    },
-                ],
-                isCurrentlyBeingDragged: false
-            },
-            {
-                taxonomyRef: 'Place',
-                taxons: [
-                    {
-                        level: 1,
-                        value: "Country"
-                    },
-                    {
-                        level: 2,
-                        value: "France"
-                    }
-                ],
-                isCurrentlyBeingDragged: false
-            },
-        ] as CompoundWidget[],
+        compoundWidgets: [] as CompoundWidget[],
     },
     mutations: {
         [mc.ADD_NEW_WIDGET]: (state) => {
@@ -147,6 +83,9 @@ export default new Vuex.Store({
             state.compoundWidgets.forEach(c => {
                 c.taxons = _.shuffle(c.taxons);
             });
+        },
+        [mc.LOAD_SAMPLE_DATA]: (state) => {
+            state.compoundWidgets = sampleData;
         }
     },
     actions: {

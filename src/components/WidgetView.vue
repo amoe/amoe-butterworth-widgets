@@ -2,6 +2,7 @@
   <div class="home" :key="renderCount">
     <p>Some text</p>
     <button v-on:click="shuffleTaxonSelectors">Shuffle taxon selectors</button>
+    <button v-on:click="loadSampleData">Load sample data</button>
 
     <div class="main-view-container" ref="mainViewContainer">
       <!-- We need a separate column class, because we don't want to drag the
@@ -93,7 +94,9 @@ export default (Vue as AugmentedVue).extend({
         log.debug("using taxonomies: %o", this.taxonomies);
     },
     mounted() {
-        this.reRender();
+        // Because we start off with no data, we don't have to initially bind
+        // everything, but this may not always be the case...
+//        this.reRender();
     },
     methods: {
         reRender() {
@@ -151,6 +154,8 @@ export default (Vue as AugmentedVue).extend({
             }
         },
         getCompoundWidgetElements(): Element[] {
+            console.log("compoundWidgets ref is %o",this.$refs.compoundWidgets); 
+            
             return this.$refs.compoundWidgets.map(v => v.$el);
         },
         setupScrollbar(): void {
@@ -171,6 +176,9 @@ export default (Vue as AugmentedVue).extend({
         },
         shuffleTaxonSelectors(): void {
             this.$store.commit(mc.SHUFFLE_TAXON_SELECTORS);
+        },
+        loadSampleData(): void {
+            this.$store.commit(mc.LOAD_SAMPLE_DATA);
         }
     },
     computed: {
@@ -197,8 +205,11 @@ export default (Vue as AugmentedVue).extend({
         },
         ... mapGetters(['compoundWidgets'])
     },
-    updated() {
-    },
+    watch: {
+        compoundWidgets: function (val) {
+            this.reRender();
+        }
+    }
 });
 </script>
 
