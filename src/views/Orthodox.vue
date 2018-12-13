@@ -9,6 +9,7 @@ import Vue from 'vue';
 import TreeModel from 'tree-model';
 import WidgetView from '@/components/WidgetView.vue'; // @ is an alias to /src
 import * as log from 'loglevel';
+import {TaxonomyNodeModel} from '@/types';
 
 const TAXONOMY_DATA = {
     'children': [{'content': 'Rock', 'id': 1, 'label': 'Taxon',
@@ -31,7 +32,7 @@ export default Vue.extend({
         return {
             someArray: [1, 2, 3],
             anotherArray: [4, 5, 6],
-            taxonomies: {'Music': t.parse(TAXONOMY_DATA)}
+            taxonomies: {'Music': t.parse<TaxonomyNodeModel>(TAXONOMY_DATA)}
         }
     },
     mounted() {
