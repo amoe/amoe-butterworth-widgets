@@ -5,11 +5,14 @@
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
     <transition-group name="taxon-slide" tag="div">
-      <taxon-selector v-for="(taxon, index) in taxons"
+      <!-- Vue numeric loop is 1-based.  Subtract 1 from n to get the index.
+           But also, we want to iterate one past the end of the array to create
+           a fresh unfilled TS.  -->
+      <taxon-selector v-for="n in (taxons.length + 1)"
                       v-on:killed="killTaxonSelector"
-                      :taxon="taxon"
-                      :key="taxon.level"
-                      :index="index"
+                      :taxon="taxons[n - 1]"
+                      :key="getTaxonSelectorKey(n - 1)"
+                      :index="n - 1"
                       :style-overrides="taxonStyleOverrides">
       </taxon-selector>
     </transition-group>
@@ -74,6 +77,14 @@ export default (Vue as AugmentedVue).extend({
         ... mapGetters(['isSpecificCompoundWidgetBeingDragged'])
     },
     methods: {
+        getTaxonSelectorKey(index: number) {
+            // This is very tricky code here
+            if (index === this.taxons.length) {
+                return index + 1;
+            } else {
+                return this.taxons[index].level;
+            }
+        },
         killTaxonSelector(taxonSelectorIndex: number) {
             log.info("Would kill taxon selector with index", taxonSelectorIndex);
 
