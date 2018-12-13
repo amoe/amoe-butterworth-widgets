@@ -10,7 +10,7 @@
            v-for="(compoundWidgetDefinition, index) in compoundWidgets">
         <compound-widget v-bind="compoundWidgetDefinition"
                          :compound-widget-index="index"
-                         :style-overrides="widgetStyle[compoundWidgetDefinition.taxonomyRef]"
+                         :taxon-style-overrides="widgetStyle[compoundWidgetDefinition.taxonomyRef]"
                          ref="compoundWidgets"/>
 
         <!-- add serif if we are not the last -->

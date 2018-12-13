@@ -6,7 +6,11 @@
 
     <transition-group name="taxon-slide" tag="div">
       <taxon-selector v-for="(taxon, index) in taxons"
-                      :key="taxon.level">
+                      v-on:killed="killTaxonSelector"
+                      :taxon="taxon"
+                      :key="taxon.level"
+                      :index="index"
+                      :style-overrides="taxonStyleOverrides">
       </taxon-selector>
     </transition-group>
   </div>
@@ -16,13 +20,11 @@
 import Vue, {VueConstructor} from 'vue';
 import {mapGetters} from 'vuex';
 import { Draggable } from 'gsap/Draggable';
-import CircleIcon from '@/components/CircleIcon.vue';
-import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import MoveIcon from '@/components/MoveIcon.vue';
-import { XCircleIcon } from 'vue-feather-icons';
 import typeGuards from '@/type-guards';
 import assert from '@/assert';
 import mc from '@/mutation-constants';
+import TaxonSelector from '@/components/TaxonSelector.vue';
 
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
@@ -34,20 +36,19 @@ interface ColorScaleCache {
 
 interface CompoundWidgetRefs {
     $refs: {
-        compoundWidgetElement: Element,
-        widgets: Element[]
+        compoundWidgetElement: Element
     }
 };
 
 type AugmentedVue = VueConstructor<Vue & CompoundWidgetRefs>;
 
 export default (Vue as AugmentedVue).extend({
-    props: ['compoundWidgetIndex', 'taxonomyRef', 'taxons', 'styleOverrides'],
+    props: ['compoundWidgetIndex', 'taxonomyRef', 'taxons', 'taxonStyleOverrides'],
     data() {
         return {
         };
     },
-    components: {MoveIcon, XCircleIcon, CircleIcon, PlusCircleIcon},
+    components: {MoveIcon,TaxonSelector},
     mounted() { 
         // nothing happens here because all the draggable binding is handled in
         // the parent widgetview
@@ -81,7 +82,7 @@ export default (Vue as AugmentedVue).extend({
         onRelease(): void {
             log.debug("bar");
         },
-        killTaxonSelector(taxonSelectorIndex: number): void {
+        killTaxonSelector(taxonSelectorIndex: number) {
             log.info("Would kill taxon selector with index", taxonSelectorIndex);
 
             const params = {
@@ -90,9 +91,6 @@ export default (Vue as AugmentedVue).extend({
             };
 
             this.$store.commit(mc.KILL_TAXON_SELECTOR, params);
-        },
-        addTaxonSelector(): void {
-            console.log("I would add a new taxon selector to this compound widget");
         }
     }
 });
