@@ -10,9 +10,7 @@
              with the key values, but it's also debatable if it even
              makes sense because of the adaptive width of the distance
              indicator :/ -->
-    <transition name="fade"
-                v-on:enter="serifOpen"
-                v-on:leave="serifClose">
+    <transition name="trans" mode="out-in">
       <serif-control-panel v-if="serifExpanded" key="serif-expanded"
                            :distance="distance"
                            :on-change-distance="onChangeDistance"/>
@@ -34,8 +32,6 @@ import DistanceIndicator from '@/components/DistanceIndicator.vue';
 import SerifControlPanel from '@/components/SerifControlPanel.vue';
 import {TransitionCallback} from '@/types';
 
-const ANIMATION_TIME_SECONDS = 2.0;
-
 export default Vue.extend({
     components: {SerifControlPanel, DistanceIndicator},
     data() {
@@ -47,14 +43,8 @@ export default Vue.extend({
     mounted() {
         this.$nextTick(() => {
             window.addEventListener('keydown', e => {
-
                 if (e.key === " ") {
-                     window.alert("no space bar action yet.  serif states need to move to vuex");
-                     e.stopPropagation();
-                     return false;
-                    // console.log("event was %o", e);
-                    // this.toggleSerif();
-                    // e.preventDefault();
+                    this.toggleSerif();
                 }
             });
         });
@@ -66,34 +56,6 @@ export default Vue.extend({
 
              const casted = target as HTMLInputElement;
              this.distance = parseInt(casted.value);
-        },
-        serifOpen(el: Element, done: TransitionCallback) {
-            console.log("serifopen");
-            // This is a little trick found on the GSAP forums, since we can't
-            // tween to 'auto' easily.
-
-            console.log("distance indicator is %o", this.$refs.distanceIndicator);
-
-            done();
-            /*
-            TweenMax.set(el, {width: 'auto'});
-            TweenMax.from(el, ANIMATION_TIME_SECONDS, {
-                width: 0,
-                onComplete: done
-            });
-            */
-
-        },
-        serifClose(el: Element, done: TransitionCallback) {
-            console.log("serifclose");
-
-            done();
-            /*
-            TweenMax.to(el, ANIMATION_TIME_SECONDS, {
-                width: 0,   
-                onComplete: done
-            });
-            */
         },
         toggleSerif() {
             this.serifExpanded = !this.serifExpanded;
@@ -141,5 +103,19 @@ export default Vue.extend({
     cursor: pointer;
 }
 
+// Define the transition, these are very trial and error
+.trans-enter {
+    opacity: 0;
+}
+.trans-enter-active {
+    transition: opacity 2s;
+}
 
+.trans-leave-to {
+    width: 0px;
+}
+
+.trans-leave-active {
+    transition: width 0.2s;
+}
 </style>

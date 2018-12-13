@@ -30,13 +30,12 @@ export default Vue.extend({
 .serif-content {
     overflow-x: hidden;
     overflow-y: hidden;
-    width: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: smaller;
-    min-width: 8em;
+    width: 10em;
 }
 
 
