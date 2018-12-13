@@ -5,32 +5,10 @@
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
     <transition-group name="taxon-slide" tag="div">
-      <div class="widget"
-           v-for="(taxon, index) in taxons"
-           :style="styleOverrides" 
-           ref="widgets"
-           :key="taxon.level">
-
-        <select class="taxon-select">
-          <option selected>{{taxon.value}}</option>
-        </select>
-
-        <div class="level-container">
-          <x-circle-icon class="widget-close-icon"
-                         v-on:click="killTaxonSelector(index)">
-          </x-circle-icon>
-
-          <span v-for="n in taxon.level">
-            <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
-          </span>
-
-          <plus-circle-icon class="widget-add-icon"
-                            :width="16" :height="16"
-                            v-on:click="addTaxonSelector">
-          </plus-circle-icon>
-        </div>
-      </div>
-      </transition-group>
+      <taxon-selector v-for="(taxon, index) in taxons"
+                      :key="taxon.level">
+      </taxon-selector>
+    </transition-group>
   </div>
 </template>
 

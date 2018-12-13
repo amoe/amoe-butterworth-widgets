@@ -3,8 +3,8 @@
     <div class="taxon-container">
       <!-- Add 1, because a loop over a number is 1 indexed.  So when no path is
            defined, the loop will still generate one iteration with n=1 -->
-      <taxon-selector v-for="n in definedWidgetCount + 1"
-                      :key="n" :level="n"></taxon-selector>
+      <TS2TaxonSelector v-for="n in definedWidgetCount + 1"
+                      :key="n" :level="n"></TS2TaxonSelector>
     </div>
 
     Defined widget count: {{definedWidgetCount}}
@@ -15,11 +15,11 @@
 <script lang="ts">
 import Vue from 'vue';
 import {mapGetters} from 'vuex';
-import TaxonSelector from '@/components/TaxonSelector.vue';
+import TS2TaxonSelector from '@/components/TS2TaxonSelector.vue';
 
 export default Vue.extend({
     name: 'home',
-    components: {TaxonSelector},
+    components: {TS2TaxonSelector},
     computed: mapGetters(['definedWidgetCount', 'taxonomyTree', 'selectedPath'])
 });
 </script>
