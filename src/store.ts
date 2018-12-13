@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import mc from '@/mutation-constants';
-import { TaxonomyNodeModel, SwapParameters, KillTaxonSelectorParameters } from '@/types'
+import { TaxonomyNodeModel, SwapParameters, KillTaxonSelectorParameters, CompoundWidget } from '@/types'
 import TreeModel from 'tree-model';
 import _ from 'lodash';
 import sampleData from '@/sample-data';
+import util from '@/util';
 
 Vue.use(Vuex);
 
@@ -30,18 +31,6 @@ const TAXONOMY_DATA = {
 
 interface WidgetData {
     isVisible: boolean
-};
-
-
-interface TaxonInfo {
-    level: number;
-    value: string;
-};
-
-interface CompoundWidget {
-    taxonomyRef: string;
-    taxons: TaxonInfo[];
-    isCurrentlyBeingDragged: boolean;
 };
 
 
@@ -86,6 +75,9 @@ export default new Vuex.Store({
         },
         [mc.LOAD_SAMPLE_DATA]: (state) => {
             state.compoundWidgets = sampleData;
+        },
+        [mc.ADD_COMPOUND_WIDGET]: (state) => {
+            state.compoundWidgets.push(util.makeEmptyCompoundWidget());
         }
     },
     actions: {

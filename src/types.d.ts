@@ -27,3 +27,15 @@ export interface KillTaxonSelectorParameters {
     compoundWidgetIndex: number;
     taxonSelectorIndex: number;
 }
+
+interface TaxonInfo {
+    level: number;
+    value: string;
+}
+
+export interface CompoundWidget {
+    taxonomyRef: string | null;
+    taxons: TaxonInfo[];
+    isCurrentlyBeingDragged: boolean;
+}
+

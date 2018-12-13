@@ -3,6 +3,7 @@
     <p>Some text</p>
     <button v-on:click="shuffleTaxonSelectors">Shuffle taxon selectors</button>
     <button v-on:click="loadSampleData">Load sample data</button>
+    <button v-on:click="addCompoundWidget">Add compound widget</button>
 
     <div class="main-view-container" ref="mainViewContainer">
       <!-- We need a separate column class, because we don't want to drag the
@@ -179,6 +180,9 @@ export default (Vue as AugmentedVue).extend({
         },
         loadSampleData(): void {
             this.$store.commit(mc.LOAD_SAMPLE_DATA);
+        },
+        addCompoundWidget(): void {
+            this.$store.commit(mc.ADD_COMPOUND_WIDGET);
         }
     },
     computed: {
