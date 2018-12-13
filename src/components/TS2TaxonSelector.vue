@@ -100,7 +100,7 @@ export default Vue.extend({
             return this.$store.getters.taxonomyTree;
         },
         selectedPath(this: any) {
-            return this.$store.getters.selectedPath;
+            return this.$store.getters.selectedPathTS2;
         },
         widgetVisibility(this: any) {
             return this.$store.getters.widgetVisibility;

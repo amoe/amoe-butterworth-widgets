@@ -41,7 +41,7 @@ export default new Vuex.Store({
             { isVisible: true }
         ] as WidgetData[],
         taxonomyData: TAXONOMY_DATA,
-        selectedPath: [],
+        selectedPathTS2: [],
 
         // This is used for the orthodox view
         compoundWidgets: [] as CompoundWidget[],
@@ -86,8 +86,8 @@ export default new Vuex.Store({
         taxonomyTree(state, getters) {
             return treeModel.parse<TaxonomyNodeModel>(state.taxonomyData);
         },
-        selectedPath(state, getters) {
-            return state.selectedPath;
+        selectedPathTS2(state, getters) {
+            return state.selectedPathTS2;
         },
         definedWidgetCount(state, getters) {
             return state.widgetState.length;
