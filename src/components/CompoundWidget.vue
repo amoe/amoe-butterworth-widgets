@@ -10,8 +10,10 @@
            :style="styleOverrides" 
            ref="widgets"
            :key="taxon.level">
-        <taxon-select :value="taxon.value">
-        </taxon-select>
+
+        <select class="taxon-select">
+          <option selected>{{taxon.value}}</option>
+        </select>
 
         <div class="level-container">
           <x-circle-icon class="widget-close-icon"
@@ -39,7 +41,6 @@ import { Draggable } from 'gsap/Draggable';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import MoveIcon from '@/components/MoveIcon.vue';
-import TaxonSelect from '@/components/TaxonSelect.vue';
 import { XCircleIcon } from 'vue-feather-icons';
 import typeGuards from '@/type-guards';
 import assert from '@/assert';
@@ -68,7 +69,7 @@ export default (Vue as AugmentedVue).extend({
         return {
         };
     },
-    components: {MoveIcon, XCircleIcon, TaxonSelect, CircleIcon, PlusCircleIcon},
+    components: {MoveIcon, XCircleIcon, CircleIcon, PlusCircleIcon},
     mounted() { 
         // nothing happens here because all the draggable binding is handled in
         // the parent widgetview
@@ -200,4 +201,11 @@ export default (Vue as AugmentedVue).extend({
     stroke: @grey;
     cursor: pointer;
 }
+
+.taxon-select {
+    min-width: 8em;
+    background-color: @offwhite;
+    margin: @space-small;
+}
+
 </style>
