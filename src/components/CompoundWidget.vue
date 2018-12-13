@@ -78,10 +78,7 @@ export default (Vue as AugmentedVue).extend({
         },
         selectedPath() {
             return this.getSelectedPath(this.compoundWidgetIndex);
-        }
-        ... mapGetters([
-            'isSpecificCompoundWidgetBeingDragged', 'getSelectedPath'
-        ])
+        }, ...mapGetters(['isSpecificCompoundWidgetBeingDragged', 'getSelectedPath'])
     },
     methods: {
         getTaxonSelectorKey(index: number) {
