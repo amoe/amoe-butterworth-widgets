@@ -11,12 +11,15 @@ import WidgetView from '@/components/WidgetView.vue'; // @ is an alias to /src
 import * as log from 'loglevel';
 
 const TAXONOMY_DATA = {
-    'children': [{'content': 'Rock', 'id': 1, 'label': 'Taxon'},
-                 {'content': 'Classical', 'id': 2, 'label': 'Taxon'}],
+    'children': [{'content': 'Rock', 'id': 1, 'label': 'Taxon',
+                  'children': [{'content': 'Metal', 'id': 3, 'label': 'Taxon'}]},
+                 {'content': 'Classical', 'id': 2, 'label': 'Taxon',
+                  'children': [{'content': 'Baroque', 'id': 4, 'label': 'Taxon'}]}],
     'content': 'Music',
     'id': 0,
     'label': 'Taxon'
-}
+};
+
 
 const config = {};
 const t = new TreeModel(config)
