@@ -29,6 +29,8 @@
     </div>
 
     <button v-on:click="addFloatingWidget">Add new floating widget</button>
+
+    {{sortedTaxonomyTypeKeys}}
   </div>
 </template>
 
@@ -175,6 +177,11 @@ export default (Vue as AugmentedVue).extend({
         }
     },
     computed: {
+        sortedTaxonomyTypeKeys(): string[] {
+            const keys = Object.keys(this.taxonomies);
+            keys.sort();
+            return keys;
+        },
         widgetStyle(): object {
             // Render widget styles upfront, this might enable vue to cache
             // these calls
@@ -189,6 +196,8 @@ export default (Vue as AugmentedVue).extend({
                 };
             });
 
+            console.log("result was %o", result);
+            
             return result;
         },
         ... mapGetters(['compoundWidgets'])
