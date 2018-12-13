@@ -30,6 +30,7 @@ export default Vue.extend({
     margin-right: 1em;
     display: flex;
     flex-direction: row;
+    width: 1em;
 }
 
 .single-distance-line {

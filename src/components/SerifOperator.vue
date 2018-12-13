@@ -10,7 +10,7 @@
              with the key values, but it's also debatable if it even
              makes sense because of the adaptive width of the distance
              indicator :/ -->
-    <transition name="control-panel" mode="out-in">
+    <transition name="trans" mode="out-in">
       <serif-control-panel v-if="serifExpanded" key="serif-expanded"
                            :distance="distance"
                            :on-change-distance="onChangeDistance"/>
@@ -103,13 +103,19 @@ export default Vue.extend({
     cursor: pointer;
 }
 
-// This is short enough so that it looks just about OK.
-.control-panel-enter-active, .control-panel-leave-active {
-    transition: all 0.2s;
-}
-.control-panel-enter, .control-panel-leave-active {
+// Define the transition, these are very trial and error
+.trans-enter {
     opacity: 0;
-    width: 0;
+}
+.trans-enter-active {
+    transition: opacity 2s;
 }
 
+.trans-leave-to {
+    width: 0px;
+}
+
+.trans-leave-active {
+    transition: width 0.2s;
+}
 </style>
