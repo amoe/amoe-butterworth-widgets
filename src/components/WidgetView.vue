@@ -50,19 +50,11 @@ import assert from '@/assert';
 import util from '@/util';
 import * as log from 'loglevel';
 
-interface TaxonomyTypeIndex {
-    [key: string]: TaxonomyTypeInfo;
-};
-
 interface ColorScaleCache {
     [key: string]: object;
 };
 
-interface TaxonomyTypeInfo {
-};
-
 interface ComponentData {
-    taxonomyTypes: TaxonomyTypeIndex;
     floatingWidgets: any;
     renderCount: 0;
 };
@@ -81,10 +73,6 @@ export default (Vue as AugmentedVue).extend({
     props: ['taxonomies'],
     data(): ComponentData {
         return {
-            taxonomyTypes: {
-                'Occupation': {},
-                'Place': {},
-            },
             floatingWidgets: [
                 {}
             ],
@@ -93,6 +81,7 @@ export default (Vue as AugmentedVue).extend({
     },
     created() {
         log.debug("using taxonomies: %o", this.taxonomies);
+        
     },
     mounted() {
         // Because we start off with no data, we don't have to initially bind
@@ -186,11 +175,6 @@ export default (Vue as AugmentedVue).extend({
         }
     },
     computed: {
-        sortedTaxonomyTypeKeys(): string[] {
-            const keys = Object.keys(this.taxonomyTypes);
-            keys.sort();
-            return keys;
-        },
         widgetStyle(): object {
             // Render widget styles upfront, this might enable vue to cache
             // these calls
