@@ -3,7 +3,7 @@
        :style="styleOverrides" 
        ref="widgets">
     <select class="taxon-select">
-      <option selected>{{taxon.value}}</option>
+      <option selected>{{taxonOrFresh.value}}</option>
     </select>
 
     <div class="level-container">
@@ -11,7 +11,7 @@
                      v-on:click="killTaxonSelector">
       </x-circle-icon>
 
-      <span v-for="n in taxon.level">
+      <span v-for="n in taxonOrFresh.level">
         <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
       </span>
 
@@ -42,6 +42,21 @@ export default Vue.extend({
         },
         addTaxonSelector(): void {
             console.log("I would add a new taxon selector to this compound widget");
+        }
+    },
+    computed: {
+        // This is a hack to deal with the fact that n+1 widgets is always
+        // rendered.  It doesn't matter too much because the changes are
+        // decoupled from the data itself.
+        taxonOrFresh(): object {
+            if (this.taxon === undefined) {
+                return {
+                    value: "",
+                    level: this.index + 1
+                };
+            } else {
+                return this.taxon;
+            }
         }
     }
 });
