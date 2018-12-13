@@ -5,11 +5,16 @@
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
     <transition-group name="taxon-slide" tag="div">
-      <taxon-selector v-for="(taxon, index) in taxons"
+      <!-- Vue numeric loop is 1-based.  Subtract 1 from n to get the index.
+           But also, we want to iterate one past the end of the array to create
+           a fresh unfilled TS.  -->
+      <taxon-selector v-for="n in (taxons.length + 1)"
                       v-on:killed="killTaxonSelector"
-                      :taxon="taxon"
-                      :key="taxon.level"
-                      :index="index"
+                      :taxon="taxons[n - 1]"
+                      :key="getTaxonSelectorKey(n - 1)"
+                      :index="n - 1"
+                      :selected-path="selectedPath"
+                      :taxonomy-ref="taxonomyRef"
                       :style-overrides="taxonStyleOverrides">
       </taxon-selector>
     </transition-group>
@@ -22,6 +27,7 @@ import {mapGetters} from 'vuex';
 import { Draggable } from 'gsap/Draggable';
 import MoveIcon from '@/components/MoveIcon.vue';
 import typeGuards from '@/type-guards';
+import {TaxonInfo} from '@/types';
 import assert from '@/assert';
 import mc from '@/mutation-constants';
 import TaxonSelector from '@/components/TaxonSelector.vue';
@@ -43,7 +49,7 @@ interface CompoundWidgetRefs {
 type AugmentedVue = VueConstructor<Vue & CompoundWidgetRefs>;
 
 export default (Vue as AugmentedVue).extend({
-    props: ['compoundWidgetIndex', 'taxonomyRef', 'taxons', 'taxonStyleOverrides'],
+    props: ['compoundWidgetIndex', 'taxonomyRef', 'taxonStyleOverrides'],
     data() {
         return {
         };
@@ -52,6 +58,9 @@ export default (Vue as AugmentedVue).extend({
     mounted() { 
         // nothing happens here because all the draggable binding is handled in
         // the parent widgetview
+    },
+    created() {
+        console.log("Compound widget has taxons %o", this.taxons);
     },
     computed: {
         // styles for the compound widget itself -- styleOverrides only used
@@ -68,12 +77,30 @@ export default (Vue as AugmentedVue).extend({
                 return {};
             }
         },
+        // go through method-style getters to get specific compound widget properties
         currentlyBeingDragged(this: any): boolean {
             return this.isSpecificCompoundWidgetBeingDragged(this.compoundWidgetIndex);
         },
-        ... mapGetters(['isSpecificCompoundWidgetBeingDragged'])
+        taxons(this: any): TaxonInfo[] {
+            return this.getTaxonsByCompoundWidgetIndex(this.compoundWidgetIndex);
+        },
+        selectedPath(this: any): number[] {
+            return this.getSelectedPath(this.compoundWidgetIndex);
+        }, ...mapGetters([
+            'isSpecificCompoundWidgetBeingDragged',
+            'getSelectedPath',
+            'getTaxonsByCompoundWidgetIndex'
+        ])
     },
     methods: {
+        getTaxonSelectorKey(index: number): number {
+            // This is very tricky code here
+            if (index === this.taxons.length) {
+                return index + 1;
+            } else {
+                return this.taxons[index].level;
+            }
+        },
         killTaxonSelector(taxonSelectorIndex: number) {
             log.info("Would kill taxon selector with index", taxonSelectorIndex);
 
@@ -121,59 +148,6 @@ export default (Vue as AugmentedVue).extend({
 .compound-widget-container > div {
     display: flex;
     flex-direction: row;
-}
-
-.widget {
-    display: flex;
-    flex-direction: column;
-
-    padding-top: @space-medium;
-    padding-bottom: @space-medium;
-
-
-    // Outset border gives it the raised quality.
-    // To make these 'absorb' into each other, we could try first-child and 
-    // last-child CSS properties.
-
-    border-top: @widget-border-style;
-    border-bottom: @widget-border-style;
-    border-radius: @roundedness;
-
-    min-width: 0;
-}
-
-.widget:first-child {
-    border-left: @widget-border-style;
-}
-.widget:last-child {
-    border-right: @widget-border-style;
-}
-
-.level-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 1em;
-    color: @orange;
-}
-
-.widget-close-icon {
-    width: 1em;
-    height: 1em;
-    margin-right: @space-small;
-    cursor: pointer;
-}
-
-.widget-add-icon {
-    margin-left: @space-small;
-    stroke: @grey;
-    cursor: pointer;
-}
-
-.taxon-select {
-    min-width: 8em;
-    background-color: @offwhite;
-    margin: @space-small;
 }
 
 </style>

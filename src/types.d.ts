@@ -37,5 +37,6 @@ export interface CompoundWidget {
     taxonomyRef: string | null;
     taxons: TaxonInfo[];
     isCurrentlyBeingDragged: boolean;
+    selectedPath: number[];
 }
 

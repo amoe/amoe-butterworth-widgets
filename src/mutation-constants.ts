@@ -7,5 +7,6 @@ export default {
     KILL_TAXON_SELECTOR: 'killTaxonSelector',
     SHUFFLE_TAXON_SELECTORS: 'shuffleTaxonSelectors',
     LOAD_SAMPLE_DATA: 'loadSampleData',
-    ADD_COMPOUND_WIDGET: 'addCompoundWidget'
+    ADD_COMPOUND_WIDGET: 'addCompoundWidget',
+    INITIALIZE_TAXONOMIES: 'initializeTaxonomies'
 };

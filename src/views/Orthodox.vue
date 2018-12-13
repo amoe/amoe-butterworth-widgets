@@ -62,10 +62,14 @@ export default Vue.extend({
         return {
             someArray: [1, 2, 3],
             anotherArray: [4, 5, 6],
+            // we pass this raw data into the WidgetView component.
+            // WidgetView itself has responsibility for deserializing it, 
+            // inserting it to the store, etc.  We never deal with the store
+            // ourselves.
             taxonomies: {
-                'Music': t.parse<TaxonomyNodeModel>(MUSIC_TAXONOMY_JSON),
-                'Occupation': t.parse<TaxonomyNodeModel>(OCCUPATION_TAXONOMY_JSON),
-                'Place': t.parse<TaxonomyNodeModel>(PLACE_TAXONOMY_JSON)
+                'Music': MUSIC_TAXONOMY_JSON,
+                'Occupation': OCCUPATION_TAXONOMY_JSON,
+                'Place': PLACE_TAXONOMY_JSON
             }
         }
     },

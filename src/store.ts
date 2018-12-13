@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import mc from '@/mutation-constants';
-import { TaxonomyNodeModel, SwapParameters, KillTaxonSelectorParameters, CompoundWidget } from '@/types'
+import { TaxonomyNode, TaxonomyNodeModel, SwapParameters, KillTaxonSelectorParameters, CompoundWidget } from '@/types'
 import TreeModel from 'tree-model';
 import _ from 'lodash';
 import sampleData from '@/sample-data';
+import sampleData2 from '@/sample-data-2';
 import util from '@/util';
 
 Vue.use(Vuex);
@@ -33,6 +34,15 @@ interface WidgetData {
     isVisible: boolean
 };
 
+// Don't know how to write the type for a JSON tree.
+interface TaxonomiesData {
+    [key: string]: any
+};
+
+interface TaxonomiesCache {
+    [key: string]: TaxonomyNode
+};
+
 
 export default new Vuex.Store({
     state: {
@@ -45,6 +55,7 @@ export default new Vuex.Store({
 
         // This is used for the orthodox view
         compoundWidgets: [] as CompoundWidget[],
+        taxonomiesData: {} as TaxonomiesData
     },
     mutations: {
         [mc.ADD_NEW_WIDGET]: (state) => {
@@ -74,10 +85,13 @@ export default new Vuex.Store({
             });
         },
         [mc.LOAD_SAMPLE_DATA]: (state) => {
-            state.compoundWidgets = sampleData;
+            state.compoundWidgets = sampleData2;
         },
         [mc.ADD_COMPOUND_WIDGET]: (state) => {
             state.compoundWidgets.push(util.makeEmptyCompoundWidget());
+        },
+        [mc.INITIALIZE_TAXONOMIES]: (state, taxonomiesData) => {
+            state.taxonomiesData = taxonomiesData;
         }
     },
     actions: {
@@ -101,6 +115,51 @@ export default new Vuex.Store({
         },
         compoundWidgets(state) {
             return state.compoundWidgets;
+        },
+        getSelectedPath(state) {
+            return (index: number) => state.compoundWidgets[index].selectedPath;
+        },
+        taxonomies(state): TaxonomiesCache {
+            const allKeys = Object.keys(state.taxonomiesData);
+            const result: TaxonomiesCache = {};
+
+            allKeys.forEach(k => {
+                result[k] = treeModel.parse<TaxonomyNodeModel>(state.taxonomiesData[k]);
+            });
+
+            return result;
+        },
+        getTaxonsByCompoundWidgetIndex(state, getters) {
+            return (index: number) => {
+                const thisCompoundWidget = state.compoundWidgets[index];
+                const taxonomyType = thisCompoundWidget.taxonomyRef;
+                const selectedPath = thisCompoundWidget.selectedPath;
+
+                if (taxonomyType === null) {
+                    throw new Error("can't happen");
+                }
+
+                console.log("looking up taxonomy type %o", taxonomyType);
+
+                console.log("taxonomies list %o", getters.taxonomies);
+
+                const targetTaxonomy = getters.taxonomies[taxonomyType];
+                console.log("locating in target taxonomy %o", targetTaxonomy);
+                console.log("selectedpath is %o", selectedPath);
+
+                // This might be disgustingly inefficient but we're just
+                // going to ignore that for now.
+
+                const nodes = selectedPath.map(id => util.getNodeById(targetTaxonomy, id));
+                const result = nodes.map((n, index) => {
+                    return {
+                        value: n.model.content,
+                        level: index + 1
+                    }
+                });
+
+                return result;
+            };
         }
     }
 });

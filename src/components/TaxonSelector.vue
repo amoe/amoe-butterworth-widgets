@@ -3,7 +3,7 @@
        :style="styleOverrides" 
        ref="widgets">
     <select class="taxon-select">
-      <option selected>{{taxon.value}}</option>
+      <option selected>{{taxonOrFresh.value}}</option>
     </select>
 
     <div class="level-container">
@@ -11,7 +11,7 @@
                      v-on:click="killTaxonSelector">
       </x-circle-icon>
 
-      <span v-for="n in taxon.level">
+      <span v-for="n in taxonOrFresh.level">
         <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
       </span>
 
@@ -25,15 +25,27 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 import * as log from 'loglevel';
+import {TaxonomyNode} from '@/types';
 import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
+import util from '@/util';
+
+// The problem is that this individual taxon selector needs some way to know
+// about the selected path, which is a property of the parent compoundwidget. 
+//  No problem, we can just pass it in as a prop?
 
 export default Vue.extend({
-    props: ['index', 'styleOverrides', 'taxon'],
+    props: ['index', 'styleOverrides', 'taxon', 'selectedPath', 'taxonomyRef'],
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
+    data() {
+        return {
+            level: this.taxon === undefined ? this.index + 1 : this.taxon.level
+        }
+    },
     methods: {
         killTaxonSelector(): void {
             // Need to pass the buck to the parent because we don't know which
@@ -43,10 +55,98 @@ export default Vue.extend({
         addTaxonSelector(): void {
             console.log("I would add a new taxon selector to this compound widget");
         }
+    },
+    computed: {
+        // This is a hack to deal with the fact that n+1 widgets is always
+        // rendered.  It doesn't matter too much because the changes are
+        // decoupled from the data itself.
+        taxonOrFresh(): object {
+            if (this.taxon === undefined) {
+                return {
+                    value: "",
+                    level: this.level
+                };
+            } else {
+                return this.taxon;
+            }
+        },
+        taxonomies(this: any) {
+            return this.$store.getters.taxonomies;
+        },
+        filteredChildren(): TaxonomyNode[] {
+            // We have the taxonomy tree.  We have a selected path.
+            // Selected path should be cut off to the value of this.level,
+            // Then passed to the finding method.
+
+            const level = this.level;
+
+            console.log("will return filtered elements for level %o", level);
+            console.log("path is currently %o", this.selectedPath);
+
+            // Slice to level-1, because index is 1-based and the slice should
+            // be empty on the first level
+            const pathSegment = this.selectedPath.slice(0, level - 1);
+
+            return util.findValidChildren(this.taxonomies[this.taxonomyRef], pathSegment);
+        }
     }
 });
 </script>
 
 <style lang="less">
 @import "../assets/variables.less";
+
+
+.widget {
+    display: flex;
+    flex-direction: column;
+
+    padding-top: @space-medium;
+    padding-bottom: @space-medium;
+
+
+    // Outset border gives it the raised quality.
+    // To make these 'absorb' into each other, we could try first-child and 
+    // last-child CSS properties.
+
+    border-top: @widget-border-style;
+    border-bottom: @widget-border-style;
+    border-radius: @roundedness;
+
+    min-width: 0;
+}
+
+.widget:first-child {
+    border-left: @widget-border-style;
+}
+.widget:last-child {
+    border-right: @widget-border-style;
+}
+
+.level-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 1em;
+    color: @orange;
+}
+
+.widget-close-icon {
+    width: 1em;
+    height: 1em;
+    margin-right: @space-small;
+    cursor: pointer;
+}
+
+.widget-add-icon {
+    margin-left: @space-small;
+    stroke: @grey;
+    cursor: pointer;
+}
+
+.taxon-select {
+    min-width: 8em;
+    background-color: @offwhite;
+    margin: @space-small;
+}
 </style>
