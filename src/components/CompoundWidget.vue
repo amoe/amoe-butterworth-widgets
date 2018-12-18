@@ -4,7 +4,7 @@
 
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
-    <transition-group name="taxon-slide" tag="div">
+    <transition-group name="taxon" tag="div">
       <taxon-selector v-for="n in taxonIndices"
                       v-if="taxons[n].isVisible"
                       v-on:killed="killTaxonSelector"
@@ -149,12 +149,12 @@ export default (Vue as AugmentedVue).extend({
 }
 
 // Do a leave transition over 2 seconds, whatever it may be
-.taxon-slide-leave-active {
+.taxon-leave-active {
     transition: all 2s;
 }
 
 // The actual transform to execute
-.taxon-slide-leave-to {
+.taxon-leave-to {
     transform: translateX(-10px);
     opacity: 0;
 }
