@@ -54,11 +54,11 @@ export default Vue.extend({
     components: {},
     methods: {
         onEnter(el: Element, done: TransitionCallback) {
-            console.log("enter transition, element is %o", el);
+            log.debug("enter transition, element is %o", el);
             done();
         },
         onLeave(el: Element, done: TransitionCallback) {
-            console.log("leave transition, element is %o", el);
+            log.debug("leave transition, element is %o", el);
             done();
         },
         onSelect(e: Event) {
@@ -66,7 +66,7 @@ export default Vue.extend({
             const target: EventTarget = e.currentTarget;
 
             const casted = target as HTMLInputElement;
-            console.log("target value is %o", casted.value);
+            log.debug("target value is %o", casted.value);
 
             this.selectedTaxonId =  parseInt(casted.value);
         },
@@ -86,8 +86,8 @@ export default Vue.extend({
 
             const level = this.level;
 
-            console.log("will return filtered elements for level %o", level);
-            console.log("path is currently %o", this.selectedPath);
+            log.debug("will return filtered elements for level %o", level);
+            log.debug("path is currently %o", this.selectedPath);
 
             // Slice to level-1, because index is 1-based and the slice should
             // be empty on the first level

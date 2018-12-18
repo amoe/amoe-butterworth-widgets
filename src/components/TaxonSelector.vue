@@ -2,6 +2,8 @@
   <div class="widget"
        :style="styleOverrides" 
        ref="widgets">
+    Levels below this one?  {{hasLevelsBelowThis}}
+    
     <select class="taxon-select">
       <option selected>{{taxonOrFresh.value}}</option>
     </select>
@@ -53,7 +55,7 @@ export default Vue.extend({
             this.$emit('killed', this.index);
         },
         addTaxonSelector(): void {
-            console.log("I would add a new taxon selector to this compound widget");
+            log.debug("I would add a new taxon selector to this compound widget");
         }
     },
     computed: {
@@ -80,14 +82,17 @@ export default Vue.extend({
 
             const level = this.level;
 
-            console.log("will return filtered elements for level %o", level);
-            console.log("path is currently %o", this.selectedPath);
+            log.debug("will return filtered elements for level %o", level);
+            log.debug("path is currently %o", this.selectedPath);
 
             // Slice to level-1, because index is 1-based and the slice should
             // be empty on the first level
             const pathSegment = this.selectedPath.slice(0, level - 1);
 
             return util.findValidChildren(this.taxonomies[this.taxonomyRef], pathSegment);
+        },
+        hasLevelsBelowThis() {
+            return this.filteredChildren.length > 0;
         }
     }
 });

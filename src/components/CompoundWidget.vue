@@ -60,7 +60,7 @@ export default (Vue as AugmentedVue).extend({
         // the parent widgetview
     },
     created() {
-        console.log("Compound widget has taxons %o", this.taxons);
+        log.debug("Compound widget has taxons %o", this.taxons);
     },
     computed: {
         // styles for the compound widget itself -- styleOverrides only used

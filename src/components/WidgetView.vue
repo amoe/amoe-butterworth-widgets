@@ -146,7 +146,7 @@ export default (Vue as AugmentedVue).extend({
             }
         },
         getCompoundWidgetElements(): Element[] {
-            console.log("compoundWidgets ref is %o",this.$refs.compoundWidgets); 
+            log.debug("compoundWidgets ref is %o",this.$refs.compoundWidgets); 
             
             return this.$refs.compoundWidgets.map(v => v.$el);
         },
@@ -196,7 +196,7 @@ export default (Vue as AugmentedVue).extend({
                 };
             });
 
-            console.log("result was %o", result);
+            log.debug("result was %o", result);
             
             return result;
         },
