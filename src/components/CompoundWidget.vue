@@ -150,13 +150,17 @@ export default (Vue as AugmentedVue).extend({
 
 // Do a leave transition over 2 seconds, whatever it may be
 .taxon-leave-active {
-    transition: all 2s;
+    transition: width 0.5s ease-in;
+
+    /* You can do opacity overrides here, but you can't do background-color
+       overrides, because 'taxonStyleOverrides' will determine that and it
+       has higher specificity */
+    opacity: 0.3;
 }
 
 // The actual transform to execute
 .taxon-leave-to {
-    transform: translateX(-10px);
-    opacity: 0;
+    width: 0px;
 }
 
 

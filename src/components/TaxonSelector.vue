@@ -2,8 +2,8 @@
   <div class="widget"
        :style="styleOverrides" 
        ref="widgets">
-    Levels below this one?  {{hasLevelsBelowThis}}
-    Visibility?  {{taxonOrFresh.isVisible}}
+    <!-- Levels below this one?  {{hasLevelsBelowThis}} -->
+    <!-- Visibility?  {{taxonOrFresh.isVisible}} -->
     
     <select class="taxon-select">
       <option selected>{{taxonOrFresh.value}}</option>
@@ -130,6 +130,9 @@ export default Vue.extend({
     border-radius: @roundedness;
 
     min-width: 0;
+
+    width: 8em;
+    overflow: hidden;
 }
 
 .widget:first-child {
