@@ -24,6 +24,8 @@ import Vue from 'vue';
 import TreeModel from 'tree-model';
 import {MyNodeModel, MyNode} from '@/types';
 import util2 from '@/util2';
+import * as log from 'loglevel';
+
 
 // For this demo, there's just one compound widget, and that can be modified
 
@@ -68,7 +70,7 @@ export default Vue.extend({
         this.addNewTaxonSelector();
     },
     mounted() {
-        console.log("Foo is %o", root);
+        log.debug("Foo is %o", root);
     },
     methods: {
         onChange(e: Event, depth: number) {
@@ -76,12 +78,12 @@ export default Vue.extend({
             const target: EventTarget = e.currentTarget;
 
             const casted = target as HTMLSelectElement;
-            console.log("target value is %o", casted.value);
-            console.log("depth is %o", depth);
+            log.debug("target value is %o", casted.value);
+            log.debug("depth is %o", depth);
 
             // Splice is crucial here!
             this.selected.splice(depth, 1, parseInt(casted.value));
-            console.log("selected is now %o", JSON.stringify(this.selected));
+            log.debug("selected is now %o", JSON.stringify(this.selected));
         },
         addNewTaxonSelector() {
             const newTaxonSelector: TaxonSelectorSpec = {};
@@ -91,8 +93,8 @@ export default Vue.extend({
             return this.selected;
         },
         filterTaxons(depth: number) {
-            console.log("filtertaxons called for depth: %o", depth);
-            console.log("Path is: %o", JSON.stringify(this.getPath()));
+            log.debug("filtertaxons called for depth: %o", depth);
+            log.debug("Path is: %o", JSON.stringify(this.getPath()));
             return util2.findValidChildren(root, this.getPath());
         }
     },
@@ -112,7 +114,7 @@ export default Vue.extend({
                 return true;
             });
 
-            console.log("generated index: %o", result);
+            log.debug("generated index: %o", result);
 
             return result;
         },

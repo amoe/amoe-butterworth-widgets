@@ -9,6 +9,7 @@
 <script lang="ts">
 import Vue, {VueConstructor} from 'vue';
 import { Draggable } from 'gsap/Draggable';
+import * as log from 'loglevel';
 
 interface RearrangementViewRefs {
     $refs: {
@@ -49,7 +50,7 @@ export default (Vue as AugmentedVue).extend({
     },
     watch: {
         boxes: function() {
-            console.log("watch arguments were %o", arguments);
+            log.debug("watch arguments were %o", arguments);
 
             this.$nextTick(this.setupDraggables);
         }
@@ -66,21 +67,21 @@ export default (Vue as AugmentedVue).extend({
             };
             const result = Draggable.create(elements, vars);
             
-            console.log("result of creating draggables was %o", result);
+            log.debug("result of creating draggables was %o", result);
 
             this.draggables = result;
         },
         onDragEnd(draggable: Draggable, e: PointerEvent) {
-            console.log("dragend");
-            console.log("this is %o", this);
-            console.log("draggable is %o", draggable);
+            log.debug("dragend");
+            log.debug("this is %o", this);
+            log.debug("draggable is %o", draggable);
 
             // Draggable 'target' is actually the source element, i.e. the one
             // that's being dragged.
             const sourceElement: Element = draggable.target;
 
             const result = getIntersectingBoxes(draggable, this.$refs.boxes);
-            console.log("intersecting result was %o", result);
+            log.debug("intersecting result was %o", result);
 
             // Find index of result element
             if (result.length === 0) {
@@ -95,12 +96,12 @@ export default (Vue as AugmentedVue).extend({
             const targetElement = result[0];
             const targetElementIndex = this.$refs.boxes.indexOf(targetElement);
 
-            console.log("Source element is %o", sourceElement);
-            console.log("Would swap %o => %o", sourceElementIndex, targetElementIndex);
+            log.debug("Source element is %o", sourceElement);
+            log.debug("Would swap %o => %o", sourceElementIndex, targetElementIndex);
 
             const cutItems = this.boxes.splice(sourceElementIndex, 1);
 
-            console.log("cut items were %o", cutItems);
+            log.debug("cut items were %o", cutItems);
 
             const theItem = cutItems[0];
 
@@ -111,7 +112,7 @@ export default (Vue as AugmentedVue).extend({
             // Force the entire view to re-render, the watch will pick up
             // and re-set the draggables.
             this.renderCount++;
-            console.log("new value is %o", this.boxes);
+            log.debug("new value is %o", this.boxes);
         }
     }
 });

@@ -1,10 +1,11 @@
 import { MyNodeModel, MyNode } from '@/types';
 import { Node } from 'tree-model';
+import * as log from 'loglevel';
 
 function getVirtualRoot(rootNode: MyNode, wantedPath: number[]): MyNode {
-    console.log("inside getVirtualRoot");
+    log.debug("inside getVirtualRoot");
     if (wantedPath.length === 0) {
-        console.log("returning root node");
+        log.debug("returning root node");
         return rootNode;
     }
 
@@ -25,9 +26,9 @@ function findValidChildren(
 ): MyNodeModel[] {
     const virtualRoot: MyNode = getVirtualRoot(rootNode, wantedPath);
     const children: MyNode[] = virtualRoot.children;
-    console.log("number of children found was " + children.length);
+    log.debug("number of children found was " + children.length);
     const result = children.map(n => n.model);
-    console.log("returning %o", JSON.stringify(result.map(n => n.content)));
+    log.debug("returning %o", JSON.stringify(result.map(n => n.content)));
     return result;
 };
 

@@ -10,6 +10,7 @@
 import { TweenMax } from 'gsap';
 import _ from 'lodash';
 import dom from '@/dom'
+import * as log from 'loglevel';
 
 interface Foo {
     widgets: number[];
@@ -34,18 +35,18 @@ export default Vue.extend({
     },
     methods: {
         mergeWidgets() {
-            console.log("dom ready");
+            log.debug("dom ready");
             // Pick the third widget.
             
-            console.log("widgets = %o", this.$refs.widgets);
+            log.debug("widgets = %o", this.$refs.widgets);
             
             // Need to type guard this because it's variant type
             if (isElementArray(this.$refs.widgets)) {
-                console.log("It was an element array, which is good");
+                log.debug("It was an element array, which is good");
                 const widgetsList: Element[] = this.$refs.widgets;
                 
                 const elementToMove = widgetsList[2];
-                console.log("I will move %o", elementToMove);
+                log.debug("I will move %o", elementToMove);
 
                 const targetElement = widgetsList[1];
                 

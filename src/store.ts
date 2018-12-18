@@ -7,6 +7,7 @@ import _ from 'lodash';
 import sampleData from '@/sample-data';
 import sampleData2 from '@/sample-data-2';
 import util from '@/util';
+import * as log from 'loglevel';
 
 Vue.use(Vuex);
 
@@ -139,13 +140,13 @@ export default new Vuex.Store({
                     throw new Error("can't happen");
                 }
 
-                console.log("looking up taxonomy type %o", taxonomyType);
+                log.debug("looking up taxonomy type %o", taxonomyType);
 
-                console.log("taxonomies list %o", getters.taxonomies);
+                log.debug("taxonomies list %o", getters.taxonomies);
 
                 const targetTaxonomy = getters.taxonomies[taxonomyType];
-                console.log("locating in target taxonomy %o", targetTaxonomy);
-                console.log("selectedpath is %o", selectedPath);
+                log.debug("locating in target taxonomy %o", targetTaxonomy);
+                log.debug("selectedpath is %o", selectedPath);
 
                 // This might be disgustingly inefficient but we're just
                 // going to ignore that for now.

@@ -1,5 +1,6 @@
 import { TaxonomyNode, CompoundWidget } from '@/types';
 import { DraggableConstructor } from 'gsap/Draggable';
+import * as log from 'loglevel';
 
 
 function getNodeById(rootNode: TaxonomyNode, wantedId: number): TaxonomyNode {
@@ -14,9 +15,9 @@ function getNodeById(rootNode: TaxonomyNode, wantedId: number): TaxonomyNode {
 }
 
 function getVirtualRoot(rootNode: TaxonomyNode, wantedPath: number[]): TaxonomyNode {
-    console.log("inside getVirtualRoot");
+    log.debug("inside getVirtualRoot");
     if (wantedPath.length === 0) {
-        console.log("returning root node");
+        log.debug("returning root node");
         return rootNode;
     }
 
