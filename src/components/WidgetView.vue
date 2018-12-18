@@ -171,7 +171,7 @@ export default (Vue as AugmentedVue).extend({
         },
         loadSampleData(): void {
             this.$store.commit(mc.LOAD_SAMPLE_DATA);
-            log.debug("After loading sample data, result is ", this.$store);
+            console.log("After loading sample data, result is ", this.$store);
         },
         addCompoundWidget(): void {
             this.$store.commit(mc.ADD_COMPOUND_WIDGET);

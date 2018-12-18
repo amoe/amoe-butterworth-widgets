@@ -5,7 +5,6 @@ import { TaxonomyNode, TaxonomyNodeModel, SwapParameters, KillTaxonSelectorParam
 import TreeModel from 'tree-model';
 import _ from 'lodash';
 import sampleData from '@/sample-data';
-import sampleData2 from '@/sample-data-2';
 import util from '@/util';
 import * as log from 'loglevel';
 
@@ -86,7 +85,7 @@ export default new Vuex.Store({
             });
         },
         [mc.LOAD_SAMPLE_DATA]: (state) => {
-            state.compoundWidgets = sampleData2;
+            state.compoundWidgets = sampleData;
         },
         [mc.ADD_COMPOUND_WIDGET]: (state) => {
             state.compoundWidgets.push(util.makeEmptyCompoundWidget());

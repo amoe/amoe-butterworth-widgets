@@ -1,66 +1,34 @@
+// paths defined by reference to an existing taxonomy
+// all taxon data has been removed -- we should refactor path to designate
+// PathSegment instead
+
 export default [
     {
         taxonomyRef: 'Occupation',
         taxons: [
-            {
-                level: 1,
-                value: "Manufacturing"
-            },
-            {
-                level: 2,
-                value: "Wood workers"
-            },
-            {
-                level: 3,
-                value: "Bandbox-maker"
-            },
         ],
-        isCurrentlyBeingDragged: false
+        isCurrentlyBeingDragged: false,
+        selectedPath: [0, 1, 2, 3]
     },
     {
         taxonomyRef: 'Place',
         taxons: [
-            {
-                level: 1,
-                value: "Country"
-            },
-            {
-                level: 2,
-                value: "France"
-            }
         ],
-        isCurrentlyBeingDragged: false
+        isCurrentlyBeingDragged: false,
+        selectedPath: [0, 1, 2]
     },
     {
         taxonomyRef: 'Occupation',
         taxons: [
-            {
-                level: 1,
-                value: "Manufacturing"
-            },
-            {
-                level: 2,
-                value: "Wood workers"
-            },
-            {
-                level: 3,
-                value: "Bandbox-maker"
-            },
         ],
-        isCurrentlyBeingDragged: false
+        isCurrentlyBeingDragged: false,
+        selectedPath: [0, 1, 2, 3]
     },
     {
         taxonomyRef: 'Place',
         taxons: [
-            {
-                level: 1,
-                value: "Country"
-            },
-            {
-                level: 2,
-                value: "France"
-            }
         ],
-        isCurrentlyBeingDragged: false
+        isCurrentlyBeingDragged: false,
+        selectedPath: [0, 1, 2]
     },
 ];
