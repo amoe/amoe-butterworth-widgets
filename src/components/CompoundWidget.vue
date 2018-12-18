@@ -8,11 +8,11 @@
       <!-- Vue numeric loop is 1-based.  Subtract 1 from n to get the index.
            But also, we want to iterate one past the end of the array to create
            a fresh unfilled TS.  -->
-      <taxon-selector v-for="n in (taxons.length + 1)"
+      <taxon-selector v-for="n in taxonIndices"
                       v-on:killed="killTaxonSelector"
-                      :taxon="taxons[n - 1]"
-                      :key="getTaxonSelectorKey(n - 1)"
-                      :index="n - 1"
+                      :taxon="taxons[n]"
+                      :key="getTaxonSelectorKey(n)"
+                      :index="n"
                       :selected-path="selectedPath"
                       :taxonomy-ref="taxonomyRef"
                       :style-overrides="taxonStyleOverrides">
@@ -32,6 +32,7 @@ import assert from '@/assert';
 import mc from '@/mutation-constants';
 import TaxonSelector from '@/components/TaxonSelector.vue';
 
+import _ from 'lodash'
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
 import * as log from 'loglevel';
@@ -63,6 +64,10 @@ export default (Vue as AugmentedVue).extend({
         log.debug("Compound widget has taxons %o", this.taxons);
     },
     computed: {
+        taxonIndices(): number[] {
+            const BLANK_PATH_SEGMENTS = 1;
+            return _.range(this.taxons.length + BLANK_PATH_SEGMENTS);
+        },
         // styles for the compound widget itself -- styleOverrides only used
         // for styling the taxons
         dynamicStyles(): object {
