@@ -8,5 +8,6 @@ export default {
     SHUFFLE_TAXON_SELECTORS: 'shuffleTaxonSelectors',
     LOAD_SAMPLE_DATA: 'loadSampleData',
     ADD_COMPOUND_WIDGET: 'addCompoundWidget',
-    INITIALIZE_TAXONOMIES: 'initializeTaxonomies'
+    INITIALIZE_TAXONOMIES: 'initializeTaxonomies',
+    HIDE_TAXON_SELECTOR: 'killTaxonSelector'
 };

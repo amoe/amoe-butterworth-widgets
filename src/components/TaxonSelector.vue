@@ -3,6 +3,7 @@
        :style="styleOverrides" 
        ref="widgets">
     Levels below this one?  {{hasLevelsBelowThis}}
+    Visibility?  {{taxonOrFresh.isVisible}}
     
     <select class="taxon-select">
       <option selected>{{taxonOrFresh.value}}</option>
@@ -10,7 +11,7 @@
 
     <div class="level-container">
       <x-circle-icon class="widget-close-icon"
-                     v-on:click="killTaxonSelector">
+                     v-on:click="kill">
       </x-circle-icon>
 
       <span v-for="n in taxonOrFresh.level">
@@ -22,15 +23,17 @@
                         v-on:click="addTaxonSelector">
       </plus-circle-icon>
     </div>
+
+    <button v-on:click="hide">Hide</button>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+    import Vue from 'vue';
 import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 import * as log from 'loglevel';
-import {TaxonomyNode, PathSegment} from '@/types';
+import {TaxonomyNode, PathSegment, VisibleTaxon} from '@/types';
 import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
@@ -49,10 +52,13 @@ export default Vue.extend({
         }
     },
     methods: {
-        killTaxonSelector(): void {
+        kill(): void {
             // Need to pass the buck to the parent because we don't know which
             // compound element we are
             this.$emit('killed', this.index);
+        },
+        hide(): void {
+            this.$emit('hidden', this.index);
         },
         addTaxonSelector(): void {
             log.debug("I would add a new taxon selector to this compound widget");
@@ -62,11 +68,12 @@ export default Vue.extend({
         // This is a hack to deal with the fact that n+1 widgets is always
         // rendered.  It doesn't matter too much because the changes are
         // decoupled from the data itself.
-        taxonOrFresh(): object {
+        taxonOrFresh(): VisibleTaxon {
             if (this.taxon === undefined) {
                 return {
                     value: "",
-                    level: this.level
+                    level: this.level,
+                    isVisible: true
                 };
             } else {
                 return this.taxon;
@@ -136,19 +143,16 @@ export default Vue.extend({
     display: flex;
     flex-direction: row;
     justify-content: center;
-    margin: 1em;
     color: @orange;
 }
 
 .widget-close-icon {
     width: 1em;
     height: 1em;
-    margin-right: @space-small;
     cursor: pointer;
 }
 
 .widget-add-icon {
-    margin-left: @space-small;
     stroke: @grey;
     cursor: pointer;
 }

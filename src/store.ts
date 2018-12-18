@@ -3,7 +3,8 @@ import Vuex from 'vuex';
 import mc from '@/mutation-constants';
 import {
     TaxonomyNode, TaxonomyNodeModel, SwapParameters,
-    KillTaxonSelectorParameters, CompoundWidget, VisibleTaxon, PathSegment
+    KillTaxonSelectorParameters, HideTaxonSelectorParameters,
+    CompoundWidget, VisibleTaxon, PathSegment
 } from '@/types'
 import TreeModel from 'tree-model';
 import _ from 'lodash';
@@ -96,7 +97,11 @@ export default new Vuex.Store({
         },
         [mc.INITIALIZE_TAXONOMIES]: (state, taxonomiesData) => {
             state.taxonomiesData = taxonomiesData;
-        }
+        },
+        [mc.HIDE_TAXON_SELECTOR]: (state, params: HideTaxonSelectorParameters) => {
+            const path = state.compoundWidgets[params.compoundWidgetIndex].selectedPath;
+            path[params.taxonSelectorIndex].isVisible = false;
+        },
     },
     actions: {
     },

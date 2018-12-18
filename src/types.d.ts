@@ -28,6 +28,11 @@ export interface KillTaxonSelectorParameters {
     taxonSelectorIndex: number;
 }
 
+export interface HideTaxonSelectorParameters {
+    compoundWidgetIndex: number;
+    taxonSelectorIndex: number;
+}
+
 interface TaxonInfo {
     level: number;
     value: string;

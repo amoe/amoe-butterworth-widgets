@@ -6,7 +6,9 @@
 
     <transition-group name="taxon-slide" tag="div">
       <taxon-selector v-for="n in taxonIndices"
+                      v-if="taxons[n].isVisible"
                       v-on:killed="killTaxonSelector"
+                      v-on:hidden="hideTaxonSelector"
                       :taxon="taxons[n]"
                       :key="getTaxonSelectorKey(n)"
                       :index="n"
@@ -64,8 +66,9 @@ export default (Vue as AugmentedVue).extend({
         // Why does this exist?  Because v-for over an integer creates a 1-based
         // loop which is not what we want.
         taxonIndices(): number[] {
-            const BLANK_PATH_SEGMENTS = 1;
-            return _.range(this.taxons.length + BLANK_PATH_SEGMENTS);
+            // const BLANK_PATH_SEGMENTS = 0;
+            // return _.range(this.taxons.length + BLANK_PATH_SEGMENTS);
+            return _.range(this.taxons.length);
         },
         // styles for the compound widget itself -- styleOverrides only used
         // for styling the taxons
@@ -114,6 +117,16 @@ export default (Vue as AugmentedVue).extend({
             };
 
             this.$store.commit(mc.KILL_TAXON_SELECTOR, params);
+        },
+        hideTaxonSelector(taxonSelectorIndex: number) {
+            log.info("Would hide taxon selector with index", taxonSelectorIndex);
+
+            const params = {
+                compoundWidgetIndex: this.compoundWidgetIndex,
+                taxonSelectorIndex: taxonSelectorIndex
+            };
+
+            this.$store.commit(mc.HIDE_TAXON_SELECTOR, params);
         }
     }
 });
@@ -142,7 +155,7 @@ export default (Vue as AugmentedVue).extend({
 
 // The actual transform to execute
 .taxon-slide-leave-to {
-    transform: translateX(10px);
+    transform: translateX(-10px);
     opacity: 0;
 }
 
