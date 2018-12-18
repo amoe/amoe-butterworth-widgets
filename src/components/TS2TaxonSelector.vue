@@ -41,6 +41,7 @@ import {mapGetters} from 'vuex';
 import util from '@/util';
 import mc from '@/mutation-constants';
 import {TransitionCallback} from '@/types';
+import * as log from 'loglevel';
 
 export default Vue.extend({
     props: ['level'],
