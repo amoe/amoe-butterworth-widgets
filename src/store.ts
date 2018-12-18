@@ -81,8 +81,8 @@ export default new Vuex.Store({
             state.compoundWidgets.splice(params.targetIndex, 0, theItem);
         },
         [mc.KILL_TAXON_SELECTOR]: (state, params: KillTaxonSelectorParameters) => {
-            const taxons = state.compoundWidgets[params.compoundWidgetIndex].taxons;
-            taxons.splice(params.taxonSelectorIndex, 1);
+            const path = state.compoundWidgets[params.compoundWidgetIndex].selectedPath;
+            path.splice(params.taxonSelectorIndex);
         },
         [mc.SHUFFLE_TAXON_SELECTORS]: (state) => {
             state.compoundWidgets.forEach(c => {

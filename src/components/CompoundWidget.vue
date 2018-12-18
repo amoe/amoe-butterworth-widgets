@@ -101,7 +101,7 @@ export default (Vue as AugmentedVue).extend({
     },
     methods: {
         getTaxonSelectorKey(index: number): number {
-            // This is very tricky code here
+            // Handle the case where the index doesn't exist yet
             if (index === this.taxons.length) {
                 return index + 1;
             } else {
