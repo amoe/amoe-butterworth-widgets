@@ -5,9 +5,6 @@
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
     <transition-group name="taxon-slide" tag="div">
-      <!-- Vue numeric loop is 1-based.  Subtract 1 from n to get the index.
-           But also, we want to iterate one past the end of the array to create
-           a fresh unfilled TS.  -->
       <taxon-selector v-for="n in taxonIndices"
                       v-on:killed="killTaxonSelector"
                       :taxon="taxons[n]"
@@ -64,6 +61,8 @@ export default (Vue as AugmentedVue).extend({
         log.debug("Compound widget has taxons %o", this.taxons);
     },
     computed: {
+        // Why does this exist?  Because v-for over an integer creates a 1-based
+        // loop which is not what we want.
         taxonIndices(): number[] {
             const BLANK_PATH_SEGMENTS = 1;
             return _.range(this.taxons.length + BLANK_PATH_SEGMENTS);
