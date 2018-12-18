@@ -30,7 +30,7 @@ import Vue from 'vue';
 import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 import * as log from 'loglevel';
-import {TaxonomyNode} from '@/types';
+import {TaxonomyNode, PathSegment} from '@/types';
 import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
@@ -87,9 +87,13 @@ export default Vue.extend({
 
             // Slice to level-1, because index is 1-based and the slice should
             // be empty on the first level
-            const pathSegment = this.selectedPath.slice(0, level - 1);
+            const pathStem: PathSegment[] = this.selectedPath.slice(0, level - 1);
 
-            return util.findValidChildren(this.taxonomies[this.taxonomyRef], pathSegment);
+            // Strip the path to the node ID only
+            return util.findValidChildren(
+                this.taxonomies[this.taxonomyRef],
+                pathStem.map(s => s.nodeId)
+            );
         },
         hasLevelsBelowThis() {
             return this.filteredChildren.length > 0;

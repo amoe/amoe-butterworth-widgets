@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import mc from '@/mutation-constants';
-import { TaxonomyNode, TaxonomyNodeModel, SwapParameters, KillTaxonSelectorParameters, CompoundWidget } from '@/types'
+import {
+    TaxonomyNode, TaxonomyNodeModel, SwapParameters,
+    KillTaxonSelectorParameters, CompoundWidget, VisibleTaxon, PathSegment
+} from '@/types'
 import TreeModel from 'tree-model';
 import _ from 'lodash';
 import sampleData from '@/sample-data';
 import util from '@/util';
+
 import * as log from 'loglevel';
 
 Vue.use(Vuex);
@@ -117,7 +121,7 @@ export default new Vuex.Store({
             return state.compoundWidgets;
         },
         getSelectedPath(state) {
-            return (index: number) => state.compoundWidgets[index].selectedPath;
+            return (index: number): PathSegment[] => state.compoundWidgets[index].selectedPath;
         },
         taxonomies(state): TaxonomiesCache {
             const allKeys = Object.keys(state.taxonomiesData);
@@ -150,11 +154,16 @@ export default new Vuex.Store({
                 // This might be disgustingly inefficient but we're just
                 // going to ignore that for now.
 
-                const nodes = selectedPath.map(id => util.getNodeById(targetTaxonomy, id));
+                const nodes = selectedPath.map(
+                    segment => util.getNodeById(targetTaxonomy, segment.nodeId)
+                );
+
+                // Some values are propagated from the path segment.
                 const result = nodes.map((n, index) => {
                     return {
                         value: n.model.content,
-                        level: index + 1
+                        level: index + 1,
+                        isVisible: selectedPath[index].isVisible
                     }
                 });
 

@@ -33,10 +33,22 @@ interface TaxonInfo {
     value: string;
 }
 
+export interface PathSegment {
+    nodeId: number;
+    isVisible: boolean;
+}
+
 export interface CompoundWidget {
     taxonomyRef: string | null;
     taxons: TaxonInfo[];
     isCurrentlyBeingDragged: boolean;
-    selectedPath: number[];
+    selectedPath: PathSegment[];
 }
 
+
+// Visible taxon is derived state and is calculated by a getter.
+export interface VisibleTaxon {
+    value: string;
+    level: number;    // 1-based
+    isVisible: boolean;
+}
