@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import WidgetView from './WidgetView.vue';
+import WidgetView from './components/WidgetView.vue';
 import router from './router';
 import store from './store';
 
