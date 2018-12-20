@@ -1,10 +1,11 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { StoreOptions } from 'vuex';
 import mc from '@/mutation-constants';
 import {
     TaxonomyNode, TaxonomyNodeModel, SwapParameters,
     KillTaxonSelectorParameters, HideTaxonSelectorParameters,
-    CompoundWidget, VisibleTaxon, PathSegment
+    CompoundWidget, VisibleTaxon, PathSegment,
+    RootState, TaxonomiesCache
 } from '@/types'
 import TreeModel from 'tree-model';
 import _ from 'lodash';
@@ -33,34 +34,18 @@ const TAXONOMY_DATA = {
 };
 
 
-
-
-interface WidgetData {
-    isVisible: boolean
-};
-
-// Don't know how to write the type for a JSON tree.
-interface TaxonomiesData {
-    [key: string]: any
-};
-
-interface TaxonomiesCache {
-    [key: string]: TaxonomyNode
-};
-
-
-export default new Vuex.Store({
+const store: StoreOptions<RootState> = {
     state: {
         // This is used for the TS2View
         widgetState: [
             { isVisible: true }
-        ] as WidgetData[],
+        ],
         taxonomyData: TAXONOMY_DATA,
         selectedPathTS2: [],
 
         // This is used for the orthodox view
-        compoundWidgets: [] as CompoundWidget[],
-        taxonomiesData: {} as TaxonomiesData
+        compoundWidgets: [],
+        taxonomiesData: {}
     },
     mutations: {
         [mc.ADD_NEW_WIDGET]: (state) => {
@@ -176,4 +161,7 @@ export default new Vuex.Store({
             };
         }
     }
-});
+};
+
+
+export default new Vuex.Store<RootState>(store);

@@ -57,3 +57,27 @@ export interface VisibleTaxon {
     level: number;    // 1-based
     isVisible: boolean;
 }
+
+
+interface WidgetData {
+    isVisible: boolean
+}
+
+// Don't know how to write the type for a JSON tree.
+interface TaxonomiesData {
+    [key: string]: any
+}
+
+export interface TaxonomiesCache {
+    [key: string]: TaxonomyNode
+}
+
+
+export interface RootState {
+    widgetState: WidgetData[];   // not used
+    taxonomyData: any,
+    selectedPathTS2: [];
+    // This is used for the orthodox view
+    compoundWidgets: CompoundWidget[],
+    taxonomiesData: TaxonomiesData;
+}
