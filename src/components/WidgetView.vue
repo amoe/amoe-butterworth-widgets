@@ -4,7 +4,6 @@
     <button v-on:click="shuffleTaxonSelectors">Shuffle taxon selectors</button>
     <button v-on:click="loadSampleData">Load sample data</button>
     <button v-on:click="addCompoundWidget">Add compound widget</button>
-    <button v-on:click="getQuery">Get query</button>
 
     <div class="main-view-container" ref="mainViewContainer">
       <!-- We need a separate column class, because we don't want to drag the
