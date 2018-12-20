@@ -4,6 +4,7 @@
     <button v-on:click="shuffleTaxonSelectors">Shuffle taxon selectors</button>
     <button v-on:click="loadSampleData">Load sample data</button>
     <button v-on:click="addCompoundWidget">Add compound widget</button>
+    <button v-on:click="getQuery">Get query</button>
 
     <div class="main-view-container" ref="mainViewContainer">
       <!-- We need a separate column class, because we don't want to drag the
@@ -31,6 +32,8 @@
     <button v-on:click="addFloatingWidget">Add new floating widget</button>
 
     {{sortedTaxonomyTypeKeys}}
+
+    <textarea rows="24" cols="80"></textarea>
   </div>
 </template>
 
@@ -174,6 +177,10 @@ export default (Vue as AugmentedVue).extend({
         },
         addCompoundWidget(): void {
             this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+        },
+        meaningOfLife(): number {
+            console.log("I am a public method");
+            return 42;
         }
     },
     computed: {
