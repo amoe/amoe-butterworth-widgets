@@ -38,6 +38,7 @@ import mc from '@/mutation-constants';
 import assert from '@/assert';
 import util from '@/util';
 import * as log from 'loglevel';
+import _ from 'lodash';
 
 interface ColorScaleCache {
     [key: string]: object;
@@ -153,6 +154,9 @@ export default (Vue as AugmentedVue).extend({
         addCompoundWidget(): void {
             this.$store.commit(mc.ADD_COMPOUND_WIDGET);
         },
+        getQuery(): any {
+            return _.cloneDeep(this.$store.getters.compoundWidgets);
+        }
     },
     computed: {
         sortedTaxonomyTypeKeys(): string[] {
