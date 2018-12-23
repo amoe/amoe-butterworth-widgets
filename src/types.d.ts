@@ -74,6 +74,9 @@ export interface TaxonomiesCache {
 
 
 export interface RootState {
+}
+
+export interface WidgetsState {
     widgetState: WidgetData[];   // not used
     taxonomyData: any,
     selectedPathTS2: [];
