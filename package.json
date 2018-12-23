@@ -1,7 +1,7 @@
 {
   "name": "amoe-butterworth-widgets",
   "main": "dist/amoe-butterworth-widgets.umd.js",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
