@@ -31,8 +31,6 @@
     <button v-on:click="addFloatingWidget">Add new floating widget</button>
 
     {{sortedTaxonomyTypeKeys}}
-
-    <textarea rows="24" cols="80"></textarea>
   </div>
 </template>
 
