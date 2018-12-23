@@ -1,6 +1,5 @@
 <template>
-  <div class="home" :key="renderCount">
-    <p>Some text</p>
+  <div :key="renderCount">
     <button v-on:click="shuffleTaxonSelectors">Shuffle taxon selectors</button>
     <button v-on:click="loadSampleData">Load sample data</button>
     <button v-on:click="addCompoundWidget">Add compound widget</button>
@@ -19,18 +18,6 @@
         <serif-operator v-if="index < (compoundWidgets.length - 1)"></serif-operator>
       </div>
     </div>
-
-
-    <div class="floating-widget-container">
-      <div class="floating-widget" v-for="floatingWidget in floatingWidgets"
-           ref="floatingWidgets">
-        <p>Some floating widget</p>
-      </div>
-    </div>
-
-    <button v-on:click="addFloatingWidget">Add new floating widget</button>
-
-    {{sortedTaxonomyTypeKeys}}
   </div>
 </template>
 
@@ -57,7 +44,6 @@ interface ColorScaleCache {
 };
 
 interface ComponentData {
-    floatingWidgets: any;
     renderCount: 0;
 };
 
@@ -70,14 +56,10 @@ interface WidgetViewRefs {
 type AugmentedVue = VueConstructor<Vue & WidgetViewRefs>;
 
 export default (Vue as AugmentedVue).extend({
-    name: 'home',
     components: {SerifOperator, CompoundWidget},
     props: ['taxonomies'],
     data(): ComponentData {
         return {
-            floatingWidgets: [
-                {}
-            ],
             renderCount: 0
         };
     },
@@ -162,10 +144,6 @@ export default (Vue as AugmentedVue).extend({
                 log.debug("set up scrollbar with %o", ps);
             }
         },
-        addFloatingWidget(): void {
-            log.debug("adding floating widget");
-            this.floatingWidgets.push({});
-        },
         shuffleTaxonSelectors(): void {
             this.$store.commit(mc.SHUFFLE_TAXON_SELECTORS);
         },
@@ -175,10 +153,6 @@ export default (Vue as AugmentedVue).extend({
         addCompoundWidget(): void {
             this.$store.commit(mc.ADD_COMPOUND_WIDGET);
         },
-        meaningOfLife(): number {
-            console.log("I am a public method");
-            return 42;
-        }
     },
     computed: {
         sortedTaxonomyTypeKeys(): string[] {
@@ -223,18 +197,6 @@ export default (Vue as AugmentedVue).extend({
     width: 99vw;
     overflow: hidden;
     position: relative;
-}
-
-.floating-widget-container {
-    border: 1px solid green;
-    padding: @space-medium;
-    width: 512px;
-    height: 512px;
-}
-
-.floating-widget {
-    border: 2px dashed black;
-    margin: @space-medium;
 }
 
 // Contains both a widget-group and a possible serif operator
