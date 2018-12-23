@@ -4,6 +4,10 @@
 
 There is no default export.  A named export `WidgetView` is exported.
 
+The WidgetView takes a single prop, `taxonomies`.  This is an object defining
+a set of available taxonomies.  The string key is used to uniquely identify
+the taxonomy.  The taxonomy should have a single root node.
+
 ## Releasing a new version
 
 Steps:
