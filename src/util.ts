@@ -41,7 +41,6 @@ function getCollidingElements(d: DraggableConstructor, validElements: Element[])
 function makeEmptyCompoundWidget(): CompoundWidget {
     return {
         taxonomyRef: null,
-        taxons: [],
         isCurrentlyBeingDragged: false,
         selectedPath: []
     };

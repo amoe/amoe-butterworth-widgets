@@ -33,9 +33,12 @@ export interface HideTaxonSelectorParameters {
     taxonSelectorIndex: number;
 }
 
-interface TaxonInfo {
+// This is an interface that is never used as concrete state in the store.
+// It's only used when laying stuff out.
+export interface TaxonDisplayInfo {
     level: number;
     value: string;
+    isVisible: boolean;
 }
 
 export interface PathSegment {
@@ -45,7 +48,6 @@ export interface PathSegment {
 
 export interface CompoundWidget {
     taxonomyRef: string | null;
-    taxons: TaxonInfo[];
     isCurrentlyBeingDragged: boolean;
     selectedPath: PathSegment[];
 }

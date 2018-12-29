@@ -1,7 +1,8 @@
 import { Module } from 'vuex';
 import {
     RootState, WidgetsState, SwapParameters, KillTaxonSelectorParameters,
-    PathSegment, TaxonomiesCache, TaxonomyNodeModel, HideTaxonSelectorParameters
+    PathSegment, TaxonomiesCache, TaxonomyNodeModel, HideTaxonSelectorParameters,
+    TaxonDisplayInfo
 } from '@/types';
 import mc from '@/mutation-constants';
 import TreeModel from 'tree-model';
@@ -48,11 +49,6 @@ const widgets: Module<WidgetsState, RootState> = {
         [mc.KILL_TAXON_SELECTOR]: (state, params: KillTaxonSelectorParameters) => {
             const path = state.compoundWidgets[params.compoundWidgetIndex].selectedPath;
             path.splice(params.taxonSelectorIndex);
-        },
-        [mc.SHUFFLE_TAXON_SELECTORS]: (state) => {
-            state.compoundWidgets.forEach(c => {
-                c.taxons = _.shuffle(c.taxons);
-            });
         },
         [mc.LOAD_SAMPLE_DATA]: (state) => {
             state.compoundWidgets = sampleData;
@@ -104,7 +100,7 @@ const widgets: Module<WidgetsState, RootState> = {
             return result;
         },
         getTaxonsByCompoundWidgetIndex(state, getters) {
-            return (index: number) => {
+            return (index: number): TaxonDisplayInfo[] => {
                 const thisCompoundWidget = state.compoundWidgets[index];
                 const taxonomyType = thisCompoundWidget.taxonomyRef;
                 const selectedPath = thisCompoundWidget.selectedPath;
@@ -129,6 +125,7 @@ const widgets: Module<WidgetsState, RootState> = {
                 );
 
                 // Some values are propagated from the path segment.
+                // The type of this is TaxonInfo.
                 const result = nodes.map((n, index) => {
                     return {
                         value: n.model.content,

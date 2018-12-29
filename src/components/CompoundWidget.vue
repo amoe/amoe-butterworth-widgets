@@ -26,7 +26,7 @@ import {mapGetters} from 'vuex';
 import { Draggable } from 'gsap/Draggable';
 import MoveIcon from '@/components/MoveIcon.vue';
 import typeGuards from '@/type-guards';
-import {TaxonInfo, PathSegment} from '@/types';
+import {TaxonDisplayInfo, PathSegment} from '@/types';
 import assert from '@/assert';
 import mc from '@/mutation-constants';
 import TaxonSelector from '@/components/TaxonSelector.vue';
@@ -88,7 +88,7 @@ export default (Vue as AugmentedVue).extend({
         currentlyBeingDragged(this: any): boolean {
             return this.isSpecificCompoundWidgetBeingDragged(this.compoundWidgetIndex);
         },
-        taxons(this: any): TaxonInfo[] {
+        taxons(this: any): TaxonDisplayInfo[] {
             return this.getTaxonsByCompoundWidgetIndex(this.compoundWidgetIndex);
         },
         selectedPath(this: any): PathSegment[] {

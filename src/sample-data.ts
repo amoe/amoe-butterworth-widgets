@@ -5,8 +5,6 @@
 export default [
     {
         taxonomyRef: 'Occupation',
-        taxons: [
-        ],
         isCurrentlyBeingDragged: false,
         selectedPath: [
             { nodeId: 0, isVisible: true },
@@ -17,8 +15,6 @@ export default [
     },
     {
         taxonomyRef: 'Place',
-        taxons: [
-        ],
         isCurrentlyBeingDragged: false,
         selectedPath: [
             { nodeId: 0, isVisible: true },
@@ -28,8 +24,6 @@ export default [
     },
     {
         taxonomyRef: 'Occupation',
-        taxons: [
-        ],
         isCurrentlyBeingDragged: false,
         selectedPath: [
             { nodeId: 0, isVisible: true },
@@ -40,8 +34,6 @@ export default [
     },
     {
         taxonomyRef: 'Place',
-        taxons: [
-        ],
         isCurrentlyBeingDragged: false,
         selectedPath: [
             { nodeId: 0, isVisible: true },
