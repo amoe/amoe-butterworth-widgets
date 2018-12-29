@@ -34,6 +34,7 @@ export interface HideTaxonSelectorParameters {
 }
 
 // This is an interface that is never used as concrete state in the store.
+// To reiterate, derived state, calculated by a getter.
 // It's only used when laying stuff out.
 export interface TaxonDisplayInfo {
     level: number;
@@ -53,12 +54,6 @@ export interface CompoundWidget {
 }
 
 
-// Visible taxon is derived state and is calculated by a getter.
-export interface VisibleTaxon {
-    value: string;
-    level: number;    // 1-based
-    isVisible: boolean;
-}
 
 
 interface WidgetData {

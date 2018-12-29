@@ -33,7 +33,7 @@
 import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 import * as log from 'loglevel';
-import {TaxonomyNode, PathSegment, VisibleTaxon} from '@/types';
+import {TaxonomyNode, PathSegment, TaxonDisplayInfo} from '@/types';
 import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
@@ -68,7 +68,7 @@ export default Vue.extend({
         // This is a hack to deal with the fact that n+1 widgets is always
         // rendered.  It doesn't matter too much because the changes are
         // decoupled from the data itself.
-        taxonOrFresh(): VisibleTaxon {
+        taxonOrFresh():  TaxonDisplayInfo {
             if (this.taxon === undefined) {
                 return {
                     value: "",
