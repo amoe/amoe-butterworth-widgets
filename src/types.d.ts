@@ -51,6 +51,7 @@ export interface CompoundWidget {
     taxonomyRef: string | null;
     isCurrentlyBeingDragged: boolean;
     selectedPath: PathSegment[];
+    hasTentativeTaxonSelector: boolean;
 }
 
 

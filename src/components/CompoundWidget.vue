@@ -19,7 +19,8 @@
                       :taxonomy-ref="taxonomyRef"
                       :style-overrides="taxonStyleOverrides"/>
 
-      <tentative-taxon-selector key="tentativeTaxonSelector"/>
+      <tentative-taxon-selector v-if="thisCompoundWidgetHasTentativeTaxonSelector"
+                                key="tentativeTaxonSelector"/>
     </transition-group>
   </div>
 </template>
@@ -98,12 +99,16 @@ export default (Vue as AugmentedVue).extend({
         taxons(this: any): TaxonDisplayInfo[] {
             return this.getTaxonsByCompoundWidgetIndex(this.compoundWidgetIndex);
         },
+        thisCompoundWidgetHasTentativeTaxonSelector(this: any): boolean {
+            return this.hasTentativeTaxonSelector(this.compoundWidgetIndex);
+        },
         selectedPath(this: any): PathSegment[] {
             return this.getSelectedPath(this.compoundWidgetIndex);
         }, ...mapGetters([
             'isSpecificCompoundWidgetBeingDragged',
             'getSelectedPath',
-            'getTaxonsByCompoundWidgetIndex'
+            'getTaxonsByCompoundWidgetIndex',
+            'hasTentativeTaxonSelector'
         ])
     },
     methods: {

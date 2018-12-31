@@ -42,7 +42,8 @@ function makeEmptyCompoundWidget(): CompoundWidget {
     return {
         taxonomyRef: null,
         isCurrentlyBeingDragged: false,
-        selectedPath: []
+        selectedPath: [],
+        hasTentativeTaxonSelector: false,
     };
 }
 

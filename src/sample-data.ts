@@ -11,7 +11,8 @@ export default [
             { nodeId: 1, isVisible: true },
             { nodeId: 2, isVisible: true },
             { nodeId: 3, isVisible: true }
-        ]
+        ],
+        hasTentativeTaxonSelector: false
     },
     {
         taxonomyRef: 'Place',
@@ -20,7 +21,8 @@ export default [
             { nodeId: 0, isVisible: true },
             { nodeId: 1, isVisible: true },
             { nodeId: 2, isVisible: true },
-        ]
+        ],
+        hasTentativeTaxonSelector: false
     },
     {
         taxonomyRef: 'Occupation',
@@ -30,7 +32,8 @@ export default [
             { nodeId: 1, isVisible: true },
             { nodeId: 2, isVisible: true },
             { nodeId: 3, isVisible: true }
-        ]
+        ],
+        hasTentativeTaxonSelector: false
     },
     {
         taxonomyRef: 'Place',
@@ -39,6 +42,7 @@ export default [
             { nodeId: 0, isVisible: true },
             { nodeId: 1, isVisible: true },
             { nodeId: 2, isVisible: true },
-        ]
+        ],
+        hasTentativeTaxonSelector: false
     },
 ];

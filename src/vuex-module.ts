@@ -17,7 +17,6 @@ const treeModel = new TreeModel(config);
 
 const widgets: Module<WidgetsState, RootState> = {
     state: {
-        // This is used for the TS2View
         widgetState: [
             { isVisible: true }
         ],
@@ -83,6 +82,9 @@ const widgets: Module<WidgetsState, RootState> = {
         isSpecificCompoundWidgetBeingDragged(state) {
             return (index: number) => state.compoundWidgets[index].isCurrentlyBeingDragged;
         },
+        hasTentativeTaxonSelector(state) {
+            return (index: number) => state.compoundWidgets[index].hasTentativeTaxonSelector;
+        },
         compoundWidgets(state) {
             return state.compoundWidgets;
         },
@@ -106,7 +108,7 @@ const widgets: Module<WidgetsState, RootState> = {
                 const selectedPath = thisCompoundWidget.selectedPath;
 
                 if (taxonomyType === null) {
-                    throw new Error("can't happen");
+                    return [];
                 }
 
                 log.debug("looking up taxonomy type %o", taxonomyType);

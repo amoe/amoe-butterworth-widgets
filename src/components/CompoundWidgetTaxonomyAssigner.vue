@@ -15,7 +15,7 @@
 
       <plus-circle-icon class="widget-add-icon"
                         :width="16" :height="16"
-                        v-on:click="spewDebugInfo">
+                        v-on:click="addTaxonSelector">
       </plus-circle-icon>
     </div>
 
@@ -33,8 +33,8 @@ import {mapGetters} from 'vuex';
 export default Vue.extend({
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
     methods: {
-        spewDebugInfo() {
-            console.log("spew debug info %o", arguments);
+        addTaxonSelector() {
+
         }
     },
     computed: { 
