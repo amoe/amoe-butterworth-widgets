@@ -62,6 +62,9 @@ const widgets: Module<WidgetsState, RootState> = {
             const path = state.compoundWidgets[params.compoundWidgetIndex].selectedPath;
             path[params.taxonSelectorIndex].isVisible = false;
         },
+        [mc.MAKE_TENTATIVE_SELECTOR]: (state, compoundWidgetIndex: number) => {
+            state.compoundWidgets[compoundWidgetIndex].hasTentativeTaxonSelector = true;
+        }
     },
     actions: {
     },
@@ -138,7 +141,7 @@ const widgets: Module<WidgetsState, RootState> = {
 
                 return result;
             };
-        }
+        },
     }
 
 };

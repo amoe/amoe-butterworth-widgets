@@ -5,7 +5,9 @@
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
     <transition-group name="taxon" tag="div">
-      <compound-widget-taxonomy-assigner key="taxonomyAssigner">
+      <compound-widget-taxonomy-assigner key="taxonomyAssigner"
+                                         :index="compoundWidgetIndex">
+
       </compound-widget-taxonomy-assigner>
       
       <taxon-selector v-for="n in taxonIndices"

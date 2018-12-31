@@ -9,5 +9,6 @@ export default {
     LOAD_SAMPLE_DATA: 'loadSampleData',
     ADD_COMPOUND_WIDGET: 'addCompoundWidget',
     INITIALIZE_TAXONOMIES: 'initializeTaxonomies',
-    HIDE_TAXON_SELECTOR: 'hideTaxonSelector'
+    HIDE_TAXON_SELECTOR: 'hideTaxonSelector',
+    MAKE_TENTATIVE_SELECTOR: 'makeTentativeSelector'
 };

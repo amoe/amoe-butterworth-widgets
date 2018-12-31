@@ -29,12 +29,20 @@ import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import Vue from 'vue';
 import {mapGetters} from 'vuex';
+import mc from '@/mutation-constants';
 
 export default Vue.extend({
+    props: {
+        index: {type: Number, required: true}
+    },
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
     methods: {
         addTaxonSelector() {
-
+            console.log("About to add taxon selector");
+            this.$store.commit(mc.MAKE_TENTATIVE_SELECTOR, this.index);
+        },
+        spewDebugInfo() {
+            console.log("called with arguments %o", arguments);
         }
     },
     computed: { 
