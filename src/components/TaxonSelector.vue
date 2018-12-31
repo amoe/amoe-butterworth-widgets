@@ -51,6 +51,9 @@ export default Vue.extend({
             level: this.taxon === undefined ? this.index + 1 : this.taxon.level
         }
     },
+    created() {
+        console.log("value of selectedpath in cw is %o", this.selectedPath);
+    },
     methods: {
         kill(): void {
             // Need to pass the buck to the parent because we don't know which

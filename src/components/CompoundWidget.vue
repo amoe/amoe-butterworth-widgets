@@ -6,8 +6,8 @@
 
     <transition-group name="taxon" tag="div">
       <compound-widget-taxonomy-assigner key="taxonomyAssigner"
-                                         :index="compoundWidgetIndex">
-
+                                         :index="compoundWidgetIndex"
+                                         :selected-path="selectedPath">
       </compound-widget-taxonomy-assigner>
       
       <taxon-selector v-for="n in taxonIndices"
@@ -22,7 +22,9 @@
                       :style-overrides="taxonStyleOverrides"/>
 
       <tentative-taxon-selector v-if="thisCompoundWidgetHasTentativeTaxonSelector"
-                                key="tentativeTaxonSelector"/>
+                                key="tentativeTaxonSelector"
+                                :selected-path="selectedPath"
+                                :taxonomy-ref="taxonomy-ref"/>
     </transition-group>
   </div>
 </template>
@@ -71,6 +73,7 @@ export default (Vue as AugmentedVue).extend({
     },
     created() {
         log.debug("Compound widget has taxons %o", this.taxons);
+        console.log("value of selectedpath in cw is %o", this.selectedPath);
     },
     computed: {
         // Why does this exist?  Because v-for over an integer creates a 1-based

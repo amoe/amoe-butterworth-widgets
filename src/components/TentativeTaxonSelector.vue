@@ -1,7 +1,7 @@
 <template>
   <div class="widget tentative-taxon-selector" ref="widgets">
     <select class="taxon-select">
-      <option selected>foo</option>
+      <option v-for="item in childrenOfCurrentPath">{{item}}</option>
     </select>
 
     <div class="level-container">
@@ -26,20 +26,45 @@
 <script lang="ts">
 import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
+import {mapGetters} from 'vuex';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
+import {TaxonomyNode} from '@/types';
 import Vue from 'vue';
+import util from '@/util';
 
 export default Vue.extend({
+    props: ['selectedPath', 'taxonomyRef'],
+    data() {
+        return {
+            largestCurrentPath: 2,
+            items: ['foo', 'bar', 'baz']
+        };
+    },
+    created() {
+    },
     methods: {
         spewDebugInfo() {
             console.log("spew debug info %o", arguments);
         }
     },
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
-    data() {
-        return {
-            largestCurrentPath: 2
-        };
+    computed: {
+        childrenOfCurrentPath(this: any): string[] {
+            console.log("value of selectedPath is %o", this.selectedPath);
+
+            // If the value is empty then we just want to return all children of
+            // this taxonomy.  This is part of the responsibility of the findValidChildren
+            // method.
+
+            // Strip the path to the node ID only
+            const result = util.findValidChildren(
+                this.taxonomies[this.taxonomyRef],
+                this.selectedPath.map((s: TaxonomyNode) => s.nodeId)
+            );
+
+            return ['foo', 'bar', 'baz'];
+        },
+        ... mapGetters(['taxonomies'])
     }
 });
 </script>
