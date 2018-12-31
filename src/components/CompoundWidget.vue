@@ -5,6 +5,9 @@
      <p>Type: <code>{{taxonomyRef}}</code></p>
 
     <transition-group name="taxon" tag="div">
+      <compound-widget-taxonomy-assigner key="taxonomyAssigner">
+      </compound-widget-taxonomy-assigner>
+      
       <taxon-selector v-for="n in taxonIndices"
                       v-if="taxons[n].isVisible"
                       v-on:killed="killTaxonSelector"
@@ -14,8 +17,9 @@
                       :index="n"
                       :selected-path="selectedPath"
                       :taxonomy-ref="taxonomyRef"
-                      :style-overrides="taxonStyleOverrides">
-      </taxon-selector>
+                      :style-overrides="taxonStyleOverrides"/>
+
+      <tentative-taxon-selector key="tentativeTaxonSelector"/>
     </transition-group>
   </div>
 </template>
@@ -25,6 +29,8 @@ import Vue, {VueConstructor} from 'vue';
 import {mapGetters} from 'vuex';
 import { Draggable } from 'gsap/Draggable';
 import MoveIcon from '@/components/MoveIcon.vue';
+import CompoundWidgetTaxonomyAssigner from '@/components/CompoundWidgetTaxonomyAssigner.vue';
+import TentativeTaxonSelector from '@/components/TentativeTaxonSelector.vue';
 import typeGuards from '@/type-guards';
 import {TaxonDisplayInfo, PathSegment} from '@/types';
 import assert from '@/assert';
@@ -54,7 +60,8 @@ export default (Vue as AugmentedVue).extend({
         return {
         };
     },
-    components: {MoveIcon,TaxonSelector},
+    components: {MoveIcon,TaxonSelector, CompoundWidgetTaxonomyAssigner,
+                 TentativeTaxonSelector},
     mounted() { 
         // nothing happens here because all the draggable binding is handled in
         // the parent widgetview
