@@ -1,11 +1,10 @@
-import { TaxonomyNode, CompoundWidget } from '@/types';
+import { TaxonomyNode, CompoundWidget, NodeIdentifier } from '@/types';
 import { DraggableConstructor } from 'gsap/Draggable';
 import * as log from 'loglevel';
 
-
-function getNodeById(rootNode: TaxonomyNode, wantedId: number): TaxonomyNode {
-    const result = rootNode.all(function(node): boolean {
-        return node.model.id === wantedId;
+function getNodeById(rootNode: TaxonomyNode, wantedId: NodeIdentifier): TaxonomyNode {
+    const result = rootNode.all(function(node: TaxonomyNode): boolean {
+        return node.model.uri === wantedId;
     });
     if (result.length === 1) {
         return result[0];
@@ -14,7 +13,7 @@ function getNodeById(rootNode: TaxonomyNode, wantedId: number): TaxonomyNode {
     }
 }
 
-function getVirtualRoot(rootNode: TaxonomyNode, wantedPath: number[]): TaxonomyNode {
+function getVirtualRoot(rootNode: TaxonomyNode, wantedPath: NodeIdentifier[]): TaxonomyNode {
     log.debug("inside getVirtualRoot");
     if (wantedPath.length === 0) {
         log.debug("returning root node");
@@ -27,7 +26,7 @@ function getVirtualRoot(rootNode: TaxonomyNode, wantedPath: number[]): TaxonomyN
 }
 
 function findValidChildren(
-    rootNode: TaxonomyNode, wantedPath: number[]
+    rootNode: TaxonomyNode, wantedPath: NodeIdentifier[]
 ): TaxonomyNode[] {
     const virtualRoot = getVirtualRoot(rootNode, wantedPath);
     return virtualRoot.children;

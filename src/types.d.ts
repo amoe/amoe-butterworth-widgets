@@ -1,8 +1,10 @@
 import { Node } from 'tree-model';
 
+export type NodeIdentifier = string;
+
 export interface TaxonomyNodeModel {
     content: string;
-    id: number;
+    uri: NodeIdentifier;
     label: string;
 }
 
@@ -28,7 +30,7 @@ export interface TaxonDisplayInfo {
 }
 
 export interface PathSegment {
-    nodeId: number;
+    nodeId: NodeIdentifier;
     isVisible: boolean;
 }
 

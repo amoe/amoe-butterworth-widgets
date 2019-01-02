@@ -2,7 +2,7 @@
   <div class="widget tentative-taxon-selector" ref="widgets">
     <select class="taxon-select" v-model="currentChosenTaxon">
       <option v-for="nodeModel in childrenOfCurrentPath"
-              :value="nodeModel.id">{{nodeModel.content}}</option>
+              :value="nodeModel.uri">{{nodeModel.content}}</option>
     </select>
 
     <div class="level-container">
@@ -29,7 +29,7 @@ import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import {mapGetters} from 'vuex';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
-import {TaxonomyNode, TaxonomyNodeModel} from '@/types';
+import {TaxonomyNode, TaxonomyNodeModel, NodeIdentifier} from '@/types';
 import {AddPathSegmentParameters} from '@/requests';
 import Vue from 'vue';
 import util from '@/util';
@@ -40,7 +40,7 @@ export default Vue.extend({
     data() {
         return {
             largestCurrentPath: 2,   // FIXME FIXME FIXME!
-            currentChosenTaxon: null as number | null
+            currentChosenTaxon: null as NodeIdentifier | null
         };
     },
     created() {

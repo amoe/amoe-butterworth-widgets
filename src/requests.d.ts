@@ -1,5 +1,7 @@
 // Payloads for vuex mutations
 
+import { NodeIdentifier } from '@/types';
+
 export interface SwapParameters {
     sourceIndex: number;
     targetIndex: number;
@@ -22,5 +24,5 @@ export interface SetTaxonomyRefParameters {
 
 export interface AddPathSegmentParameters {
     compoundWidgetIndex: number;
-    nodeId: number;
+    nodeId: NodeIdentifier;
 }
