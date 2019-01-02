@@ -71,6 +71,8 @@ export default Vue.extend({
         // This is a hack to deal with the fact that n+1 widgets is always
         // rendered.  It doesn't matter too much because the changes are
         // decoupled from the data itself.
+
+        // We can probably remove this hack now
         taxonOrFresh():  TaxonDisplayInfo {
             if (this.taxon === undefined) {
                 return {

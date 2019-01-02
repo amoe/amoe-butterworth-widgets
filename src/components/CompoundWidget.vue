@@ -25,6 +25,7 @@
                                 :selected-path="selectedPath"
                                 :taxonomy-ref="taxonomyRef"/>
     </transition-group>
+
   </div>
 </template>
 

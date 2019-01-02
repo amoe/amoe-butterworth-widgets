@@ -34,7 +34,7 @@ import mc from '@/mutation-constants';
 export default Vue.extend({
     data() {
         return {
-            chosenTaxonomy: null as string | null
+            chosenTaxonomy: "Music" as string | null   // for debugging
         };
     },
     props: {
