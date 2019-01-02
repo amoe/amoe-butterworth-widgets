@@ -30,16 +30,17 @@ import CircleIcon from '@/components/CircleIcon.vue';
 import {mapGetters} from 'vuex';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import {TaxonomyNode, TaxonomyNodeModel} from '@/types';
+import {AddPathSegmentParameters} from '@/requests';
 import Vue from 'vue';
 import util from '@/util';
 import mc from '@/mutation-constants';
 
 export default Vue.extend({
-    props: ['selectedPath', 'taxonomyRef'],
+    props: ['selectedPath', 'taxonomyRef', 'index'],
     data() {
         return {
             largestCurrentPath: 2,   // FIXME FIXME FIXME!
-            currentChosenTaxon: null as string | null
+            currentChosenTaxon: null as number | null
         };
     },
     created() {
@@ -50,7 +51,17 @@ export default Vue.extend({
         },
         confirmTentativeTaxon() {
             console.log("chosen taxon is %o", this.currentChosenTaxon);
-            this.$store.commit(mc.ADD_PATH_SEGMENT);
+
+            if (this.currentChosenTaxon === null) {
+                throw new Error("must choose a taxon");
+            }
+
+            const parameters: AddPathSegmentParameters = {
+                compoundWidgetIndex: this.index,
+                nodeId: this.currentChosenTaxon
+            };
+
+            this.$store.commit(mc.ADD_PATH_SEGMENT, parameters);
         }
     },
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },

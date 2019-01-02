@@ -21,6 +21,7 @@
 
       <tentative-taxon-selector v-if="thisCompoundWidgetHasTentativeTaxonSelector"
                                 key="tentativeTaxonSelector"
+                                :index="compoundWidgetIndex"
                                 :selected-path="selectedPath"
                                 :taxonomy-ref="taxonomyRef"/>
     </transition-group>

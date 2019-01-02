@@ -73,6 +73,15 @@ const widgets: Module<WidgetsState, RootState> = {
             state.compoundWidgets[parameters.compoundWidgetIndex].taxonomyRef = parameters.taxonomyRef;
         },
         [mc.ADD_PATH_SEGMENT]: (state, parameters: AddPathSegmentParameters) => {
+            const compoundWidget = state.compoundWidgets[parameters.compoundWidgetIndex];
+
+            const newSegment: PathSegment = {
+                nodeId: parameters.nodeId,
+                isVisible: true
+            };
+
+            compoundWidget.selectedPath.push(newSegment);
+            compoundWidget.hasTentativeTaxonSelector = false;
         }
     },
     actions: {
