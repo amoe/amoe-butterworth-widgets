@@ -64,7 +64,8 @@ export default Vue.extend({
             this.$emit('hidden', this.index);
         },
         addTaxonSelector(): void {
-            log.debug("I would add a new taxon selector to this compound widget");
+            log.info("I would add a new taxon selector to this compound widget");
+            this.$store.commit(mc.MAKE_TENTATIVE_SELECTOR, this.index);
         }
     },
     computed: {
