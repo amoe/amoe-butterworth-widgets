@@ -1,4 +1,4 @@
-import { TaxonomyNode, CompoundWidget, NodeIdentifier } from '@/types';
+import { TaxonomyNode, CompoundWidget, NodeIdentifier, QuerySegment } from '@/types';
 import { DraggableConstructor } from 'gsap/Draggable';
 import * as log from 'loglevel';
 
@@ -46,8 +46,17 @@ function makeEmptyCompoundWidget(): CompoundWidget {
     };
 }
 
+function getQuerySegment(c: CompoundWidget): QuerySegment {
+    if (c.taxonomyRef === null) throw new Error("null taxonomy");
+
+    return {
+        taxonomyRef: c.taxonomyRef,
+        selectedPath: c.selectedPath.map(n => n.nodeId)
+    };
+}
+
 
 export default {
     findValidChildren, getCollidingElements, makeEmptyCompoundWidget,
-    getNodeById
+    getNodeById, getQuerySegment
 };

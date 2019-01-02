@@ -66,3 +66,12 @@ export interface WidgetsState {
     compoundWidgets: CompoundWidget[],
     taxonomiesData: TaxonomiesData;
 }
+
+export type TaxonomyPath = NodeIdentifier[]
+
+export interface QuerySegment {
+    taxonomyRef: string;
+    selectedPath: TaxonomyPath;
+}
+
+export type SerializedQuery = QuerySegment[]

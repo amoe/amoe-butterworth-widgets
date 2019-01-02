@@ -1,7 +1,7 @@
 import { Module } from 'vuex';
 import {
     RootState, WidgetsState, PathSegment, TaxonomiesCache, TaxonomyNodeModel,
-    TaxonDisplayInfo
+    TaxonDisplayInfo, SerializedQuery
 } from '@/types';
 
 import {
@@ -160,6 +160,11 @@ const widgets: Module<WidgetsState, RootState> = {
                 return result;
             };
         },
+        serializedQuery(state, getters): SerializedQuery {
+            // Narrow the state of each path to its node id which is an immutable
+            // string.
+            return state.compoundWidgets.map(util.getQuerySegment);
+        }
     }
 
 };

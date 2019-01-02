@@ -39,6 +39,7 @@ import assert from '@/assert';
 import util from '@/util';
 import * as log from 'loglevel';
 import _ from 'lodash';
+import {SerializedQuery} from '@/types';
 
 interface ColorScaleCache {
     [key: string]: object;
@@ -154,8 +155,8 @@ export default (Vue as AugmentedVue).extend({
         addCompoundWidget(): void {
             this.$store.commit(mc.ADD_COMPOUND_WIDGET);
         },
-        getQuery(): any {
-            return _.cloneDeep(this.$store.getters.compoundWidgets);
+        getQuery(this: any): SerializedQuery {
+            return this.serializedQuery;
         }
     },
     computed: {
@@ -182,7 +183,7 @@ export default (Vue as AugmentedVue).extend({
             
             return result;
         },
-        ... mapGetters(['compoundWidgets'])
+        ... mapGetters(['compoundWidgets', 'serializedQuery'])
     },
     watch: {
         compoundWidgets: function (val) {
