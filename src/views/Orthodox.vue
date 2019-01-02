@@ -57,7 +57,7 @@ export default Vue.extend({
             // inserting it to the store, etc.  We never deal with the store
             // ourselves.
             taxonomies: {
-                'Occupation': OCCUPATION_TAXONOMY_JSON
+                'Occupation': OCCUPATION_TAXONOMY_JSON,
             }
         }
     },
