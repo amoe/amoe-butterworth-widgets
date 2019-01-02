@@ -18,21 +18,6 @@ export type MyNode = Node<MyNodeModel>
 
 export type TransitionCallback = () => void;
 
-export interface SwapParameters {
-    sourceIndex: number;
-    targetIndex: number;
-}
-
-export interface KillTaxonSelectorParameters {
-    compoundWidgetIndex: number;
-    taxonSelectorIndex: number;
-}
-
-export interface HideTaxonSelectorParameters {
-    compoundWidgetIndex: number;
-    taxonSelectorIndex: number;
-}
-
 // This is an interface that is never used as concrete state in the store.
 // To reiterate, derived state, calculated by a getter.
 // It's only used when laying stuff out.

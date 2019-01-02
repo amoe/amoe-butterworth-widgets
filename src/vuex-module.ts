@@ -1,9 +1,13 @@
 import { Module } from 'vuex';
 import {
-    RootState, WidgetsState, SwapParameters, KillTaxonSelectorParameters,
-    PathSegment, TaxonomiesCache, TaxonomyNodeModel, HideTaxonSelectorParameters,
+    RootState, WidgetsState, PathSegment, TaxonomiesCache, TaxonomyNodeModel,
     TaxonDisplayInfo
 } from '@/types';
+
+import {
+    HideTaxonSelectorParameters, SwapParameters, KillTaxonSelectorParameters,
+    SetTaxonomyRefParameters
+} from '@/requests';
 import mc from '@/mutation-constants';
 import TreeModel from 'tree-model';
 import sampleData from '@/sample-data';
@@ -64,7 +68,10 @@ const widgets: Module<WidgetsState, RootState> = {
         },
         [mc.MAKE_TENTATIVE_SELECTOR]: (state, compoundWidgetIndex: number) => {
             state.compoundWidgets[compoundWidgetIndex].hasTentativeTaxonSelector = true;
-        }
+        },
+        [mc.SET_TAXONOMY_REF]: (state, parameters: SetTaxonomyRefParameters) => {
+            state.compoundWidgets[parameters.compoundWidgetIndex].taxonomyRef = parameters.taxonomyRef;
+        },
     },
     actions: {
     },

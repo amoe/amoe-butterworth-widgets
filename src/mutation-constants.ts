@@ -10,5 +10,6 @@ export default {
     ADD_COMPOUND_WIDGET: 'addCompoundWidget',
     INITIALIZE_TAXONOMIES: 'initializeTaxonomies',
     HIDE_TAXON_SELECTOR: 'hideTaxonSelector',
-    MAKE_TENTATIVE_SELECTOR: 'makeTentativeSelector'
+    MAKE_TENTATIVE_SELECTOR: 'makeTentativeSelector',
+    SET_TAXONOMY_REF: 'setTaxonomyRef'
 };

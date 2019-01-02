@@ -39,6 +39,7 @@ export default Vue.extend({
     methods: {
         addTaxonSelector() {
             console.log("About to add taxon selector");
+            this.$store.commit(mc.SET_TAXONOMY_REF, this.index);
             this.$store.commit(mc.MAKE_TENTATIVE_SELECTOR, this.index);
         },
         spewDebugInfo() {
