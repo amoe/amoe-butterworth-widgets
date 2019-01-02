@@ -7,10 +7,10 @@ export default [
         taxonomyRef: 'Occupation',
         isCurrentlyBeingDragged: false,
         selectedPath: [
-            { nodeId: 0, isVisible: true },
-            { nodeId: 1, isVisible: true },
-            { nodeId: 2, isVisible: true },
-            { nodeId: 3, isVisible: true }
+            { nodeId: "0", isVisible: true },
+            { nodeId: "1", isVisible: true },
+            { nodeId: "2", isVisible: true },
+            { nodeId: "3", isVisible: true }
         ],
         hasTentativeTaxonSelector: false
     },
@@ -18,9 +18,9 @@ export default [
         taxonomyRef: 'Place',
         isCurrentlyBeingDragged: false,
         selectedPath: [
-            { nodeId: 0, isVisible: true },
-            { nodeId: 1, isVisible: true },
-            { nodeId: 2, isVisible: true },
+            { nodeId: "0", isVisible: true },
+            { nodeId: "1", isVisible: true },
+            { nodeId: "2", isVisible: true },
         ],
         hasTentativeTaxonSelector: false
     },
@@ -28,10 +28,10 @@ export default [
         taxonomyRef: 'Occupation',
         isCurrentlyBeingDragged: false,
         selectedPath: [
-            { nodeId: 0, isVisible: true },
-            { nodeId: 1, isVisible: true },
-            { nodeId: 2, isVisible: true },
-            { nodeId: 3, isVisible: true }
+            { nodeId: "0", isVisible: true },
+            { nodeId: "1", isVisible: true },
+            { nodeId: "2", isVisible: true },
+            { nodeId: "3", isVisible: true }
         ],
         hasTentativeTaxonSelector: false
     },
@@ -39,9 +39,9 @@ export default [
         taxonomyRef: 'Place',
         isCurrentlyBeingDragged: false,
         selectedPath: [
-            { nodeId: 0, isVisible: true },
-            { nodeId: 1, isVisible: true },
-            { nodeId: 2, isVisible: true },
+            { nodeId: "0", isVisible: true },
+            { nodeId: "1", isVisible: true },
+            { nodeId: "2", isVisible: true },
         ],
         hasTentativeTaxonSelector: false
     },
