@@ -39,9 +39,6 @@ export interface CompoundWidget {
     hasTentativeTaxonSelector: boolean;
 }
 
-
-
-
 interface WidgetData {
     isVisible: boolean
 }

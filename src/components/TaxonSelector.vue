@@ -96,7 +96,7 @@ export default Vue.extend({
             log.debug("path is currently %o", this.selectedPath);
 
             // Slice to level-1, because index is 1-based and the slice should
-            // be empty on the first level
+            // be empty on the first level XXX PROBABLY NO LONGER CORRECT
             const pathStem: PathSegment[] = this.selectedPath.slice(0, level - 1);
 
             // Strip the path to the node ID only
