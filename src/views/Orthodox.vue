@@ -11,46 +11,38 @@ import WidgetView from '@/components/WidgetView.vue'; // @ is an alias to /src
 import * as log from 'loglevel';
 import {TaxonomyNodeModel} from '@/types';
 
-const MUSIC_TAXONOMY_JSON = {
-    'children': [{'content': 'Rock', 'id': 1, 'label': 'Taxon',
-                  'children': [{'content': 'Metal', 'id': 3, 'label': 'Taxon'}]},
-                 {'content': 'Classical', 'id': 2, 'label': 'Taxon',
-                  'children': [{'content': 'Baroque', 'id': 4, 'label': 'Taxon'}]}],
-    'content': 'Music',
-    'id': 0,
-    'label': 'Taxon'
-};
-
 const OCCUPATION_TAXONOMY_JSON = {
-    'children': [{'content': 'Manufacturing', 'id': 1, 'label': 'Taxon',
-                  'children': [
-                      {'content': 'Wood workers',
-                       'id': 2, 
-                       'label': 'Taxon', 
-                       'children': [
-                           {'content': 'Bandbox-maker',
-                            'id': 3,
-                            'label': 'Taxon'}
-                       ]}
-                  ]}],
-
-    'content': 'Occupation',
-    'id': 0,
-    'label': 'Taxon'
+    "children": [
+        {
+            "content": "Transport", 
+            "id": 63792, 
+            "label": "Taxon", 
+            "uri": "tag:solasistim.net,2018-12-28:occubrow/Transport/1"
+        }, 
+        {
+            "content": "Serve", 
+            "id": 63788, 
+            "label": "Taxon", 
+            "uri": "tag:solasistim.net,2018-12-28:occubrow/Serve/1"
+        }, 
+        {
+            "content": "Drive", 
+            "id": 63790, 
+            "label": "Taxon", 
+            "uri": "tag:solasistim.net,2018-12-28:occubrow/Drive/1"
+        }, 
+        {
+            "content": "Manage", 
+            "id": 63791, 
+            "label": "Taxon", 
+            "uri": "tag:solasistim.net,2018-12-28:occubrow/Manage/1"
+        }
+    ], 
+  "content": "Occupation", 
+  "id": 63789, 
+  "label": "Taxon", 
+  "uri": "tag:solasistim.net,2018-12-28:occubrow/Occupation/1"
 };
-
-const PLACE_TAXONOMY_JSON = {
-    'children': [{'content': 'Country', 'id': 1, 'label': 'Taxon',
-                  'children': [
-                      {'content': 'France',
-                       'id': 2, 
-                       'label': 'Taxon'}]
-                 }],
-    'content': 'Place',
-    'id': 0,
-    'label': 'Taxon'
-};
-
 
 const config = {};
 const t = new TreeModel(config)
@@ -60,16 +52,12 @@ export default Vue.extend({
     components: {WidgetView},
     data() {
         return {
-            someArray: [1, 2, 3],
-            anotherArray: [4, 5, 6],
             // we pass this raw data into the WidgetView component.
             // WidgetView itself has responsibility for deserializing it, 
             // inserting it to the store, etc.  We never deal with the store
             // ourselves.
             taxonomies: {
-                'Music': MUSIC_TAXONOMY_JSON,
                 'Occupation': OCCUPATION_TAXONOMY_JSON,
-                'Place': PLACE_TAXONOMY_JSON
             }
         }
     },
