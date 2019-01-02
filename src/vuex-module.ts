@@ -6,7 +6,7 @@ import {
 
 import {
     HideTaxonSelectorParameters, SwapParameters, KillTaxonSelectorParameters,
-    SetTaxonomyRefParameters
+    SetTaxonomyRefParameters, AddPathSegmentParameters
 } from '@/requests';
 import mc from '@/mutation-constants';
 import TreeModel from 'tree-model';
@@ -72,6 +72,8 @@ const widgets: Module<WidgetsState, RootState> = {
         [mc.SET_TAXONOMY_REF]: (state, parameters: SetTaxonomyRefParameters) => {
             state.compoundWidgets[parameters.compoundWidgetIndex].taxonomyRef = parameters.taxonomyRef;
         },
+        [mc.ADD_PATH_SEGMENT]: (state, parameters: AddPathSegmentParameters) => {
+        }
     },
     actions: {
     },

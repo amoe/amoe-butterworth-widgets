@@ -19,3 +19,8 @@ export interface SetTaxonomyRefParameters {
     compoundWidgetIndex: number;
     taxonomyRef: string;
 }
+
+export interface AddPathSegmentParameters {
+    compoundWidgetIndex: number;
+    nodeId: number;
+}

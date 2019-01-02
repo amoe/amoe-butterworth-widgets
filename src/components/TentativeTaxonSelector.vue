@@ -1,7 +1,8 @@
 <template>
   <div class="widget tentative-taxon-selector" ref="widgets">
-    <select class="taxon-select">
-      <option v-for="item in childrenOfCurrentPath">{{item}}</option>
+    <select class="taxon-select" v-model="currentChosenTaxon">
+      <option v-for="nodeModel in childrenOfCurrentPath"
+              :value="nodeModel.id">{{nodeModel.content}}</option>
     </select>
 
     <div class="level-container">
@@ -15,7 +16,7 @@
 
       <plus-circle-icon class="widget-add-icon"
                         :width="16" :height="16"
-                        v-on:click="spewDebugInfo">
+                        v-on:click="confirmTentativeTaxon">
       </plus-circle-icon>
     </div>
 
@@ -28,16 +29,17 @@ import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import {mapGetters} from 'vuex';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
-import {TaxonomyNode} from '@/types';
+import {TaxonomyNode, TaxonomyNodeModel} from '@/types';
 import Vue from 'vue';
 import util from '@/util';
+import mc from '@/mutation-constants';
 
 export default Vue.extend({
     props: ['selectedPath', 'taxonomyRef'],
     data() {
         return {
-            largestCurrentPath: 2,
-            items: ['foo', 'bar', 'baz']
+            largestCurrentPath: 2,   // FIXME FIXME FIXME!
+            currentChosenTaxon: null as string | null
         };
     },
     created() {
@@ -45,11 +47,15 @@ export default Vue.extend({
     methods: {
         spewDebugInfo() {
             console.log("spew debug info %o", arguments);
+        },
+        confirmTentativeTaxon() {
+            console.log("chosen taxon is %o", this.currentChosenTaxon);
+            this.$store.commit(mc.ADD_PATH_SEGMENT);
         }
     },
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
     computed: {
-        childrenOfCurrentPath(this: any): string[] {
+        childrenOfCurrentPath(this: any): TaxonomyNodeModel[] {
             console.log("value of selectedPath is %o", this.selectedPath);
 
             // If the value is empty then we just want to return all children of
@@ -62,7 +68,7 @@ export default Vue.extend({
                 this.selectedPath.map((s: TaxonomyNode) => s.nodeId)
             );
 
-            return ['foo', 'bar', 'baz'];
+            return result.map(n => n.model);
         },
         ... mapGetters(['taxonomies'])
     }
