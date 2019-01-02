@@ -162,8 +162,17 @@ const widgets: Module<WidgetsState, RootState> = {
         },
         serializedQuery(state, getters): SerializedQuery {
             // Narrow the state of each path to its node id which is an immutable
-            // string.
-            return state.compoundWidgets.map(util.getQuerySegment);
+            // string.   Skip ones without a taxonomyRef.
+            const result = [];
+
+
+            for (let w of state.compoundWidgets) {
+                if (w.taxonomyRef === null) continue;
+
+                result.push(util.getQuerySegment(w));
+            }
+
+            return result;
         }
     }
 
