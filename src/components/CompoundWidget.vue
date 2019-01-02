@@ -2,8 +2,6 @@
   <div class="compound-widget-container" :style="dynamicStyles" ref="compoundWidgetElement">
     <move-icon class="move-handle"></move-icon>
 
-     <p>Type: <code>{{taxonomyRef}}</code></p>
-
     <transition-group name="taxon" tag="div">
       <compound-widget-taxonomy-assigner key="taxonomyAssigner"
                                          :index="compoundWidgetIndex"
@@ -24,7 +22,7 @@
       <tentative-taxon-selector v-if="thisCompoundWidgetHasTentativeTaxonSelector"
                                 key="tentativeTaxonSelector"
                                 :selected-path="selectedPath"
-                                :taxonomy-ref="taxonomy-ref"/>
+                                :taxonomy-ref="taxonomyRef"/>
     </transition-group>
   </div>
 </template>

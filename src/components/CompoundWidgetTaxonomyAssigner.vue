@@ -1,6 +1,6 @@
 <template>
   <div class="widget compound-widget-taxonomy-assigner" ref="widgets">
-    <select class="taxon-select">
+    <select class="taxon-select" v-model="chosenTaxonomy">
       <option v-for="taxonomy in availableTaxonomies">{{taxonomy}}</option>
     </select>
 
@@ -32,6 +32,11 @@ import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 
 export default Vue.extend({
+    data() {
+        return {
+            chosenTaxonomy: null as string | null
+        };
+    },
     props: {
         index: {type: Number, required: true}
     },
@@ -39,7 +44,12 @@ export default Vue.extend({
     methods: {
         addTaxonSelector() {
             console.log("About to add taxon selector");
-            this.$store.commit(mc.SET_TAXONOMY_REF, this.index);
+            if (this.chosenTaxonomy === null) {
+                throw new Error("Must select a taxonomy");
+            }
+
+            this.$store.commit(mc.SET_TAXONOMY_REF, 
+                               {compoundWidgetIndex: this.index, taxonomyRef: this.chosenTaxonomy});
             this.$store.commit(mc.MAKE_TENTATIVE_SELECTOR, this.index);
         },
         spewDebugInfo() {
