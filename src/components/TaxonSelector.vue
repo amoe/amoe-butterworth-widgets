@@ -23,6 +23,8 @@
     </div>
 
     <button v-on:click="hide">Hide</button>
+    
+    <p>Length is {{siblings.length}}</p>
   </div>
 </template>
 
@@ -73,6 +75,20 @@ export default Vue.extend({
         addTaxonSelector(): void {
             log.info("I would add a new taxon selector to this compound widget");
             this.$store.commit(mc.MAKE_TENTATIVE_SELECTOR, this.index);
+        },
+        getNodesAtPathLevel(cutLevel: number): TaxonomyNodeModel[] {
+            const thisPathSegment: PathSegment = this.selectedPath[this.index];
+            
+            const pathStem: PathSegment[] = this.selectedPath.slice(0, cutLevel);
+
+            const siblings = util.findValidChildren(
+                this.taxonomies[this.taxonomyRef],
+                util.getFlatPath(pathStem)
+            );
+
+            const result = siblings.map(n => n.model);
+            console.log("called from index %o, sibling result was %o, stem size is %o", this.index, result, pathStem.length);
+            return result;
         }
     },
     computed: {
@@ -89,21 +105,7 @@ export default Vue.extend({
         // Because the tentative should show children of the level above it.
         // But the regular one should show 
         siblings(): TaxonomyNodeModel[] {
-            const thisPathSegment: PathSegment = this.selectedPath[this.index];
-            
-            console.log("has definite value? %o", thisPathSegment.hasDefiniteValue());
-
-            const level = this.taxon.level;
-            const pathStem: PathSegment[] = this.selectedPath.slice(0, level);
-
-            const siblings = util.findValidChildren(
-                this.taxonomies[this.taxonomyRef],
-                util.getFlatPath(pathStem)
-            );
-
-            const result = siblings.map(n => n.model);
-            console.log("called from index %o, sibling result was %o, stem size is %o", this.index, result, pathStem.length);
-            return result;
+            return this.getNodesAtPathLevel(this.taxon.level);
         }
     }
 });
