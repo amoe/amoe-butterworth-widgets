@@ -166,7 +166,7 @@ export default (Vue as AugmentedVue).extend({
 }
 
 // Do a leave transition over 2 seconds, whatever it may be
-.taxon-leave-active {
+.taxon-leave-active:not(.tentative-taxon-selector) {
     transition: width 0.5s ease-in;
 
     /* You can do opacity overrides here, but you can't do background-color
