@@ -23,6 +23,8 @@
     </div>
 
     <button v-on:click="hide">Hide</button>
+
+    <p>Has children: {{hasRemainingChildren}}</p>
   </div>
 </template>
 
