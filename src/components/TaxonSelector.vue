@@ -73,17 +73,37 @@ export default Vue.extend({
         }
     },
     computed: {
+        // If you think about it, this method only applies for the taxonselector, not the tentativeone.
+        // Because the tentative should show children of the level above it.
+        // But the regular one should show 
         siblings(this: any): TaxonomyNodeModel[] {
-            const parentLevel = this.level - 1;
 
-            const pathStem: PathSegment[] = this.selectedPath.slice(0, parentLevel);
+
+            const thisPathSegment: PathSegment = this.selectedPath[this.index];
+            
+            console.log("has definite value? %o", thisPathSegment.hasDefiniteValue());
+
+
+            var cutLevel;
+
+            if (thisPathSegment.hasDefiniteValue()) {
+                cutLevel = this.level - 1;
+            } else {
+                cutLevel = this.level;
+            }
+
+            const pathStem: PathSegment[] = this.selectedPath.slice(0, cutLevel);
 
             const siblings = util.findValidChildren(
                 this.taxonomies[this.taxonomyRef],
                 util.getFlatPath(pathStem)
             );
 
-            return siblings.map(n => n.model);
+            const result = siblings.map(n => n.model);
+
+            console.log("called from index %o, sibling result was %o, stem size is %o", this.index, result, pathStem.length);
+
+            return result;
         }, ...mapGetters(['taxonomies'])
     }
 });
