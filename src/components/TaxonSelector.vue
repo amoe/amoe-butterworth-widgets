@@ -77,10 +77,10 @@ export default Vue.extend({
     },
     computed: {
         humanFriendlyTaxonLevel(): number {
-            const taxonomyAssignerColumns = 1;
+            const taxonomyAssignerColumnSpan = 1;
             const indexOffset = 1;
 
-            return this.taxon.level + taxonomyAssignerColumns + indexOffset;
+            return this.taxon.level + taxonomyAssignerColumnSpan + indexOffset;
         },
         taxonomies(): TaxonomiesCache {
             return this.$store.getters.taxonomies;
@@ -93,17 +93,8 @@ export default Vue.extend({
             
             console.log("has definite value? %o", thisPathSegment.hasDefiniteValue());
 
-
             const level = this.taxon.level;
-            var cutLevel;
-
-            if (thisPathSegment.hasDefiniteValue()) {
-                cutLevel = level;
-            } else {
-                cutLevel = level - 1;
-            }
-
-            const pathStem: PathSegment[] = this.selectedPath.slice(0, cutLevel);
+            const pathStem: PathSegment[] = this.selectedPath.slice(0, level);
 
             const siblings = util.findValidChildren(
                 this.taxonomies[this.taxonomyRef],
