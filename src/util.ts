@@ -1,4 +1,7 @@
-import { TaxonomyNode, CompoundWidget, NodeIdentifier, QuerySegment } from '@/types';
+import {
+    TaxonomyNode, CompoundWidget, NodeIdentifier, QuerySegment, TaxonomyPath,
+    PathSegment
+} from '@/types';
 import { DraggableConstructor } from 'gsap/Draggable';
 import * as log from 'loglevel';
 
@@ -46,17 +49,30 @@ function makeEmptyCompoundWidget(): CompoundWidget {
     };
 }
 
+
+// Coerce a compound widget's selected path (which may include undefined ones)
+// to a simple list of path identifiers
+function getFlatPath(selectedPath: PathSegment[]): TaxonomyPath {
+    const result: NodeIdentifier[] = [];
+
+    selectedPath.forEach(segment => {
+        result.push.apply(result, segment.toPathElements());
+    });
+
+    return result;
+}
+
 function getQuerySegment(c: CompoundWidget): QuerySegment {
     if (c.taxonomyRef === null) throw new Error("null taxonomy");
 
     return {
         taxonomyRef: c.taxonomyRef,
-        selectedPath: c.selectedPath.map(n => n.nodeId)
+        selectedPath: getFlatPath(c.selectedPath)
     };
 }
 
 
 export default {
     findValidChildren, getCollidingElements, makeEmptyCompoundWidget,
-    getNodeById, getQuerySegment
+    getNodeById, getQuerySegment, getFlatPath
 };

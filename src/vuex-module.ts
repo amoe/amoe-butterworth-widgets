@@ -4,10 +4,14 @@ import {
     TaxonDisplayInfo, SerializedQuery
 } from '@/types';
 
+import { DefinedPathSegment, TentativePathSegment } from '@/classes';
+
 import {
     HideTaxonSelectorParameters, SwapParameters, KillTaxonSelectorParameters,
-    SetTaxonomyRefParameters, AddPathSegmentParameters
+    SetTaxonomyRefParameters, AddPathSegmentParameters, ReplacePathSegmentParameters
 } from '@/requests';
+
+
 import mc from '@/mutation-constants';
 import TreeModel from 'tree-model';
 import sampleData from '@/sample-data';
@@ -67,22 +71,25 @@ const widgets: Module<WidgetsState, RootState> = {
             path[params.taxonSelectorIndex].isVisible = false;
         },
         [mc.MAKE_TENTATIVE_SELECTOR]: (state, compoundWidgetIndex: number) => {
-            state.compoundWidgets[compoundWidgetIndex].hasTentativeTaxonSelector = true;
+            const compoundWidget = state.compoundWidgets[compoundWidgetIndex];
+            const newSegment: PathSegment = new TentativePathSegment()
+
+            compoundWidget.selectedPath.push(newSegment);
+            compoundWidget.hasTentativeTaxonSelector = false;
         },
         [mc.SET_TAXONOMY_REF]: (state, parameters: SetTaxonomyRefParameters) => {
             state.compoundWidgets[parameters.compoundWidgetIndex].taxonomyRef = parameters.taxonomyRef;
         },
-        [mc.ADD_PATH_SEGMENT]: (state, parameters: AddPathSegmentParameters) => {
+        [mc.REPLACE_PATH_SEGMENT]: (state, parameters: ReplacePathSegmentParameters) => {
+            console.log("would replace path segment, %o", parameters);
             const compoundWidget = state.compoundWidgets[parameters.compoundWidgetIndex];
-
-            const newSegment: PathSegment = {
-                nodeId: parameters.nodeId,
-                isVisible: true
-            };
-
-            compoundWidget.selectedPath.push(newSegment);
-            compoundWidget.hasTentativeTaxonSelector = false;
-        }
+            const newSegment: PathSegment = new DefinedPathSegment(parameters.nodeIdentifier);
+            compoundWidget.selectedPath.splice(
+                parameters.selectedPathIndex,
+                1,
+                newSegment
+            );
+        },
     },
     actions: {
     },
@@ -124,40 +131,8 @@ const widgets: Module<WidgetsState, RootState> = {
         },
         getTaxonsByCompoundWidgetIndex(state, getters) {
             return (index: number): TaxonDisplayInfo[] => {
-                const thisCompoundWidget = state.compoundWidgets[index];
-                const taxonomyType = thisCompoundWidget.taxonomyRef;
-                const selectedPath = thisCompoundWidget.selectedPath;
-
-                if (taxonomyType === null) {
-                    return [];
-                }
-
-                log.debug("looking up taxonomy type %o", taxonomyType);
-
-                log.debug("taxonomies list %o", getters.taxonomies);
-
-                const targetTaxonomy = getters.taxonomies[taxonomyType];
-                log.debug("locating in target taxonomy %o", targetTaxonomy);
-                log.debug("selectedpath is %o", selectedPath);
-
-                // This might be disgustingly inefficient but we're just
-                // going to ignore that for now.
-
-                const nodes = selectedPath.map(
-                    segment => util.getNodeById(targetTaxonomy, segment.nodeId)
-                );
-
-                // Some values are propagated from the path segment.
-                // The type of this is TaxonInfo.
-                const result = nodes.map((n, index) => {
-                    return {
-                        value: n.model.content,
-                        level: index + 1,
-                        isVisible: selectedPath[index].isVisible
-                    }
-                });
-
-                return result;
+                const path: PathSegment[] = getters.getSelectedPath(index);
+                return path.map((segment, n) => segment.toTaxonDisplayInfo(n));
             };
         },
         serializedQuery(state, getters): SerializedQuery {

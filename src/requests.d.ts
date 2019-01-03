@@ -26,3 +26,9 @@ export interface AddPathSegmentParameters {
     compoundWidgetIndex: number;
     nodeId: NodeIdentifier;
 }
+
+export interface ReplacePathSegmentParameters {
+    compoundWidgetIndex: number;
+    selectedPathIndex: number;
+    nodeIdentifier: NodeIdentifier;
+}

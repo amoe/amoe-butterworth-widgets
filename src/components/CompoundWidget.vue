@@ -8,22 +8,17 @@
                                          :selected-path="selectedPath">
       </compound-widget-taxonomy-assigner>
       
-      <taxon-selector v-for="n in taxonIndices"
-                      v-if="taxons[n].isVisible"
+      <taxon-selector v-for="(taxon, index) in taxons"
+                      v-if="taxon.isVisible"
                       v-on:killed="killTaxonSelector"
                       v-on:hidden="hideTaxonSelector"
-                      :taxon="taxons[n]"
-                      :key="getTaxonSelectorKey(n)"
-                      :index="n"
+                      :taxon="taxon"
+                      :key="taxon.level"
+                      :index="index"
                       :selected-path="selectedPath"
                       :taxonomy-ref="taxonomyRef"
+                      :compound-widget-index="compoundWidgetIndex"
                       :style-overrides="taxonStyleOverrides"/>
-
-      <tentative-taxon-selector v-if="thisCompoundWidgetHasTentativeTaxonSelector"
-                                key="tentativeTaxonSelector"
-                                :index="compoundWidgetIndex"
-                                :selected-path="selectedPath"
-                                :taxonomy-ref="taxonomyRef"/>
     </transition-group>
 
   </div>
@@ -117,14 +112,6 @@ export default (Vue as AugmentedVue).extend({
         ])
     },
     methods: {
-        getTaxonSelectorKey(index: number): number {
-            // Handle the case where the index doesn't exist yet
-            if (index === this.taxons.length) {
-                return index + 1;
-            } else {
-                return this.taxons[index].level;
-            }
-        },
         killTaxonSelector(taxonSelectorIndex: number) {
             log.info("Would kill taxon selector with index", taxonSelectorIndex);
 
