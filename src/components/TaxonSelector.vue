@@ -23,8 +23,6 @@
     </div>
 
     <button v-on:click="hide">Hide</button>
-    
-    <p>Length is {{children.length}}</p>
   </div>
 </template>
 
@@ -107,8 +105,9 @@ export default Vue.extend({
         siblings(): TaxonomyNodeModel[] {
             return this.getNodesAtPathLevel(this.taxon.level - 1);
         },
-        children(): TaxonomyNodeModel[] {
-            return this.getNodesAtPathLevel(this.taxon.level);
+        hasRemainingChildren(): boolean {
+            const children = this.getNodesAtPathLevel(this.taxon.level);
+            return children.length > 0;
         }
     }
 });
