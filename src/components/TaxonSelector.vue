@@ -12,7 +12,7 @@
                      v-on:click="kill">
       </x-circle-icon>
 
-      <span v-for="n in taxon.level">
+      <span v-for="i in humanFriendlyTaxonLevel">
         <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
       </span>
 
@@ -38,7 +38,10 @@ import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import util from '@/util';
 
 export default Vue.extend({
-    props: ['index', 'styleOverrides', 'taxon', 'selectedPath', 'taxonomyRef', 'compoundWidgetIndex'],
+    props: [
+        'index', 'styleOverrides', 'taxon', 'selectedPath',
+        'taxonomyRef', 'compoundWidgetIndex'
+    ],
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
     data() {
         return {
@@ -73,6 +76,12 @@ export default Vue.extend({
         }
     },
     computed: {
+        humanFriendlyTaxonLevel(): number {
+            const taxonomyAssignerColumns = 1;
+            const indexOffset = 1;
+
+            return this.taxon.level + taxonomyAssignerColumns + indexOffset;
+        },
         // If you think about it, this method only applies for the taxonselector, not the tentativeone.
         // Because the tentative should show children of the level above it.
         // But the regular one should show 
