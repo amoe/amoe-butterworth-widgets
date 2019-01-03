@@ -40,6 +40,9 @@ export class TentativePathSegment implements PathSegment {
     }
 
     toTaxonDisplayInfo(level: number): TaxonDisplayInfo {
+        if (level < 1)
+            throw new Error("level must be 1-based");
+
         return {
             level: level,
             value: "",

@@ -132,7 +132,7 @@ const widgets: Module<WidgetsState, RootState> = {
         getTaxonsByCompoundWidgetIndex(state, getters) {
             return (index: number): TaxonDisplayInfo[] => {
                 const path: PathSegment[] = getters.getSelectedPath(index);
-                return path.map((segment, n) => segment.toTaxonDisplayInfo(n));
+                return path.map((segment, n) => segment.toTaxonDisplayInfo(n + 1));
             };
         },
         serializedQuery(state, getters): SerializedQuery {

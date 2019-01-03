@@ -24,7 +24,7 @@
 
     <button v-on:click="hide">Hide</button>
     
-    <p>Length is {{siblings.length}}</p>
+    <p>Length is {{children.length}}</p>
   </div>
 </template>
 
@@ -96,7 +96,7 @@ export default Vue.extend({
             const taxonomyAssignerColumnSpan = 1;
             const indexOffset = 1;
 
-            return this.taxon.level + taxonomyAssignerColumnSpan + indexOffset;
+            return this.taxon.level + taxonomyAssignerColumnSpan;
         },
         taxonomies(): TaxonomiesCache {
             return this.$store.getters.taxonomies;
@@ -105,6 +105,9 @@ export default Vue.extend({
         // Because the tentative should show children of the level above it.
         // But the regular one should show 
         siblings(): TaxonomyNodeModel[] {
+            return this.getNodesAtPathLevel(this.taxon.level - 1);
+        },
+        children(): TaxonomyNodeModel[] {
             return this.getNodesAtPathLevel(this.taxon.level);
         }
     }
