@@ -69,6 +69,9 @@ export default Vue.extend({
         childrenOfCurrentPath(this: any): TaxonomyNodeModel[] {
             console.log("value of selectedPath is %o", this.selectedPath);
 
+            // Just return all children of the current path, because the last
+            // value has already been 'confirmed'.
+            //
             // If the value is empty then we just want to return all children of
             // this taxonomy.  This is part of the responsibility of the findValidChildren
             // method.

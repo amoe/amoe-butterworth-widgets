@@ -2,11 +2,8 @@
   <div class="widget"
        :style="styleOverrides" 
        ref="widgets">
-    <!-- Levels below this one?  {{hasLevelsBelowThis}} -->
-    <!-- Visibility?  {{taxonOrFresh.isVisible}} -->
-    
     <select class="taxon-select">
-      <option selected>{{taxonOrFresh.value}}</option>
+      <option v-for="sibling in siblings">{{sibling.content}}</option>
     </select>
 
     <div class="level-container">
@@ -14,7 +11,7 @@
                      v-on:click="kill">
       </x-circle-icon>
 
-      <span v-for="n in taxonOrFresh.level">
+      <span v-for="n in taxon.level">
         <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
       </span>
 
@@ -29,30 +26,26 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue';
+import Vue from 'vue';
 import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 import * as log from 'loglevel';
-import {TaxonomyNode, PathSegment, TaxonDisplayInfo} from '@/types';
+import {TaxonomyNodeModel, PathSegment} from '@/types';
 import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import util from '@/util';
-
-// The problem is that this individual taxon selector needs some way to know
-// about the selected path, which is a property of the parent compoundwidget. 
-//  No problem, we can just pass it in as a prop?
 
 export default Vue.extend({
     props: ['index', 'styleOverrides', 'taxon', 'selectedPath', 'taxonomyRef'],
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
     data() {
         return {
-            level: this.taxon === undefined ? this.index + 1 : this.taxon.level
-        }
+        };
     },
     created() {
-        console.log("value of selectedpath in cw is %o", this.selectedPath);
+        console.log("I consumed a REAL taxon.");
+        console.log("The taxon is called %o", this.taxon);
     },
     methods: {
         kill(): void {
@@ -69,48 +62,18 @@ export default Vue.extend({
         }
     },
     computed: {
-        // This is a hack to deal with the fact that n+1 widgets is always
-        // rendered.  It doesn't matter too much because the changes are
-        // decoupled from the data itself.
+        siblings(this: any): TaxonomyNodeModel[] {
+            const parentLevel = this.level - 1;
 
-        // We can probably remove this hack now
-        taxonOrFresh():  TaxonDisplayInfo {
-            if (this.taxon === undefined) {
-                return {
-                    value: "",
-                    level: this.level,
-                    isVisible: true
-                };
-            } else {
-                return this.taxon;
-            }
-        },
-        taxonomies(this: any) {
-            return this.$store.getters.taxonomies;
-        },
-        filteredChildren(): TaxonomyNode[] {
-            // We have the taxonomy tree.  We have a selected path.
-            // Selected path should be cut off to the value of this.level,
-            // Then passed to the finding method.
+            const pathStem: PathSegment[] = this.selectedPath.slice(0, parentLevel);
 
-            const level = this.level;
-
-            log.debug("will return filtered elements for level %o", level);
-            log.debug("path is currently %o", this.selectedPath);
-
-            // Slice to level-1, because index is 1-based and the slice should
-            // be empty on the first level XXX PROBABLY NO LONGER CORRECT
-            const pathStem: PathSegment[] = this.selectedPath.slice(0, level - 1);
-
-            // Strip the path to the node ID only
-            return util.findValidChildren(
+            const siblings = util.findValidChildren(
                 this.taxonomies[this.taxonomyRef],
                 pathStem.map(s => s.nodeId)
             );
-        },
-        hasLevelsBelowThis() {
-            return this.filteredChildren.length > 0;
-        }
+
+            return siblings.map(n => n.model);
+        }, ...mapGetters(['taxonomies'])
     }
 });
 </script>
