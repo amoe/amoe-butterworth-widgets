@@ -37,11 +37,6 @@ export default new Router({
             component: () => import('./views/TS2View.vue')
         },
         {
-            path: '/folding-taxon-selectors',
-            name: 'folding-taxon-selectors',
-            component: () => import('./views/FoldingTaxonSelectorsView.vue')
-        },
-        {
             path: '/rearrangement',
             name: 'rearrangement-demo',
             component: () => import('./views/RearrangementView.vue')

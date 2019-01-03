@@ -10,14 +10,6 @@ export interface TaxonomyNodeModel {
 
 export type TaxonomyNode = Node<TaxonomyNodeModel>
 
-export interface MyNodeModel {
-    content: string;
-    id: number;
-    label: string;
-}
-
-export type MyNode = Node<MyNodeModel>
-
 export type TransitionCallback = () => void;
 
 // This is an interface that is never used as concrete state in the store.
