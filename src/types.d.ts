@@ -30,8 +30,10 @@ export interface TaxonDisplayInfo {
 }
 
 export interface PathSegment {
-    nodeId: NodeIdentifier;
     isVisible: boolean;
+    hasDefiniteValue(): boolean;
+    toTaxonDisplayInfo(level: number): TaxonDisplayInfo;
+    toPathElements(): NodeIdentifier[];
 }
 
 export interface CompoundWidget {

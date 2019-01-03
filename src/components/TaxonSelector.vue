@@ -2,8 +2,9 @@
   <div class="widget"
        :style="styleOverrides" 
        ref="widgets">
-    <select class="taxon-select">
-      <option v-for="sibling in siblings">{{sibling.content}}</option>
+    <select class="taxon-select" v-on:change="onChanged" v-model="selectedTaxon">
+      <option v-for="sibling in siblings"
+              :value="sibling.uri">{{sibling.content}}</option>
     </select>
 
     <div class="level-container">
@@ -30,17 +31,18 @@ import Vue from 'vue';
 import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 import * as log from 'loglevel';
-import {TaxonomyNodeModel, PathSegment} from '@/types';
+import {TaxonomyNodeModel, PathSegment, NodeIdentifier} from '@/types';
 import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import util from '@/util';
 
 export default Vue.extend({
-    props: ['index', 'styleOverrides', 'taxon', 'selectedPath', 'taxonomyRef'],
+    props: ['index', 'styleOverrides', 'taxon', 'selectedPath', 'taxonomyRef', 'compoundWidgetIndex'],
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
     data() {
         return {
+            selectedTaxon: this.taxon.value as string
         };
     },
     created() {
@@ -48,6 +50,15 @@ export default Vue.extend({
         console.log("The taxon is called %o", this.taxon);
     },
     methods: {
+        onChanged(): void {
+            const compoundWidgetIndex = this.compoundWidgetIndex;
+            const selectedPathIndex = this.index;
+            const nodeIdentifier: NodeIdentifier = this.selectedTaxon;
+
+            this.$store.commit(mc.REPLACE_PATH_SEGMENT, {
+                compoundWidgetIndex, selectedPathIndex, nodeIdentifier
+            });
+        },
         kill(): void {
             // Need to pass the buck to the parent because we don't know which
             // compound element we are
@@ -69,7 +80,7 @@ export default Vue.extend({
 
             const siblings = util.findValidChildren(
                 this.taxonomies[this.taxonomyRef],
-                pathStem.map(s => s.nodeId)
+                util.getFlatPath(pathStem)
             );
 
             return siblings.map(n => n.model);
