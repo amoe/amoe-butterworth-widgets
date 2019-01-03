@@ -74,6 +74,11 @@ export default Vue.extend({
         },
         addTaxonSelector(): void {
             log.info("I would add a new taxon selector to this compound widget");
+
+            if (!this.hasRemainingChildren) {
+                throw new Error("no remaining children");
+            }
+
             this.$store.commit(mc.MAKE_TENTATIVE_SELECTOR, this.index);
         },
         getNodesAtPathLevel(cutLevel: number): TaxonomyNodeModel[] {
