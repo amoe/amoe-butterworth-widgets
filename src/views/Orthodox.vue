@@ -11,6 +11,37 @@ import WidgetView from '@/components/WidgetView.vue'; // @ is an alias to /src
 import * as log from 'loglevel';
 import {TaxonomyNodeModel} from '@/types';
 
+
+const PLACE_TAXONOMY_JSON = {
+    "children": [
+        {
+            "children": [
+                {
+                    "content": "Clothes shop", 
+                    "id": 63795, 
+                    "label": "Taxon", 
+                    "uri": "tag:solasistim.net,2018-12-28:occubrow/Clothes shop/1"
+                }
+            ], 
+            "content": "Shop", 
+            "id": 63793, 
+            "label": "Taxon", 
+            "uri": "tag:solasistim.net,2018-12-28:occubrow/Shop/1"
+        }, 
+        {
+            "content": "Pub", 
+            "id": 63794, 
+            "label": "Taxon", 
+            "uri": "tag:solasistim.net,2018-12-28:occubrow/Pub/1"
+        }
+    ], 
+    "content": "Place", 
+    "id": 63796, 
+    "label": "Taxon", 
+    "uri": "tag:solasistim.net,2018-12-28:occubrow/Place/1"
+};
+
+
 const OCCUPATION_TAXONOMY_JSON = {
     "children": [
         {
@@ -58,6 +89,7 @@ export default Vue.extend({
             // ourselves.
             taxonomies: {
                 'Occupation': OCCUPATION_TAXONOMY_JSON,
+                'Place': PLACE_TAXONOMY_JSON
             }
         }
     },
