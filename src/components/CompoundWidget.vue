@@ -186,4 +186,13 @@ export default (Vue as AugmentedVue).extend({
     stroke: @grey;
     cursor: pointer;
 }
+
+.circle-icon {
+    // nothing here yet
+}
+
+.circle-icon.ob-enabled {
+    fill: hsl(22.4,100%,40%);
+    stroke: hsl(22.4,100%,85%);
+}
 </style>

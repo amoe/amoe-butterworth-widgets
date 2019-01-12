@@ -13,7 +13,7 @@
       </x-circle-icon>
 
       <span v-for="i in humanFriendlyTaxonLevel">
-        <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
+        <circle-icon :width="16" :height="16" :class="circleIconClasses"></circle-icon>
       </span>
 
       <plus-circle-icon :class="plusCircleClasses"
@@ -103,11 +103,13 @@ export default Vue.extend({
             const thisPathSegment: PathSegment = this.selectedPath[this.index];
             return getPlusCircleClasses(!thisPathSegment.hasDefiniteValue());
         },
+        circleIconClasses(): ComputedClassesSpec {
+            return {
+                'ob-enabled': true
+            };
+        },
         humanFriendlyTaxonLevel(): number {
-            const taxonomyAssignerColumnSpan = 1;
-            const indexOffset = 1;
-
-            return this.taxon.level + taxonomyAssignerColumnSpan;
+            return this.taxon.level;
         },
         taxonomies(): TaxonomiesCache {
             return this.$store.getters.taxonomies;

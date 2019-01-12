@@ -9,9 +9,11 @@
                      v-on:click="killCompoundWidget">
       </x-circle-icon>
 
+      <!--
       <span v-for="n in 1">
         <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
       </span>
+      -->
 
       <plus-circle-icon :class="plusCircleClasses"
                         :width="16" :height="16"
