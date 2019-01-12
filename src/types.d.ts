@@ -69,3 +69,8 @@ export interface QuerySegment {
 }
 
 export type SerializedQuery = QuerySegment[]
+
+
+export interface ComputedClassesSpec {
+    [className: string]: boolean;
+}

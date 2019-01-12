@@ -13,8 +13,7 @@
         <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
       </span>
 
-      <plus-circle-icon class="widget-add-icon"
-                        stroke="green"
+      <plus-circle-icon :class="plusCircleClasses"
                         :width="16" :height="16"
                         v-on:click="addTaxonSelector">
       </plus-circle-icon>
@@ -29,11 +28,12 @@ import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import Vue from 'vue';
 import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
+import {ComputedClassesSpec} from '@/types';
 
 export default Vue.extend({
     data() {
         return {
-            chosenTaxonomy: "Music" as string | null   // for debugging,
+            chosenTaxonomy: null as string | null
         };
     },
     props: {
@@ -58,10 +58,27 @@ export default Vue.extend({
         },
     },
     computed: { 
-       availableTaxonomies(this: any): string[] {
-           return Object.keys(this.taxonomies);
-       },
-       ...mapGetters(["taxonomies"])
+        plusCircleClasses(): ComputedClassesSpec {
+            const classes: ComputedClassesSpec = {
+                'widget-add-icon': true
+            };
+
+            console.log("taxonomy is %o", this.chosenTaxonomy);
+
+            if (this.chosenTaxonomy === null) {
+                classes['ob-disabled'] = true;
+            } else {
+                classes['ob-enabled'] = true;
+            }
+
+            console.log("returning classes %o", classes);
+
+            return classes;
+        },
+        availableTaxonomies(this: any): string[] {
+            return Object.keys(this.taxonomies);
+        },
+        ...mapGetters(["taxonomies"])
     }
 });
 </script>

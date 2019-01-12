@@ -1,6 +1,6 @@
 <template>
   <svg xmlns="http://www.w3.org/2000/svg" :width="width" :height="height" 
-       viewBox="0 0 24 24" fill="none" :stroke="stroke" stroke-width="2"
+       viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
        stroke-linecap="round" stroke-linejoin="round" 
        v-on="inputListeners">
     <circle cx="12" cy="12" r="10"/>
@@ -15,8 +15,7 @@ import Vue from 'vue';
 export default Vue.extend({
     props: {
         'width': {type: Number, required: true},
-        'height': {type: Number, required: true},
-        'stroke': {type: String, required: true}
+        'height': {type: Number, required: true}
     },
     computed: {
         inputListeners(): object {
