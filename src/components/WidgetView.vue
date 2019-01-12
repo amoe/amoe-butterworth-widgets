@@ -64,7 +64,6 @@ export default (Vue as AugmentedVue).extend({
     created() {
         log.debug("using taxonomies: %o", this.taxonomies);
         this.$store.commit(mc.INITIALIZE_TAXONOMIES, this.taxonomies);
-        this.addCompoundWidget();
     },
     mounted() {
         // Because we start off with no data, we don't have to initially bind

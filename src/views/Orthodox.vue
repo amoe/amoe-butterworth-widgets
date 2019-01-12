@@ -10,7 +10,7 @@ import TreeModel from 'tree-model';
 import WidgetView from '@/components/WidgetView.vue'; // @ is an alias to /src
 import * as log from 'loglevel';
 import {TaxonomyNodeModel} from '@/types';
-
+import mc from '@/mutation-constants';
 
 const PLACE_TAXONOMY_JSON = {
     "children": [
@@ -92,6 +92,9 @@ export default Vue.extend({
                 'Place': PLACE_TAXONOMY_JSON
             }
         }
+    },
+    created() {
+        this.$store.commit(mc.ADD_COMPOUND_WIDGET);
     },
     mounted() {
         log.debug("root is %o", this.taxonomies);
