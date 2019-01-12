@@ -122,6 +122,12 @@ const widgets: Module<WidgetsState, RootState> = {
         compoundWidgets(state) {
             return state.compoundWidgets;
         },
+        getTaxonSelectorVisibility(state, getters) {
+            return (compoundWidgetIndex: number, taxonSelectorIndex: number): boolean => {
+                return state.compoundWidgets[compoundWidgetIndex].selectedPath[taxonSelectorIndex].isVisible;
+            };
+        },
+
         getSelectedPath(state) {
             return (index: number): PathSegment[] => state.compoundWidgets[index].selectedPath;
         },

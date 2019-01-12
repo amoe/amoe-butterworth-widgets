@@ -184,4 +184,8 @@ export default (Vue as AugmentedVue).extend({
     fill: hsl(22.4,100%,40%);
     stroke: hsl(22.4,100%,85%);
 }
+
+.circle-icon.ob-disabled {
+    fill: none;
+}
 </style>

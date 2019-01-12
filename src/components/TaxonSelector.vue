@@ -15,7 +15,7 @@
       <span v-for="i in humanFriendlyTaxonLevel">
         <circle-icon v-on:click="hideTaxonSelector(i)"
                      :width="16" 
-                     :height="16" :class="circleIconClasses"></circle-icon>
+                     :height="16" :class="getCircleIconClasses(i)"></circle-icon>
       </span>
 
       <plus-circle-icon :class="plusCircleClasses"
@@ -108,6 +108,26 @@ export default Vue.extend({
             const result = siblings.map(n => n.model);
             console.log("called from index %o, sibling result was %o, stem size is %o", this.index, result, pathStem.length);
             return result;
+        },
+        getCircleIconClasses(level: number): ComputedClassesSpec {
+            const relevantIndex = level - 1;
+
+            const isVisible = this.$store.getters.getTaxonSelectorVisibility(
+                this.compoundWidgetIndex,
+                relevantIndex
+            );
+
+            const classes: ComputedClassesSpec = {
+                'circle-icon': true
+            };
+
+            if (isVisible) {
+                classes['ob-enabled'] = true;
+            } else {
+                classes['ob-disabled'] = false;
+            }
+            
+            return classes;
         }
     },
     computed: {
@@ -117,11 +137,6 @@ export default Vue.extend({
         },
         plusCircleClasses(): ComputedClassesSpec {
             return getPlusCircleClasses(this.canAddLevel);
-        },
-        circleIconClasses(): ComputedClassesSpec {
-            return {
-                'ob-enabled': true
-            };
         },
         humanFriendlyTaxonLevel(): number {
             return this.taxon.level;
@@ -138,7 +153,7 @@ export default Vue.extend({
         hasRemainingChildren(): boolean {
             const children = this.getNodesAtPathLevel(this.taxon.level);
             return children.length > 0;
-        }
+        },
     }
 });
 </script>
