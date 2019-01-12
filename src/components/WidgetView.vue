@@ -1,9 +1,5 @@
 <template>
   <div :key="renderCount">
-    <button v-on:click="shuffleTaxonSelectors">Shuffle taxon selectors</button>
-    <button v-on:click="loadSampleData">Load sample data</button>
-    <button v-on:click="addCompoundWidget">Add compound widget</button>
-
     <div class="main-view-container" ref="mainViewContainer">
       <!-- We need a separate column class, because we don't want to drag the
            attached operator as well as the group itself. -->
@@ -68,6 +64,7 @@ export default (Vue as AugmentedVue).extend({
     created() {
         log.debug("using taxonomies: %o", this.taxonomies);
         this.$store.commit(mc.INITIALIZE_TAXONOMIES, this.taxonomies);
+        this.addCompoundWidget();
     },
     mounted() {
         // Because we start off with no data, we don't have to initially bind
