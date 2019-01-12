@@ -30,7 +30,6 @@ import {mapGetters} from 'vuex';
 import { Draggable } from 'gsap/Draggable';
 import MoveIcon from '@/components/MoveIcon.vue';
 import CompoundWidgetTaxonomyAssigner from '@/components/CompoundWidgetTaxonomyAssigner.vue';
-import TentativeTaxonSelector from '@/components/TentativeTaxonSelector.vue';
 import typeGuards from '@/type-guards';
 import {TaxonDisplayInfo, PathSegment} from '@/types';
 import assert from '@/assert';
@@ -60,8 +59,7 @@ export default (Vue as AugmentedVue).extend({
         return {
         };
     },
-    components: {MoveIcon,TaxonSelector, CompoundWidgetTaxonomyAssigner,
-                 TentativeTaxonSelector},
+    components: {MoveIcon,TaxonSelector, CompoundWidgetTaxonomyAssigner},
     mounted() { 
         // nothing happens here because all the draggable binding is handled in
         // the parent widgetview
