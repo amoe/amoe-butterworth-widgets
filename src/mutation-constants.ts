@@ -9,7 +9,7 @@ export default {
     LOAD_SAMPLE_DATA: 'loadSampleData',
     ADD_COMPOUND_WIDGET: 'addCompoundWidget',
     INITIALIZE_TAXONOMIES: 'initializeTaxonomies',
-    HIDE_TAXON_SELECTOR: 'hideTaxonSelector',
+    TOGGLE_TAXON_SELECTOR_VISIBILITY: 'toggleTaxonSelectorVisibility',
     MAKE_TENTATIVE_SELECTOR: 'makeTentativeSelector',
     SET_TAXONOMY_REF: 'setTaxonomyRef',
     ADD_PATH_SEGMENT: 'addPathSegment',

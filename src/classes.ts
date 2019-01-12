@@ -3,17 +3,18 @@ import { PathSegment, TaxonDisplayInfo, NodeIdentifier } from '@/types';
 export class DefinedPathSegment implements PathSegment {
     isVisible: boolean;
     nodeId: NodeIdentifier;
+    content: string;
 
-    constructor(id: NodeIdentifier) {
+    constructor(id: NodeIdentifier, content: string) {
         this.isVisible = true;
         this.nodeId = id;
+        this.content = content;
     }
 
     toTaxonDisplayInfo(level: number): TaxonDisplayInfo {
         return {
             level: level,
-            value: "",// FIXME,  We need to pass in some data that we can
-            // return here when we call the constructor???
+            value: this.content,
             isVisible: this.isVisible
         }
     }

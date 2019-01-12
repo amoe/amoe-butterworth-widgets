@@ -31,4 +31,5 @@ export interface ReplacePathSegmentParameters {
     compoundWidgetIndex: number;
     selectedPathIndex: number;
     nodeIdentifier: NodeIdentifier;
+    taxonContent: string;    // friendly name for taxon
 }

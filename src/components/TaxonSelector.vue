@@ -13,7 +13,9 @@
       </x-circle-icon>
 
       <span v-for="i in humanFriendlyTaxonLevel">
-        <circle-icon :width="16" :height="16" :class="circleIconClasses"></circle-icon>
+        <circle-icon v-on:click="hideTaxonSelector(i)"
+                     :width="16" 
+                     :height="16" :class="circleIconClasses"></circle-icon>
       </span>
 
       <plus-circle-icon :class="plusCircleClasses"
@@ -21,10 +23,6 @@
                         v-on:click="addTaxonSelector">
       </plus-circle-icon>
     </div>
-
-    <button v-on:click="hide">Hide</button>
-
-    <p>Has children: {{hasRemainingChildren}}</p>
   </div>
 </template>
 
@@ -33,7 +31,10 @@ import Vue from 'vue';
 import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 import * as log from 'loglevel';
-import {TaxonomyNodeModel, PathSegment, NodeIdentifier, TaxonomiesCache} from '@/types';
+import {
+    TaxonomyNodeModel, PathSegment, NodeIdentifier, TaxonomiesCache,
+} from '@/types';
+import { HideTaxonSelectorParameters } from '@/requests';
 import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
@@ -61,9 +62,13 @@ export default Vue.extend({
             const compoundWidgetIndex = this.compoundWidgetIndex;
             const selectedPathIndex = this.index;
             const nodeIdentifier: NodeIdentifier = this.selectedTaxon;
+            const taxonContent = this.selectedTaxon;
 
             this.$store.commit(mc.REPLACE_PATH_SEGMENT, {
-                compoundWidgetIndex, selectedPathIndex, nodeIdentifier
+                compoundWidgetIndex,
+                selectedPathIndex,
+                nodeIdentifier,
+                taxonContent
             });
         },
         kill(): void {
@@ -71,8 +76,15 @@ export default Vue.extend({
             // compound element we are
             this.$emit('killed', this.index);
         },
-        hide(): void {
-            this.$emit('hidden', this.index);
+        hideTaxonSelector(level: number): void {
+            const index = level - 1;
+            
+            const parameters: HideTaxonSelectorParameters = {
+                compoundWidgetIndex: this.compoundWidgetIndex,
+                taxonSelectorIndex: index
+            }
+
+            this.$store.commit(mc.TOGGLE_TAXON_SELECTOR_VISIBILITY, parameters);
         },
         addTaxonSelector(): void {
             log.info("I would add a new taxon selector to this compound widget");
@@ -99,9 +111,12 @@ export default Vue.extend({
         }
     },
     computed: {
-        plusCircleClasses(): ComputedClassesSpec {
+        canAddLevel(): boolean {
             const thisPathSegment: PathSegment = this.selectedPath[this.index];
-            return getPlusCircleClasses(!thisPathSegment.hasDefiniteValue());
+            return thisPathSegment.hasDefiniteValue() && this.hasRemainingChildren;
+        },
+        plusCircleClasses(): ComputedClassesSpec {
+            return getPlusCircleClasses(this.canAddLevel);
         },
         circleIconClasses(): ComputedClassesSpec {
             return {

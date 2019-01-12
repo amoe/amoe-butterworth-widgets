@@ -11,7 +11,6 @@
       <taxon-selector v-for="(taxon, index) in taxons"
                       v-if="taxon.isVisible"
                       v-on:killed="killTaxonSelector"
-                      v-on:hidden="hideTaxonSelector"
                       :taxon="taxon"
                       :key="taxon.level"
                       :index="index"
@@ -119,16 +118,6 @@ export default (Vue as AugmentedVue).extend({
             };
 
             this.$store.commit(mc.KILL_TAXON_SELECTOR, params);
-        },
-        hideTaxonSelector(taxonSelectorIndex: number) {
-            log.info("Would hide taxon selector with index", taxonSelectorIndex);
-
-            const params = {
-                compoundWidgetIndex: this.compoundWidgetIndex,
-                taxonSelectorIndex: taxonSelectorIndex
-            };
-
-            this.$store.commit(mc.HIDE_TAXON_SELECTOR, params);
         }
     }
 });

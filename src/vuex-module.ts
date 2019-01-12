@@ -66,9 +66,10 @@ const widgets: Module<WidgetsState, RootState> = {
         [mc.INITIALIZE_TAXONOMIES]: (state, taxonomiesData) => {
             state.taxonomiesData = taxonomiesData;
         },
-        [mc.HIDE_TAXON_SELECTOR]: (state, params: HideTaxonSelectorParameters) => {
+        [mc.TOGGLE_TAXON_SELECTOR_VISIBILITY]: (state, params: HideTaxonSelectorParameters) => {
             const path = state.compoundWidgets[params.compoundWidgetIndex].selectedPath;
-            path[params.taxonSelectorIndex].isVisible = false;
+            const ts = path[params.taxonSelectorIndex];
+            ts.isVisible = !ts.isVisible;
         },
         [mc.MAKE_TENTATIVE_SELECTOR]: (state, compoundWidgetIndex: number) => {
             const compoundWidget = state.compoundWidgets[compoundWidgetIndex];
@@ -83,7 +84,9 @@ const widgets: Module<WidgetsState, RootState> = {
         [mc.REPLACE_PATH_SEGMENT]: (state, parameters: ReplacePathSegmentParameters) => {
             console.log("would replace path segment, %o", parameters);
             const compoundWidget = state.compoundWidgets[parameters.compoundWidgetIndex];
-            const newSegment: PathSegment = new DefinedPathSegment(parameters.nodeIdentifier);
+            const newSegment: PathSegment = new DefinedPathSegment(
+                parameters.nodeIdentifier, parameters.taxonContent
+            );
             compoundWidget.selectedPath.splice(
                 parameters.selectedPathIndex,
                 1,

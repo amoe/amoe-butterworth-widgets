@@ -62,7 +62,7 @@ export default Vue.extend({
     },
     computed: { 
         plusCircleClasses(): ComputedClassesSpec {
-            return getPlusCircleClasses(this.chosenTaxonomy === null);
+            return getPlusCircleClasses(this.chosenTaxonomy !== null);
         },
         availableTaxonomies(this: any): string[] {
             return Object.keys(this.taxonomies);

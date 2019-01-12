@@ -1,15 +1,15 @@
 import { ComputedClassesSpec } from '@/types';
 
-function getPlusCircleClasses(condition: boolean): ComputedClassesSpec {
+function getPlusCircleClasses(isEnabledCondition: boolean): ComputedClassesSpec {
     const classes: ComputedClassesSpec = {
         'widget-add-icon': true
     };
 
 
-    if (condition) {
-        classes['ob-disabled'] = true;
-    } else {
+    if (isEnabledCondition) {
         classes['ob-enabled'] = true;
+    } else {
+        classes['ob-disabled'] = true;
     }
 
     return classes;
