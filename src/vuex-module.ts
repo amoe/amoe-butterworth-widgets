@@ -90,6 +90,9 @@ const widgets: Module<WidgetsState, RootState> = {
                 newSegment
             );
         },
+        [mc.KILL_COMPOUND_WIDGET]: (state, index) => {
+            state.compoundWidgets.splice(index, 1);
+        }
     },
     actions: {
     },

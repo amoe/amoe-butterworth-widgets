@@ -6,7 +6,7 @@
 
     <div class="level-container">
       <x-circle-icon class="widget-close-icon"
-                     v-on:click="spewDebugInfo">
+                     v-on:click="killCompoundWidget">
       </x-circle-icon>
 
       <span v-for="n in 1">
@@ -51,6 +51,11 @@ export default Vue.extend({
             this.$store.commit(mc.SET_TAXONOMY_REF, 
                                {compoundWidgetIndex: this.index, taxonomyRef: this.chosenTaxonomy});
             this.$store.commit(mc.MAKE_TENTATIVE_SELECTOR, this.index);
+        },
+        killCompoundWidget() {
+            // Hitting the kill button for the taxonomy selector should
+            // kill the entire compound widget.
+            this.$store.commit(mc.KILL_COMPOUND_WIDGET, this.index);
         },
         spewDebugInfo() {
             console.log("called with arguments %o", arguments);

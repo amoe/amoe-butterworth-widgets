@@ -13,5 +13,6 @@ export default {
     MAKE_TENTATIVE_SELECTOR: 'makeTentativeSelector',
     SET_TAXONOMY_REF: 'setTaxonomyRef',
     ADD_PATH_SEGMENT: 'addPathSegment',
-    REPLACE_PATH_SEGMENT: 'replacePathSegment'
+    REPLACE_PATH_SEGMENT: 'replacePathSegment',
+    KILL_COMPOUND_WIDGET: 'killCompoundWidget'
 };
