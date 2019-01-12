@@ -166,10 +166,6 @@ export default Vue.extend({
     cursor: pointer;
 }
 
-.widget-add-icon {
-    stroke: @grey;
-    cursor: pointer;
-}
 
 .taxon-select {
     min-width: 8em;

@@ -175,4 +175,17 @@ export default (Vue as AugmentedVue).extend({
     flex-direction: row;
 }
 
+
+.widget-add-icon {
+    // nothing here yet
+}
+
+.widget-add-icon.ob-enabled {
+    stroke: @offblack;
+    cursor: pointer;
+}
+.widget-add-icon.ob-disabled {
+    stroke: @grey;
+    cursor: pointer;
+}
 </style>

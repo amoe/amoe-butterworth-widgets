@@ -14,12 +14,11 @@
       </span>
 
       <plus-circle-icon class="widget-add-icon"
+                        stroke="green"
                         :width="16" :height="16"
                         v-on:click="addTaxonSelector">
       </plus-circle-icon>
     </div>
-
-    <button v-on:click="spewDebugInfo">Hide</button>
   </div>
 </template>
 
@@ -34,7 +33,7 @@ import mc from '@/mutation-constants';
 export default Vue.extend({
     data() {
         return {
-            chosenTaxonomy: "Music" as string | null   // for debugging
+            chosenTaxonomy: "Music" as string | null   // for debugging,
         };
     },
     props: {
@@ -57,9 +56,6 @@ export default Vue.extend({
             // kill the entire compound widget.
             this.$store.commit(mc.KILL_COMPOUND_WIDGET, this.index);
         },
-        spewDebugInfo() {
-            console.log("called with arguments %o", arguments);
-        }
     },
     computed: { 
        availableTaxonomies(this: any): string[] {
