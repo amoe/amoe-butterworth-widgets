@@ -29,6 +29,7 @@ import Vue from 'vue';
 import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 import {ComputedClassesSpec} from '@/types';
+import {getPlusCircleClasses} from '@/taxon-utilities';
 
 export default Vue.extend({
     data() {
@@ -59,21 +60,7 @@ export default Vue.extend({
     },
     computed: { 
         plusCircleClasses(): ComputedClassesSpec {
-            const classes: ComputedClassesSpec = {
-                'widget-add-icon': true
-            };
-
-            console.log("taxonomy is %o", this.chosenTaxonomy);
-
-            if (this.chosenTaxonomy === null) {
-                classes['ob-disabled'] = true;
-            } else {
-                classes['ob-enabled'] = true;
-            }
-
-            console.log("returning classes %o", classes);
-
-            return classes;
+            return getPlusCircleClasses(this.chosenTaxonomy === null);
         },
         availableTaxonomies(this: any): string[] {
             return Object.keys(this.taxonomies);

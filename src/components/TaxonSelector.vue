@@ -16,7 +16,7 @@
         <circle-icon :width="16" :height="16" class="circle-icon"></circle-icon>
       </span>
 
-      <plus-circle-icon class="widget-add-icon"
+      <plus-circle-icon :class="plusCircleClasses"
                         :width="16" :height="16"
                         v-on:click="addTaxonSelector">
       </plus-circle-icon>
@@ -38,6 +38,8 @@ import { XCircleIcon } from 'vue-feather-icons';
 import CircleIcon from '@/components/CircleIcon.vue';
 import PlusCircleIcon from '@/components/PlusCircleIcon.vue';
 import util from '@/util';
+import {ComputedClassesSpec} from '@/types';
+import {getPlusCircleClasses} from '@/taxon-utilities';
 
 export default Vue.extend({
     props: [
@@ -97,6 +99,10 @@ export default Vue.extend({
         }
     },
     computed: {
+        plusCircleClasses(): ComputedClassesSpec {
+            const thisPathSegment: PathSegment = this.selectedPath[this.index];
+            return getPlusCircleClasses(!thisPathSegment.hasDefiniteValue());
+        },
         humanFriendlyTaxonLevel(): number {
             const taxonomyAssignerColumnSpan = 1;
             const indexOffset = 1;
@@ -165,7 +171,6 @@ export default Vue.extend({
     height: 1em;
     cursor: pointer;
 }
-
 
 .taxon-select {
     min-width: 8em;
