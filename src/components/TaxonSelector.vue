@@ -54,8 +54,8 @@ export default Vue.extend({
         };
     },
     created() {
-        console.log("I consumed a REAL taxon.");
-        console.log("The taxon is called %o", this.taxon);
+        log.debug("I consumed a REAL taxon.");
+        log.debug("The taxon is called %o", this.taxon);
     },
     methods: {
         onChanged(): void {
@@ -106,7 +106,7 @@ export default Vue.extend({
             );
 
             const result = siblings.map(n => n.model);
-            console.log("called from index %o, sibling result was %o, stem size is %o", this.index, result, pathStem.length);
+            log.debug("called from index %o, sibling result was %o, stem size is %o", this.index, result, pathStem.length);
             return result;
         },
         getCircleIconClasses(level: number): ComputedClassesSpec {

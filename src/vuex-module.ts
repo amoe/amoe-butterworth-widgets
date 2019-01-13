@@ -82,7 +82,7 @@ const widgets: Module<WidgetsState, RootState> = {
             state.compoundWidgets[parameters.compoundWidgetIndex].taxonomyRef = parameters.taxonomyRef;
         },
         [mc.REPLACE_PATH_SEGMENT]: (state, parameters: ReplacePathSegmentParameters) => {
-            console.log("would replace path segment, %o", parameters);
+            log.debug("would replace path segment, %o", parameters);
             const compoundWidget = state.compoundWidgets[parameters.compoundWidgetIndex];
             const newSegment: PathSegment = new DefinedPathSegment(
                 parameters.nodeIdentifier, parameters.taxonContent
@@ -132,6 +132,7 @@ const widgets: Module<WidgetsState, RootState> = {
             return (index: number): PathSegment[] => state.compoundWidgets[index].selectedPath;
         },
         taxonomies(state): TaxonomiesCache {
+
             const allKeys = Object.keys(state.taxonomiesData);
             const result: TaxonomiesCache = {};
 

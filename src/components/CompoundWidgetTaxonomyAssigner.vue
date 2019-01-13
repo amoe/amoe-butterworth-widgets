@@ -32,6 +32,7 @@ import {mapGetters} from 'vuex';
 import mc from '@/mutation-constants';
 import {ComputedClassesSpec} from '@/types';
 import {getPlusCircleClasses} from '@/taxon-utilities';
+import * as log from 'loglevel';
 
 export default Vue.extend({
     data() {
@@ -45,7 +46,7 @@ export default Vue.extend({
     components: { XCircleIcon, CircleIcon, PlusCircleIcon },
     methods: {
         addTaxonSelector() {
-            console.log("About to add taxon selector");
+            log.debug("About to add taxon selector");
             if (this.chosenTaxonomy === null) {
                 throw new Error("Must select a taxonomy");
             }
