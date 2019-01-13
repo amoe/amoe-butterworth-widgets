@@ -132,7 +132,6 @@ const widgets: Module<WidgetsState, RootState> = {
             return (index: number): PathSegment[] => state.compoundWidgets[index].selectedPath;
         },
         taxonomies(state): TaxonomiesCache {
-
             const allKeys = Object.keys(state.taxonomiesData);
             const result: TaxonomiesCache = {};
 
