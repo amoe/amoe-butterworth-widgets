@@ -1,8 +1,12 @@
 <template>
   <div :key="renderCount">
     <div class="main-view-container" ref="mainViewContainer">
+      <!-- This span is needed otherwise perfect scrollbar is going to cause
+           some weird layout bugs -->
+      <span>
       <plus-button class="add-compount-widget-button"
                    v-on:click="addCompoundWidget"/>
+      </span>
 
       <!-- We need a separate column class, because we don't want to drag the
            attached operator as well as the group itself. -->
@@ -71,7 +75,7 @@ export default (Vue as AugmentedVue).extend({
     mounted() {
         // Because we start off with no data, we don't have to initially bind
         // everything, but this may not always be the case...
-//        this.reRender();
+        this.reRender();
     },
     watch: {
         compoundWidgets: function (val) {

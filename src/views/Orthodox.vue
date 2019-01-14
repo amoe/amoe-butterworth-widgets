@@ -94,7 +94,19 @@ export default Vue.extend({
         }
     },
     created() {
-//        this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
+       this.$store.commit(mc.ADD_COMPOUND_WIDGET);
     },
     mounted() {
         log.debug("root is %o", this.taxonomies);
