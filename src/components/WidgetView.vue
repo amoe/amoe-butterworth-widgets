@@ -1,6 +1,9 @@
 <template>
   <div :key="renderCount">
     <div class="main-view-container" ref="mainViewContainer">
+      <plus-button class="add-compount-widget-button"
+                   v-on:click="addCompoundWidget"/>
+
       <!-- We need a separate column class, because we don't want to drag the
            attached operator as well as the group itself. -->
       <div class="widget-group-column"
@@ -26,6 +29,7 @@ import CompoundWidget from '@/components/CompoundWidget.vue';
 import { Draggable, DraggableConstructor } from 'gsap/Draggable';
 import typeGuards from '@/type-guards';
 import SerifOperator from '@/components/SerifOperator.vue';
+import PlusButton from '@/components/PlusButton.vue';
 import * as d3Scale from 'd3-scale';
 import * as d3ScaleChromatic from 'd3-scale-chromatic';
 import PerfectScrollbar from 'perfect-scrollbar';
@@ -54,7 +58,7 @@ interface WidgetViewRefs {
 type AugmentedVue = VueConstructor<Vue & WidgetViewRefs>;
 
 export default (Vue as AugmentedVue).extend({
-    components: {SerifOperator, CompoundWidget},
+    components: {SerifOperator, CompoundWidget, PlusButton},
     props: ['taxonomies'],
     data(): ComponentData {
         return {
@@ -197,6 +201,7 @@ export default (Vue as AugmentedVue).extend({
     width: 99vw;
     overflow: hidden;
     position: relative;
+    min-height: 110px;
 }
 
 // Contains both a widget-group and a possible serif operator
@@ -204,4 +209,5 @@ export default (Vue as AugmentedVue).extend({
     display: flex;
     flex-direction: row;
 }
+
 </style>

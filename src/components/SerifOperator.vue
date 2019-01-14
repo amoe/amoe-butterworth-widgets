@@ -74,7 +74,7 @@ export default Vue.extend({
     flex-direction: row;
 
     /* Just to set off from main */
-    height: 8em;
+    height: 4em;
     margin: 1em;
 
     background-color: hsl(0, 0, 98%);

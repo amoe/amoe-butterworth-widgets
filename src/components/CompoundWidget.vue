@@ -137,6 +137,7 @@ export default (Vue as AugmentedVue).extend({
     border-width: medium;
     border-style: solid;
     border-color: rgba(0, 0, 0, 0);
+    border-radius: 4px;
 }
 
 // Do a leave transition over 2 seconds, whatever it may be
@@ -188,4 +189,5 @@ export default (Vue as AugmentedVue).extend({
 .circle-icon.ob-disabled {
     fill: none;
 }
+
 </style>
