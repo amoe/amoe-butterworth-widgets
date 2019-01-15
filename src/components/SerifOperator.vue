@@ -36,7 +36,7 @@ export default Vue.extend({
     components: {SerifControlPanel, DistanceIndicator},
     data() {
         return {
-            serifExpanded: true,
+            serifExpanded: false,
             distance: 4
         }
     },
@@ -101,6 +101,7 @@ export default Vue.extend({
 
 .toggle-control {
     cursor: pointer;
+    margin-right: @space-small;
 }
 
 // Define the transition, these are very trial and error
