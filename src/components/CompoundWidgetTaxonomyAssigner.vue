@@ -1,6 +1,6 @@
 <template>
   <div class="widget compound-widget-taxonomy-assigner" ref="widgets">
-    <select class="taxon-select" v-model="chosenTaxonomy">
+    <select class="taxon-select" v-model="chosenTaxonomy" v-on:change="onChange">
       <option v-for="taxonomy in availableTaxonomies">{{taxonomy}}</option>
     </select>
 
@@ -60,6 +60,9 @@ export default Vue.extend({
             // kill the entire compound widget.
             this.$store.commit(mc.KILL_COMPOUND_WIDGET, this.index);
         },
+        onChange(): void {
+            this.$store.commit(mc.KILL_ENTIRE_PATH, this.index);
+        }
     },
     computed: { 
         plusCircleClasses(): ComputedClassesSpec {

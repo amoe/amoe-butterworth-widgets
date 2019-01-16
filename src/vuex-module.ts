@@ -95,6 +95,10 @@ const widgets: Module<WidgetsState, RootState> = {
         },
         [mc.KILL_COMPOUND_WIDGET]: (state, index) => {
             state.compoundWidgets.splice(index, 1);
+        },
+        [mc.KILL_ENTIRE_PATH]: (state, index) => {
+            // wipe out whole path
+            state.compoundWidgets[index].selectedPath.splice(0);
         }
     },
     actions: {
@@ -151,7 +155,6 @@ const widgets: Module<WidgetsState, RootState> = {
             // Narrow the state of each path to its node id which is an immutable
             // string.   Skip ones without a taxonomyRef.
             const result = [];
-
 
             for (let w of state.compoundWidgets) {
                 if (w.taxonomyRef === null) continue;

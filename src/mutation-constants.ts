@@ -14,5 +14,6 @@ export default {
     SET_TAXONOMY_REF: 'setTaxonomyRef',
     ADD_PATH_SEGMENT: 'addPathSegment',
     REPLACE_PATH_SEGMENT: 'replacePathSegment',
-    KILL_COMPOUND_WIDGET: 'killCompoundWidget'
+    KILL_COMPOUND_WIDGET: 'killCompoundWidget',
+    KILL_ENTIRE_PATH: 'killEntirePath'
 };
