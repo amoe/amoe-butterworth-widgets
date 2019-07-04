@@ -10,6 +10,19 @@ The WidgetView takes a single prop, `taxonomies`.  This is an object defining
 a set of available taxonomies.  The string key is used to uniquely identify
 the taxonomy.  The taxonomy should have a single root node.
 
+Nodes should have a certain structure.  A node should be an object with the
+following structure:
+
+    {
+        content: "foo",
+        uri: "tag:solasistim.net,2018-12-28:occubrow/Transport/1"
+    }
+
+The URI is an opaque unique identifier string.  Here I am using [tag
+URIs](https://www.taguri.org/).  Each node must have a unique value for this
+property.  It doesn't need to be a real URI, it could just as well be an
+integer, although URIs are preferred.
+ 
 To get the needed CSS rules, you should do the following either within a
 component or within your entry point.
 

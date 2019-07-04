@@ -3,10 +3,18 @@ import {
     PathSegment
 } from '@/types';
 import { DraggableConstructor } from 'gsap/Draggable';
+import { has } from 'lodash';
 import * as log from 'loglevel';
+
+function validateNode(node: TaxonomyNode): void {
+    if (!has(node.model, 'uri')) {
+        log.warn("node is missing required property", node);
+    }
+}
 
 function getNodeById(rootNode: TaxonomyNode, wantedId: NodeIdentifier): TaxonomyNode {
     const result = rootNode.all(function(node: TaxonomyNode): boolean {
+        validateNode(node);
         return node.model.uri === wantedId;
     });
     if (result.length === 1) {
