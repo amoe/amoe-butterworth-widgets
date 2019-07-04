@@ -139,8 +139,13 @@ export default (Vue as AugmentedVue).extend({
         },
         getCompoundWidgetElements(): Element[] {
             log.debug("compoundWidgets ref is %o",this.$refs.compoundWidgets); 
-            
-            return this.$refs.compoundWidgets.map(v => v.$el);
+
+            if (this.$refs.compoundWidgets === undefined) {
+                log.warn("no compound widgets defined");
+                return [];
+            } else {
+                return this.$refs.compoundWidgets.map(v => v.$el);
+            }
         },
         setupScrollbar(): void {
             if (typeGuards.isHTMLElement(this.$refs.mainViewContainer)) {
