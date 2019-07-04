@@ -20,6 +20,7 @@
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
     "lodash": "^4.17.11",
+    "loglevel": "1.6.3",
     "perfect-scrollbar": "^1.4.0",
     "tree-model": "^1.0.7",
     "vue": "^2.5.17",
