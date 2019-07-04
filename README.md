@@ -1,5 +1,7 @@
 # widgets3
 
+[![npm version](https://badge.fury.io/js/amoe-butterworth-widgets.svg)](https://badge.fury.io/js/amoe-butterworth-widgets)
+
 ## Usage instructions
 
 There is no default export.  A named export `WidgetView` is exported.
