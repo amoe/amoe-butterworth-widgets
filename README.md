@@ -1,4 +1,4 @@
-# widgets3
+# amoe-butterworth-widgets
 
 [![npm version](https://badge.fury.io/js/amoe-butterworth-widgets.svg)](https://badge.fury.io/js/amoe-butterworth-widgets)
 
