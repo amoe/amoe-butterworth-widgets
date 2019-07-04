@@ -10,6 +10,12 @@ The WidgetView takes a single prop, `taxonomies`.  This is an object defining
 a set of available taxonomies.  The string key is used to uniquely identify
 the taxonomy.  The taxonomy should have a single root node.
 
+To get the needed CSS rules, you should do the following either within a
+component or within your entry point.
+
+    import 'amoe-butterworth-widgets/dist/amoe-butterworth-widgets.css';
+
+
 ## Releasing a new version
 
 Steps:
