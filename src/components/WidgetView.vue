@@ -141,7 +141,8 @@ export default (Vue as AugmentedVue).extend({
             log.debug("compoundWidgets ref is %o",this.$refs.compoundWidgets); 
 
             if (this.$refs.compoundWidgets === undefined) {
-                log.warn("no compound widgets defined");
+                // No compound widgets defined, this isn't necessarily a problem,
+                // it just means that none have been added yet.
                 return [];
             } else {
                 return this.$refs.compoundWidgets.map(v => v.$el);
