@@ -16,6 +16,21 @@ component or within your entry point.
     import 'amoe-butterworth-widgets/dist/amoe-butterworth-widgets.css';
 
 
+Include the Vuex module into your store like so.
+
+    import Vuex from 'vuex';
+    import { WidgetsModule } from 'amoe-butterworth-widgets';
+
+    Vue.use(Vuex);
+
+    export default new Vuex.Store({
+        // [rest of store definition omitted]
+        modules: {
+            widgets: WidgetsModule
+        },
+    });
+
+
 ## Releasing a new version
 
 Steps:
