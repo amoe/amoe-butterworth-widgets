@@ -23,7 +23,7 @@
     "gsap": "2.0.2",
     "less": "3.8.1",
     "less-loader": "4.1.0",
-    "lodash": "4.17.11",
+    "lodash": "4.17.19",
     "loglevel": "1.6.3",
     "perfect-scrollbar": "1.4.0",
     "tree-model": "1.0.7",
